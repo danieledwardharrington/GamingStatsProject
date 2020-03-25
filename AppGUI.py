@@ -1,8 +1,9 @@
 import webbrowser
 import tkinter
+import requests
+import json
 from tkinter import *
-import Global
-from Global import REPO_URL
+from Global import *
 
 '''
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
@@ -12,7 +13,9 @@ USER_API_KEY=""
 
 class AppGUI:
 
-    def __init__(self, root):
+    def __init__(self):
+        root = tkinter.Tk()
+
         root.title("Gaming Stats")
         root.geometry("1200x700")
 
@@ -31,6 +34,7 @@ class AppGUI:
         instructions_button = Button(root, text = "Need API key/Don't know SteamID64?", borderwidth = 5, width = 34, font = ("Helvetica", 12), command = self.send_to_repo)
         instructions_button.grid(row = 3, column = 0)
 
+        root.mainloop()
     def send_to_repo(self):
         webbrowser.open_new_tab(REPO_URL)
 
@@ -39,8 +43,12 @@ class AppGUI:
         print("Steam user ID: " + USER_STEAM_ID)
         USER_API_KEY = key_entry.get()
         print("Steam user API key: " + USER_API_KEY)
-        
 
-root = tkinter.Tk()
-appGUI = AppGUI(root)
-root.mainloop()
+        ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + USER_API_KEY + "&include_appinfo=true" + "&steamid=" + USER_STEAM_ID + "&format=json")
+        print(vars(ownedGamesReq))
+        ownedGamesJsonObj = json.loads(ownedGamesReq.text)
+        for game in ownedGamesJsonObj:
+            for name, value in game.items():
+                print(name + " " + value)
+
+        
