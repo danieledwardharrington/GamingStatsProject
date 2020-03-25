@@ -13,3 +13,5 @@ https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey
 https://www.youtube.com/watch?v=gQuelApsq7k
 * Alternatively, put the link to your Steam profile into this website:
 https://steamid.io/
+## Why get an API key and SteamID64?
+I'm doing it this way so the program can access your information while allowing you to keep your profile private.

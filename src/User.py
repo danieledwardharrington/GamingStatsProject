@@ -1,4 +1,4 @@
-class User(object):
+class User:
 
     email = ""
     password = ""
