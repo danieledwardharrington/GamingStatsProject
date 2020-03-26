@@ -1,3 +1,5 @@
+from PopupWindow import *
+
 class UserFile:
 
     user_api = ""
@@ -9,11 +11,10 @@ class UserFile:
 
     def create_user_file(self):
         try:
-            with open("userFile.txt", "w") as file_handler:
-                file_handler.write(self.user_api + "\n")
-                file_handler.write(self.user_id)
-                print("File created")
-                print("Data written")
+            file_handler = open("userFile.txt", "w+")
+            file_handler.write(self.user_api + "\n")
+            file_handler.write(self.user_id)
+            file_handler.close()
         except:
             print("Error creating file")
-            #TODO("Add pop-up for user")
+            file_popup = PopupWindow(FILE_POPUP)

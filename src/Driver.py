@@ -1,3 +1,6 @@
+# Program that gives detailed stats/ratings about a user's Steam library
+# Author: Daniel Harrington
+
 import requests
 from steamwebapi import profiles
 from steamwebapi.api import ISteamUser, ISteamUserStats, IPlayerService
