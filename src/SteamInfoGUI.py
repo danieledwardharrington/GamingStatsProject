@@ -42,7 +42,7 @@ class SteamInfoGUI:
             webbrowser.open_new_tab(REPO_URL)
         except:
             print("Exception opening browser")
-            TODO("Pop-up dialog for user")
+            #TODO("Pop-up dialog for user")
 
     def _get_input(self, key_entry, id_entry):
         self.user_id_number = id_entry.get()
@@ -63,6 +63,6 @@ class SteamInfoGUI:
                 print(item["name"])
         except:
             print("Exception getting userr info from Steam")
-            TODO("Create pop-up for user")
+            #TODO("Create pop-up for user")
 
         
