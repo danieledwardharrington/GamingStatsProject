@@ -11,7 +11,7 @@ from LibraryGUI import *
 from Global import *
 
 
-if not os.path.exists("userInfo.txt"):
+if not os.path.exists(USER_FILE_NAME) and not os.path.exists(LIBRARY_FILE_NAME):
     steamGUI = SteamInfoGUI()
 else:
     libraryGUI = LibraryGUI()

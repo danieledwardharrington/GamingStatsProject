@@ -9,6 +9,7 @@ from tkinter import ttk
 from Global import *
 from UserFile import *
 from PopupWindow import *
+from Game import *
 
 class SteamInfoGUI:
 
@@ -38,17 +39,6 @@ class SteamInfoGUI:
 
         #root.iconbitmap()
         root.mainloop()
-
-    # def _make_popup(self, message = "Error"):
-    #     win = tkinter.Toplevel()
-    #     win.wm_title("Alert!")
-    #     win.geometry("200x100")
-
-    #     label = tkinter.Label(win, text = message)
-    #     label.pack(side = "top", fill = "x", pady = 10)
-
-    #     okay_button = ttk.Button(win, text = "Okay", command = win.destroy)
-    #     okay_button.pack()
 
     def _send_to_repo(self):
         try:
@@ -87,10 +77,24 @@ class SteamInfoGUI:
                 print(type(ownedGamesReq))
                 ownedGamesRes = ownedGamesReq.json()
                 print(type(ownedGamesRes))
+
+                gameList = []
                 
                 #getting list of game names
                 for item in ownedGamesRes["response"]["games"]:
                     print(item["name"])
+                    game_name = item["name"]
+                    game_minutes = item["playtime_forever"]
+                    game_genre = ""
+
+
+                    game = Game(game_name, game_genre, game_minutes)
+
+                    #only adding to the list if the user has actually played the game
+                    if game_minutes > 0:
+                        gameList.append(game)
+
+                    userInfoFile.create_library_file(gameList)
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)

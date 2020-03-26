@@ -11,3 +11,6 @@ class Game:
         self.genre = genre
         self.minutes_played = minutes_played
         self.hours_played = minutes_played / 60
+
+    def update_rating(self, new_rating):
+        pass
