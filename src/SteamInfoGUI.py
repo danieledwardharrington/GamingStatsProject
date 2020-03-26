@@ -3,7 +3,6 @@ import tkinter
 import requests
 import json
 import os
-import pprint
 from tkinter import *
 from Global import *
 from UserFile import *
