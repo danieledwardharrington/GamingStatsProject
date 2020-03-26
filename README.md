@@ -14,4 +14,4 @@ https://www.youtube.com/watch?v=gQuelApsq7k
 * Alternatively, put the link to your Steam profile into this website:
 https://steamid.io/
 ## Why get an API key and SteamID64?
-I'm doing it this way so the program can access your information while allowing you to keep your profile private.
+Getting an API key allows the program to access your information while retaining the ability to keep your profile private on Steam. The SteamID64 is a unique user ID and has less issues than the vanity name user's can create within Steam.
