@@ -15,3 +15,5 @@ https://www.youtube.com/watch?v=gQuelApsq7k
 https://steamid.io/
 ## Why get an API key and SteamID64?
 Getting an API key allows the program to access your information while retaining the ability to keep your profile private on Steam. The SteamID64 is a unique user ID and has less issues than the vanity name users can create within Steam.
+## Will there be support for Epic/Blizzard/GOG, etc?
+I'm new to Python so for now, I just went with the game library that I felt would be the most common. If I have time and figure out how to do it for other platforms, I'll consider adding the support.
