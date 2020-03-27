@@ -37,5 +37,5 @@ STEAM_SEARCH_BOX_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/d
 STEAM_SEARCH_BUTTON_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[9]/div[1]/form/div/a"
 
 #FIle names
-USER_FILE_NAME = "userInfo.txt"
-LIBRARY_FILE_NAME = "userLibrary.dat"
+USER_FILE_NAME = "userInfo.pickle"
+LIBRARY_FILE_NAME = "userLibrary.pickle"
