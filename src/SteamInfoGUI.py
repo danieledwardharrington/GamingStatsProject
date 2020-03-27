@@ -10,6 +10,7 @@ from Global import *
 from UserFile import *
 from PopupWindow import *
 from Game import *
+from operator import attrgetter
 
 class SteamInfoGUI:
 
@@ -78,7 +79,7 @@ class SteamInfoGUI:
                 ownedGamesRes = ownedGamesReq.json()
                 print(type(ownedGamesRes))
 
-                gameList = []
+                game_list = []
                 
                 #getting list of game names
                 for item in ownedGamesRes["response"]["games"]:
@@ -92,9 +93,11 @@ class SteamInfoGUI:
 
                     #only adding to the list if the user has actually played the game
                     if game_minutes > 0:
-                        gameList.append(game)
+                        game_list.append(game)
 
-                    userInfoFile.create_library_file(gameList)
+                    game_list.sort(key = attrgetter("sort_name"), reverse = False)
+                    
+                    userInfoFile.create_library_file(game_list)
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)

@@ -1,6 +1,7 @@
 class Game:
 
     name = ""
+    sort_name = "" #This is specifically for sorting the list alphabetically, trimming the from any titles
     genre = ""
     minutes_played = 0.0
     hours_played = 0.0
@@ -11,6 +12,12 @@ class Game:
         self.genre = genre
         self.minutes_played = minutes_played
         self.hours_played = minutes_played / 60
+        
+        #checking to see if the game title starts with the so I can remove it for the purposes of sorting
+        if self.name.find("The ") == 0 or self.name.find("the ") == 0:
+            self.sort_name = self.name[4:]
+        else:
+            self.sort_name = self.name  
 
     def update_rating(self, new_rating):
         pass
