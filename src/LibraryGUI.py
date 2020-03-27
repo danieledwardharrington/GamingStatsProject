@@ -20,7 +20,7 @@ class LibraryGUI:
         root.geometry("600x600")
 
         game_box = Listbox(root, selectmode = SINGLE)
-        for game in game_list:
+        for game in self.game_list:
             game_box.insert(game.name)
         
         game_box.pack(side = "top", fill = "x", pady = 10)
@@ -39,7 +39,7 @@ class LibraryGUI:
         self.game_list = pickle.load(pickle_in)        
 
     def _edit_game(self, game_box):
-        game_name = game_box.get(game_box.curselection())
+        game_name = game_box.get(ACTIVE)
 
         game_to_edit = Game()
 
@@ -50,7 +50,10 @@ class LibraryGUI:
         edit_game_window = EditGameWindow(game, self.game_list)
 
     def _delete_user(self, root):
-        os.remove(USER_FILE_NAME)
-        os.remove(LIBRARY_FILE_NAME)
-        steam_info_win = SteamInfoGUI()
-        root.destroy()
+        confirm_popup = PopupWindow("Are you sure?", True)
+
+        if confirm_popup.clicked_yes:
+            os.remove(USER_FILE_NAME)
+            os.remove(LIBRARY_FILE_NAME)
+            steam_info_win = SteamInfoGUI()
+            root.destroy()

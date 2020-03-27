@@ -18,6 +18,3 @@ class Game:
             self.sort_name = self.name[4:]
         else:
             self.sort_name = self.name  
-
-    def update_rating(self, new_rating):
-        pass
