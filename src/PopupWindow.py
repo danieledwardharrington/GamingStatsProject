@@ -7,8 +7,6 @@ import os
 
 class PopupWindow:
 
-    clicked_yes = False
-
     def __init__(self, message, delete_user = False):
         
         win = tkinter.Toplevel()
