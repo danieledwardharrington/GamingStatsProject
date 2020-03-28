@@ -9,12 +9,14 @@ class PopupWindow:
 
     def __init__(self, message, delete_user = False):
         
+        #General error/exception popup
         win = tkinter.Toplevel()
         win.wm_title("Alert!")
         win.geometry("200x100")
         label = tkinter.Label(win, text = message)
         label.pack(side = "top", fill = "x", pady = 10)
 
+        #Popup to confirm deletion of user info/Steam library files
         if not delete_user:
             okay_button = ttk.Button(win, text = "Okay", command = win.destroy)
             okay_button.pack()

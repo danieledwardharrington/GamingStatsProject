@@ -35,6 +35,7 @@ class SteamInfoGUI:
         submit_button = Button(root, text = "SUBMIT", borderwidth = 5, width = 34, font = NORM_FONT, command = lambda:  self._get_input(key_entry, id_entry))
         submit_button.grid(row = 2, column = 0)
 
+        #This button will forward the user to the GitHub repo for more information
         instructions_button = Button(root, text = "Need API key/Don't know SteamID64?", borderwidth = 5, width = 34, font = NORM_FONT, command = self._send_to_repo)
         instructions_button.grid(row = 3, column = 0)
 
@@ -86,7 +87,7 @@ class SteamInfoGUI:
                     print(item["name"])
                     game_name = item["name"]
                     game_minutes = item["playtime_forever"]
-                    game_genre = ""
+                    game_genre = "" #scraping this from Steam
 
 
                     game = Game(game_name, game_genre, game_minutes)
