@@ -2,6 +2,8 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from Global import *
+from SteamInfoGUI import *
+import os
 
 class PopupWindow:
 
@@ -25,6 +27,8 @@ class PopupWindow:
             no_button.pack()
 
     def _confirmed(self, win):
-        clicked_yes = True
+        os.remove(USER_FILE_NAME)
+        os.remove(LIBRARY_FILE_NAME)
+        steam_info_win = SteamInfoGUI()
         win.destroy
 

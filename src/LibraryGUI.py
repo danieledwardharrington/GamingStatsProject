@@ -51,9 +51,3 @@ class LibraryGUI:
 
     def _delete_user(self, root):
         confirm_popup = PopupWindow("Are you sure?", True)
-
-        if confirm_popup.clicked_yes:
-            os.remove(USER_FILE_NAME)
-            os.remove(LIBRARY_FILE_NAME)
-            steam_info_win = SteamInfoGUI()
-            root.destroy()
