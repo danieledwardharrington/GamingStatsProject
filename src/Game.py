@@ -7,7 +7,7 @@ class Game:
     hours_played = 0.0
     rating = 0.0
 
-    def __init__(self, name, genre, minutes_played):
+    def __init__(self, name = "", genre = "", minutes_played = 0.0):
         self.name = name
         self.genre = genre
         self.minutes_played = minutes_played

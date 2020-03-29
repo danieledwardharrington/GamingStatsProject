@@ -17,18 +17,21 @@ class PopupWindow:
         label.pack(side = "top", fill = "x", pady = 10)
 
         #Popup to confirm deletion of user info/Steam library files
-        if not delete_user:
-            okay_button = ttk.Button(win, text = "Okay", command = win.destroy)
-            okay_button.pack()
-        else:
-            yes_button = ttk.Button(win, text = "Yes", command = _confirmed(win))
+        if delete_user:
+            yes_button = Button(win, text = "Yes", width = 8, command = lambda:  self._confirmed(win))
+            yes_button.pack()
 
-            no_button = ttk.Button(win, Text = "No", command = win.destroy)
+            no_button = Button(win, text = "No", width = 8, command = win.destroy)
             no_button.pack()
+        elif not delete_user:
+            okay_button = Button(win, text = "Okay", command = win.destroy)
+            okay_button.pack()
+
 
     def _confirmed(self, win):
         os.remove(USER_FILE_NAME)
         os.remove(LIBRARY_FILE_NAME)
-        steam_info_win = SteamInfoGUI()
-        win.destroy
+        from SteamInfoGUI import SteamInfoGUI
+        SteamInfoGUI()
+        win.destroy()
 

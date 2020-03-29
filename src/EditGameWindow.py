@@ -40,7 +40,7 @@ class EditGameWindow:
         self.new_genre = genre_entry.get().strip()
         self.new_rating_str = rating_entry.get().strip()
 
-        new_rating = round(float(new_rating_str), 1) #rounding the rating to the nearest 10th place
+        new_rating = round(float(self.new_rating_str), 1) #rounding the rating to the nearest 10th place
 
         game.genre = self.new_genre
         game.rating = new_rating

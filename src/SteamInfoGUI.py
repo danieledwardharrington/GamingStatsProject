@@ -11,6 +11,7 @@ from UserFile import *
 from PopupWindow import *
 from Game import *
 from operator import attrgetter
+from LibraryGUI import *
 
 class SteamInfoGUI:
 
@@ -32,7 +33,7 @@ class SteamInfoGUI:
         id_entry = Entry(root, width = 25, font = LARGE_FONT)
         id_entry.grid(row = 1, column = 1)
 
-        submit_button = Button(root, text = "SUBMIT", borderwidth = 5, width = 34, font = NORM_FONT, command = lambda:  self._get_input(key_entry, id_entry))
+        submit_button = Button(root, text = "SUBMIT", borderwidth = 5, width = 34, font = NORM_FONT, command = lambda: self._get_input(key_entry, id_entry, root))
         submit_button.grid(row = 2, column = 0)
 
         #This button forwards the user to the GitHub repo for more information
@@ -57,7 +58,7 @@ class SteamInfoGUI:
         except:
             return False
 
-    def _get_input(self, key_entry, id_entry):
+    def _get_input(self, key_entry, id_entry, root):
         
         self.user_id_number = id_entry.get().strip()
         print("Steam user ID: " + self.user_id_number)
@@ -71,7 +72,7 @@ class SteamInfoGUI:
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
                 
-                #if all good, saving user info to txt file
+                #if all good, saving user info to file
                 userInfoFile = UserFile(self.user_api_key, self.user_id_number)
                 userInfoFile.create_user_file()
                 
@@ -96,9 +97,13 @@ class SteamInfoGUI:
                     if game_minutes > 0:
                         game_list.append(game)
 
-                    game_list.sort(key = attrgetter("sort_name"), reverse = False)
+                game_list.sort(key = attrgetter("sort_name"), reverse = False)
                     
-                    userInfoFile.create_library_file(game_list)
+                userInfoFile.create_library_file(game_list)
+
+                LibraryGUI()
+
+                root.destroy()
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)

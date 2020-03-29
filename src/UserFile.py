@@ -14,18 +14,20 @@ class UserFile:
     def create_user_file(self):
         try:
             user = SteamUser(self.user_id, self.user_api)
-            file_handler = open(USER_FILE_NAME, "w+")
+            file_handler = open(USER_FILE_NAME, "wb")
             pickle.dump(user, file_handler)
             file_handler.close()
-        except:
+        except Exception as e:
             print(USER_FILE_EXCEPTION)
+            print(e)
             file_popup = PopupWindow(USER_FILE_POPUP)
 
     def create_library_file(self, game_list):
         try:
-            file_handler = open(LIBRARY_FILE_NAME, "w+")
+            file_handler = open(LIBRARY_FILE_NAME, "wb")
             pickle.dump(game_list, file_handler)
             file_handler.close()
-        except:
+        except Exception as e:
             print(LIBRARY_FILE_EXCEPTION)
+            print(e)
             library_popup = PopupWindow(LIBRARY_FILE_POPUP)
