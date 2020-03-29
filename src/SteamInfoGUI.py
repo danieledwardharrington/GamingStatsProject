@@ -46,16 +46,18 @@ class SteamInfoGUI:
     def _send_to_repo(self):
         try:
             webbrowser.open_new_tab(REPO_URL)
-        except:
+        except Exception as e:
             browser_popup = PopupWindow(BROWSER_POPUP)
             print(BROWSER_EXCEPTION)
+            print(e)
 
     def _check_connection(self):
         host = "http://google.com"
         try:
             urllib.request.urlopen(host)
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def _get_input(self, key_entry, id_entry, root):
@@ -101,9 +103,9 @@ class SteamInfoGUI:
                     
                 userInfoFile.create_library_file(game_list)
 
-                LibraryGUI()
-
                 root.destroy()
+
+                LibraryGUI()
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)

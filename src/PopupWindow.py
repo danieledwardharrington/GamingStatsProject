@@ -7,7 +7,7 @@ import os
 
 class PopupWindow:
 
-    def __init__(self, message, delete_user = False):
+    def __init__(self, message, delete_user = False, libWin = None):
         
         #General error/exception popup
         win = tkinter.Toplevel()
@@ -18,7 +18,7 @@ class PopupWindow:
 
         #Popup to confirm deletion of user info/Steam library files
         if delete_user:
-            yes_button = Button(win, text = "Yes", width = 8, command = lambda:  self._confirmed(win))
+            yes_button = Button(win, text = "Yes", width = 8, command = lambda:  self._confirmed(win, libWin))
             yes_button.pack()
 
             no_button = Button(win, text = "No", width = 8, command = win.destroy)
@@ -28,10 +28,11 @@ class PopupWindow:
             okay_button.pack()
 
 
-    def _confirmed(self, win):
+    def _confirmed(self, win, libWin):
         os.remove(USER_FILE_NAME)
         os.remove(LIBRARY_FILE_NAME)
         from SteamInfoGUI import SteamInfoGUI
-        SteamInfoGUI()
         win.destroy()
+        libWin.destroy()
+        SteamInfoGUI()
 
