@@ -3,13 +3,15 @@ class Game:
     name = ""
     sort_name = "" #This is specifically for sorting the list alphabetically, trimming "the" from the beginning of any titles
     genre = ""
+    steam_app_id = ""
     minutes_played = 0.0
     hours_played = 0.0
     rating = 0.0
 
-    def __init__(self, name = "", genre = "", minutes_played = 0.0):
+    def __init__(self, name = "", genre = "", steam_app_id = "", minutes_played = 0.0):
         self.name = name
         self.genre = genre
+        self.steam_app_id = steam_app_id
         self.minutes_played = minutes_played
         self.hours_played = minutes_played / 60
         

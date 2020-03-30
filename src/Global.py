@@ -4,7 +4,7 @@ import os
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 
 #URL for Steam
-STEAM_URL = "https://store.steampowered.com/"
+STEAM_APP_URL = "https://store.steampowered.com/app/"
 
 #My info for testing
 api_key = os.environ.get("STEAM_API_KEY")

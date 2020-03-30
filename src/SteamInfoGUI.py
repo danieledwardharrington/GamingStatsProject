@@ -12,6 +12,7 @@ from PopupWindow import *
 from Game import *
 from operator import attrgetter
 from LibraryGUI import *
+from SteamBot import *
 
 class SteamInfoGUI:
 
@@ -87,13 +88,13 @@ class SteamInfoGUI:
                 
                 #getting list of game names
                 for item in ownedGamesRes["response"]["games"]:
-                    print(item["name"])
                     game_name = item["name"]
                     game_minutes = item["playtime_forever"]
                     game_genre = "" #scraping this from Steam
+                    game_app_id = item["appid"]
+                    print(item["name"] + " " + item["appid"])
 
-
-                    game = Game(game_name, game_genre, game_minutes)
+                    game = Game(game_name, game_genre, game_app_id, game_minutes)
 
                     #only adding to the list if the user has actually played the game
                     if game_minutes > 0:
@@ -112,4 +113,7 @@ class SteamInfoGUI:
         else:
             print(NO_NETWORK)
             network_popup = PopupWindow(NO_NETWORK)
+
+    def _get_genre(self, game):
+        steam_scraper = SteamBot(game)
     

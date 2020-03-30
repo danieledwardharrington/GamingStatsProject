@@ -19,24 +19,28 @@ class LibraryGUI:
         root.title("Gaming Stats - Library")
         root.geometry("600x600")
 
-        frame = Frame(root, borderwidth = 1)
-        frame.pack()
+        frame = Frame(root, borderwidth = 1, height = 300, width = 300)
+        frame.pack(fill = BOTH, expand = True)
+        game_scrollbar = Scrollbar(frame)
+        game_scrollbar.pack(side = RIGHT, fill = Y)
 
         game_box = Listbox(frame, selectmode = SINGLE, borderwidth = 0)
         for game in self.game_list:
              game_box.insert(END, game.name)
-        game_box.pack(fill = "x")
+        game_box.pack(fill = BOTH, expand = True)
         
-        game_scrollbar = Scrollbar(frame, orient = "vertical")
+
         game_box.config(yscrollcommand = game_scrollbar.set)
         game_scrollbar.config(command = game_box.yview)
-        game_scrollbar.pack(side = "right", fill = "y")
 
         edit_button = Button(root, text = "Edit rating/genre", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._edit_game(game_box))
         edit_button.pack()
 
         delete_info_button = Button(root, text = "Delete user", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._delete_user(root))
         delete_info_button.pack()
+
+        update_library_button = Button(root, text = "Update library", font = NORM_FONT, width = 20, borderwidth = 5)
+        update_library_button.pack()
         
         root.mainloop()
 
