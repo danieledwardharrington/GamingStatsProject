@@ -27,7 +27,7 @@ class EditGameWindow:
         rating_entry.insert(END, str(game.rating)) #inserting the current rating (0.0 if not rated yet)
         rating_entry.grid(row = 1, column = 1)
 
-        save_button = Button(win, text = "Save", borderwidth = 5, width = 10, font = NORM_FONT, padx = 15, pady = 10, command = self._edit_info(game, genre_entry, rating_entry, game_list))
+        save_button = Button(win, text = "Save", borderwidth = 5, width = 10, font = NORM_FONT, padx = 15, pady = 10, command = lambda: self._edit_info(game, genre_entry, rating_entry, game_list, win))
         save_button.grid(row = 2, column = 1)
 
         cancel_button = Button(win, text = "Cancel", borderwidth = 5, width = 10, font = NORM_FONT, padx = 15, pady = 10, command = win.destroy)
@@ -36,7 +36,7 @@ class EditGameWindow:
         win.mainloop()
 
 
-    def _edit_info(self, game, genre_entry, rating_entry, game_list):
+    def _edit_info(self, game, genre_entry, rating_entry, game_list, win):
         self.new_genre = genre_entry.get().strip()
         self.new_rating_str = rating_entry.get().strip()
 
@@ -47,3 +47,5 @@ class EditGameWindow:
 
         new_library_file = UserFile()
         new_library_file.create_library_file(game_list)
+
+        win.destroy()

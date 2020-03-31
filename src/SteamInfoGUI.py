@@ -69,16 +69,14 @@ class SteamInfoGUI:
         print("Steam user API key: " + self.user_api_key)
 
         if self._check_connection():
+            
             ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + api_key + "&include_appinfo=true" + "&steamid=" + steam_id + "&format=json")
             print(type(ownedGamesReq))
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
                 
-                #if all good, saving user info to file
-                userInfoFile = UserFile(self.user_api_key, self.user_id_number)
-                userInfoFile.create_user_file()
-                
+                #if all good, starting everything and saving user info and library files
                 print(vars(ownedGamesReq))
                 print(type(ownedGamesReq))
                 ownedGamesRes = ownedGamesReq.json()
@@ -90,17 +88,26 @@ class SteamInfoGUI:
                 for item in ownedGamesRes["response"]["games"]:
                     game_name = item["name"]
                     game_minutes = item["playtime_forever"]
-                    game_genre = "" #scraping this from Steam
                     game_app_id = item["appid"]
-                    print(item["name"] + " " + item["appid"])
+                    game_genre = ""
 
                     game = Game(game_name, game_genre, game_app_id, game_minutes)
+
+                    self._set_genre(game) #scraping this from Steam
 
                     #only adding to the list if the user has actually played the game
                     if game_minutes > 0:
                         game_list.append(game)
 
+                        print(game.name)
+                        print(game.steam_app_id)
+                        print(game.genre)
+
                 game_list.sort(key = attrgetter("sort_name"), reverse = False)
+
+                #saving user files once everything has been done successfully
+                userInfoFile = UserFile(self.user_api_key, self.user_id_number)
+                userInfoFile.create_user_file()
                     
                 userInfoFile.create_library_file(game_list)
 
@@ -114,6 +121,6 @@ class SteamInfoGUI:
             print(NO_NETWORK)
             network_popup = PopupWindow(NO_NETWORK)
 
-    def _get_genre(self, game):
+    def _set_genre(self, game):
         steam_scraper = SteamBot(game)
     

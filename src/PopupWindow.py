@@ -13,8 +13,8 @@ class PopupWindow:
         win = tkinter.Toplevel()
         win.wm_title("Alert!")
         win.geometry("200x100")
-        label = tkinter.Label(win, text = message)
-        label.pack(side = "top", fill = "x", pady = 10)
+        message_label = tkinter.Label(win, text = message)
+        message_label.pack(side = "top", fill = "x", pady = 10)
 
         #Popup to confirm deletion of user info/Steam library files
         if delete_user:
