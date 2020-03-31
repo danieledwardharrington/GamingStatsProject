@@ -66,4 +66,4 @@ class LibraryGUI:
         edit_game_window = EditGameWindow(game_to_edit, self.game_list)
 
     def _delete_user(self, root):
-        confirm_popup = PopupWindow("Are you sure?", True, root)
+        confirm_popup = PopupWindow("Are you sure?", "delete_user", root)

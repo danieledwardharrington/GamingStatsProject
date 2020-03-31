@@ -7,7 +7,7 @@ import os
 
 class PopupWindow:
 
-    def __init__(self, message, delete_user = False, libWin = None):
+    def __init__(self, message, alert_type = "exception", libWin = None):
         
         #General error/exception popup
         win = tkinter.Toplevel()
@@ -17,15 +17,17 @@ class PopupWindow:
         message_label.pack(side = "top", fill = "x", pady = 10)
 
         #Popup to confirm deletion of user info/Steam library files
-        if delete_user:
+        if alert_type == "delete_user":
             yes_button = Button(win, text = "Yes", width = 8, command = lambda:  self._confirmed(win, libWin))
             yes_button.pack()
 
             no_button = Button(win, text = "No", width = 8, command = win.destroy)
             no_button.pack()
-        elif not delete_user:
+        elif alert_type == "exception":
             okay_button = Button(win, text = "Okay", command = win.destroy)
             okay_button.pack()
+        else:
+            pass
 
 
     def _confirmed(self, win, libWin):

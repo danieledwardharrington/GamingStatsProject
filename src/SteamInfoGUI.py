@@ -13,6 +13,7 @@ from Game import *
 from operator import attrgetter
 from LibraryGUI import *
 from SteamBot import *
+import threading
 
 class SteamInfoGUI:
 
@@ -75,7 +76,7 @@ class SteamInfoGUI:
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
-                
+
                 #if all good, starting everything and saving user info and library files
                 print(vars(ownedGamesReq))
                 print(type(ownedGamesReq))
@@ -83,25 +84,36 @@ class SteamInfoGUI:
                 print(type(ownedGamesRes))
 
                 game_list = []
-                
-                #getting list of game names
-                for item in ownedGamesRes["response"]["games"]:
-                    game_name = item["name"]
-                    game_minutes = item["playtime_forever"]
-                    game_app_id = item["appid"]
-                    game_genre = ""
+                threads = []
 
-                    game = Game(game_name, game_genre, game_app_id, game_minutes)
+                list_length = len(ownedGamesRes["response"]["games"])
 
-                    self._set_genre(game) #scraping this from Steam
+                for _ in range(list_length):
+                    t = threading.Thread(target = self._get_steam_game_info, args = [game_list, ownedGamesRes])
+                    t.start()
+                    threads.append(t)
 
-                    #only adding to the list if the user has actually played the game
-                    if game_minutes > 0:
-                        game_list.append(game)
+                for thread in threads:
+                    thread.join()
 
-                        print(game.name)
-                        print(game.steam_app_id)
-                        print(game.genre)
+                # #getting list of game names
+                # for item in ownedGamesRes["response"]["games"]:
+                #     game_name = item["name"]
+                #     game_minutes = item["playtime_forever"]
+                #     game_app_id = item["appid"]
+                #     game_genre = ""
+
+                #     game = Game(game_name, game_genre, game_app_id, game_minutes)
+
+                #     self._set_genre(game) #scraping this from Steam
+
+                #     #only adding to the list if the user has actually played the game
+                #     if game_minutes > 0:
+                #         game_list.append(game)
+
+                #         print(game.name)
+                #         print(game.steam_app_id)
+                #         print(game.genre)
 
                 game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
@@ -123,4 +135,22 @@ class SteamInfoGUI:
 
     def _set_genre(self, game):
         steam_scraper = SteamBot(game)
-    
+
+    def _get_steam_game_info(self, game_list, ownedGamesRes):
+        for item in ownedGamesRes["response"]["games"]:
+            game_name = item["name"]
+            game_minutes = item["playtime_forever"]
+            game_app_id = item["appid"]
+            game_genre = ""
+
+            game = Game(game_name, game_genre, game_app_id, game_minutes)
+
+            self._set_genre(game) #scraping this from Steam
+
+            #only adding to the list if the user has actually played the game
+            if game_minutes > 0:
+                game_list.append(game)
+
+                print(game.name)
+                print(game.steam_app_id)
+                print(game.genre)
