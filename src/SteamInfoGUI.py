@@ -84,36 +84,28 @@ class SteamInfoGUI:
                 print(type(ownedGamesRes))
 
                 game_list = []
-                threads = []
-
-                list_length = len(ownedGamesRes["response"]["games"])
-
-                for _ in range(list_length):
-                    t = threading.Thread(target = self._get_steam_game_info, args = [game_list, ownedGamesRes])
-                    t.start()
-                    threads.append(t)
-
-                for thread in threads:
-                    thread.join()
 
                 # #getting list of game names
-                # for item in ownedGamesRes["response"]["games"]:
-                #     game_name = item["name"]
-                #     game_minutes = item["playtime_forever"]
-                #     game_app_id = item["appid"]
-                #     game_genre = ""
+                for item in ownedGamesRes["response"]["games"]:
+                    game_minutes = item["playtime_forever"]
 
-                #     game = Game(game_name, game_genre, game_app_id, game_minutes)
+                    #only adding to the list if the user has actually played the game
+                    if game_minutes > 0:
+                        game_name = item["name"]
+                        game_app_id = item["appid"]
+                        game_genre = ""
 
-                #     self._set_genre(game) #scraping this from Steam
+                        game = Game(game_name, game_genre, game_app_id, game_minutes)
 
-                #     #only adding to the list if the user has actually played the game
-                #     if game_minutes > 0:
-                #         game_list.append(game)
+                        self._set_genre(game) #scraping this from Steam
 
-                #         print(game.name)
-                #         print(game.steam_app_id)
-                #         print(game.genre)
+                        #only adding to the list if the user has actually played the game
+                        if game_minutes > 0:
+                            game_list.append(game)
+
+                            print(game.name)
+                            print(game.steam_app_id)
+                            print(game.genre)
 
                 game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
