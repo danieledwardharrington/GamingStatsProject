@@ -39,9 +39,12 @@ class LibraryGUI:
         delete_info_button = Button(root, text = "Delete user", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._delete_user(root))
         delete_info_button.pack()
 
-        update_library_button = Button(root, text = "Update library", font = NORM_FONT, width = 20, borderwidth = 5)
+        update_library_button = Button(root, text = "Update library", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._update_library(root))
         update_library_button.pack()
         
+        summary_button = Button(root, text = "Library summary", font = NORM_FONT, width = 20, borderwidth = 5)
+        summary_button.pack()
+
         root.mainloop()
 
     #loading data from the file
@@ -67,3 +70,107 @@ class LibraryGUI:
 
     def _delete_user(self, root):
         confirm_popup = PopupWindow("Are you sure?", "delete_user", root)
+
+    def _update_library(self, root):
+
+        pickle_in = open(USER_FILE_NAME, "rb")
+        user = pickle.load(pickle_in)
+        
+        user_id_number = user.user_id.strip()
+        print("Steam user ID: " + self.user_id_number)
+        user_api_key = user.user_api.get().strip()
+        print("Steam user API key: " + self.user_api_key)
+
+        if self._check_connection():
+            
+            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + user_api_key + "&include_appinfo=true" + "&steamid=" + user_id_number + "&format=json")
+            print(type(ownedGamesReq))
+            
+            #checking for good response from Steam
+            if(ownedGamesReq.status_code == 200):
+                start = time.time()
+                print("-----------------------------")
+                print("Job start: " + str(start))
+                print("-----------------------------")
+                #if all good, starting everything and saving user info and library files
+                print(vars(ownedGamesReq))
+                print(type(ownedGamesReq))
+                ownedGamesRes = ownedGamesReq.json()
+                print(type(ownedGamesRes))
+
+                game_list = []
+                print(type(game_list))
+                for game in ownedGamesRes["response"]["games"]:
+                    if game["playtime_forever"] > 0:
+                        game_minutes = game["playtime_forever"]
+                        game_name = game["name"]
+                        game_app_id = game["appid"]
+                        game_genre = ""
+                        new_game = Game(game_name, game_genre, game_app_id, game_minutes)
+                        game_list.append(new_game)
+                print("Game list done")
+                print(type(game_list))
+
+                with concurrent.futures.ProcessPoolExecutor() as executor:
+                    result = executor.map(self._set_genre, game_list)
+                result_list = list(result)
+                for i  in result_list:
+                    print(str(i))
+
+                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
+                game_list.sort(key = attrgetter("sort_name"), reverse = False)
+
+                #basically just assigning the genres from the futures result to the actual games in the games_list
+                for game in game_list:
+                    for genre in result_list:
+                        if game.name in genre:
+                            game.genre = genre.replace(game.name, "")
+
+                for game in game_list:
+                    print(game.name)
+                    print(game.steam_app_id)
+                    print(game.genre)
+                    
+                user.create_library_file(game_list)
+
+                root.destroy()
+
+                print("-----------------------------")
+                end = time.time()
+                print("Job end: " + str(end))
+                print("Job took: " + str(end - start))
+                print("-----------------------------")
+
+                LibraryGUI()
+
+            else:
+                steam_popup = PopupWindow(STEAM_POPUP)
+                print(STEAM_EXCEPTION)
+        else:
+            print(NO_NETWORK)
+            network_popup = PopupWindow(NO_NETWORK)
+
+    def _set_genre(self, game):
+        steam_cookies = {'birthtime': '283993201', 'mature_content': '1'}
+        sauce = requests.get(STEAM_APP_URL + str(game.steam_app_id), cookies = steam_cookies)
+        soup = bs4.BeautifulSoup(sauce.content, "lxml")
+
+        genre = ""
+        for a in soup.find_all("a", class_ = "app_tag"):
+            if genre == "":
+                genre = str(a.text.strip())
+            else:
+                genre = genre + ", " + str(a.text.strip())
+
+        #I'm adding the name of the game to the beginning of the string here so that later, I can easily assign the genre to the actual game in the game_list
+        return_str = game.name + genre
+        return return_str
+
+    def _check_connection(self):
+        host = "http://google.com"
+        try:
+            urllib.request.urlopen(host)
+            return True
+        except Exception as e:
+            print(e)
+            return False

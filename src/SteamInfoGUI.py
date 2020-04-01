@@ -1,6 +1,7 @@
-import webbrowser
 import tkinter
+import webbrowser
 import requests
+import bs4
 import json
 import os
 import urllib.request
@@ -13,7 +14,8 @@ from Game import *
 from operator import attrgetter
 from LibraryGUI import *
 from SteamBot import *
-import threading
+import concurrent.futures
+import time
 
 class SteamInfoGUI:
 
@@ -34,6 +36,10 @@ class SteamInfoGUI:
         id_label.grid(row = 1, column = 0)
         id_entry = Entry(root, width = 25, font = LARGE_FONT)
         id_entry.grid(row = 1, column = 1)
+        wait_label = Label(root, text = "After clicking submit, please wait. It may take a few minutes.", font = LARGE_FONT, anchor = W, width = 50, pady = 10)
+        wait_label.grid(row = 4, column = 1)
+        disconnect_label = Label(root, text = "Do not close or disconnect from the network.", font = LARGE_FONT, anchor = W, width = 50, pady = 10)
+        disconnect_label.grid(row = 5, column = 1)
 
         submit_button = Button(root, text = "SUBMIT", borderwidth = 5, width = 34, font = NORM_FONT, command = lambda: self._get_input(key_entry, id_entry, root))
         submit_button.grid(row = 2, column = 0)
@@ -43,6 +49,7 @@ class SteamInfoGUI:
         instructions_button.grid(row = 3, column = 0)
 
         #root.iconbitmap()
+        print("Steam info gui loaded")
         root.mainloop()
 
     def _send_to_repo(self):
@@ -76,7 +83,10 @@ class SteamInfoGUI:
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
-
+                start = time.time()
+                print("-----------------------------")
+                print("Job start: " + str(start))
+                print("-----------------------------")
                 #if all good, starting everything and saving user info and library files
                 print(vars(ownedGamesReq))
                 print(type(ownedGamesReq))
@@ -84,30 +94,38 @@ class SteamInfoGUI:
                 print(type(ownedGamesRes))
 
                 game_list = []
-
-                # #getting list of game names
-                for item in ownedGamesRes["response"]["games"]:
-                    game_minutes = item["playtime_forever"]
-
-                    #only adding to the list if the user has actually played the game
-                    if game_minutes > 0:
-                        game_name = item["name"]
-                        game_app_id = item["appid"]
+                print(type(game_list))
+                for game in ownedGamesRes["response"]["games"]:
+                    if game["playtime_forever"] > 0:
+                        game_minutes = game["playtime_forever"]
+                        game_name = game["name"]
+                        game_app_id = game["appid"]
                         game_genre = ""
+                        new_game = Game(game_name, game_genre, game_app_id, game_minutes)
+                        game_list.append(new_game)
+                print("Game list done")
+                print(type(game_list))
 
-                        game = Game(game_name, game_genre, game_app_id, game_minutes)
+                with concurrent.futures.ProcessPoolExecutor() as executor:
+                    result = executor.map(self._set_genre, game_list)
+                result_list = list(result)
+                for i  in result_list:
+                    print(type(i))
+                    print(str(i))
 
-                        self._set_genre(game) #scraping this from Steam
-
-                        #only adding to the list if the user has actually played the game
-                        if game_minutes > 0:
-                            game_list.append(game)
-
-                            print(game.name)
-                            print(game.steam_app_id)
-                            print(game.genre)
-
+                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
                 game_list.sort(key = attrgetter("sort_name"), reverse = False)
+
+                #basically just assigning the genres from the futures result to the actual games in the games_list
+                for game in game_list:
+                    for genre in result_list:
+                        if game.name in genre:
+                            game.genre = genre.replace(game.name, "")
+
+                for game in game_list:
+                    print(game.name)
+                    print(game.steam_app_id)
+                    print(game.genre)
 
                 #saving user files once everything has been done successfully
                 userInfoFile = UserFile(self.user_api_key, self.user_id_number)
@@ -117,7 +135,14 @@ class SteamInfoGUI:
 
                 root.destroy()
 
+                print("-----------------------------")
+                end = time.time()
+                print("Job end: " + str(end))
+                print("Job took: " + str(end - start))
+                print("-----------------------------")
+
                 LibraryGUI()
+
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)
@@ -126,23 +151,17 @@ class SteamInfoGUI:
             network_popup = PopupWindow(NO_NETWORK)
 
     def _set_genre(self, game):
-        steam_scraper = SteamBot(game)
+        steam_cookies = {'birthtime': '283993201', 'mature_content': '1'}
+        sauce = requests.get(STEAM_APP_URL + str(game.steam_app_id), cookies = steam_cookies)
+        soup = bs4.BeautifulSoup(sauce.content, "lxml")
 
-    def _get_steam_game_info(self, game_list, ownedGamesRes):
-        for item in ownedGamesRes["response"]["games"]:
-            game_name = item["name"]
-            game_minutes = item["playtime_forever"]
-            game_app_id = item["appid"]
-            game_genre = ""
+        genre = ""
+        for a in soup.find_all("a", class_ = "app_tag"):
+            if genre == "":
+                genre = str(a.text.strip())
+            else:
+                genre = genre + ", " + str(a.text.strip())
 
-            game = Game(game_name, game_genre, game_app_id, game_minutes)
-
-            self._set_genre(game) #scraping this from Steam
-
-            #only adding to the list if the user has actually played the game
-            if game_minutes > 0:
-                game_list.append(game)
-
-                print(game.name)
-                print(game.steam_app_id)
-                print(game.genre)
+        #I'm adding the name of the game to the beginning of the string here so that later, I can easily assign the genre to the actual game in the game_list
+        return_str = game.name + genre
+        return return_str
