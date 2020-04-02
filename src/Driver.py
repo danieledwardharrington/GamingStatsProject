@@ -2,8 +2,6 @@
 # Author: Daniel Harrington
 
 import requests
-from steamwebapi import profiles
-from steamwebapi.api import ISteamUser, ISteamUserStats, IPlayerService
 from os import *
 import json
 from SteamInfoGUI import *
