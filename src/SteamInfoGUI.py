@@ -26,6 +26,7 @@ class SteamInfoGUI:
         root = tkinter.Tk()
 
         root.title("Gaming Stats")
+        root.iconbitmap("images/gspIconTransparent.ico")
         root.geometry("1200x700")
 
         key_label = Label(root, text = "Enter your Steam API key", font = LARGE_FONT, anchor = W, width = 25, pady = 10)
@@ -78,7 +79,7 @@ class SteamInfoGUI:
 
         if self._check_connection():
             
-            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + api_key + "&include_appinfo=true" + "&steamid=" + steam_id + "&format=json")
+            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.user_api_key + "&include_appinfo=true" + "&steamid=" + self.user_id_number + "&format=json")
             print(type(ownedGamesReq))
             
             #checking for good response from Steam

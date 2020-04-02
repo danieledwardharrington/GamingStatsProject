@@ -6,6 +6,8 @@ import pickle
 from EditGameWindow import *
 import os
 from SteamInfoGUI import *
+import time
+from LibrarySummary import *
 
 class LibraryGUI:
 
@@ -18,6 +20,7 @@ class LibraryGUI:
 
         root.title("Gaming Stats - Library")
         root.geometry("600x600")
+        root.iconbitmap("images/gspIconTransparent.ico")
 
         frame = Frame(root, borderwidth = 1, height = 300, width = 300)
         frame.pack(fill = BOTH, expand = True)
@@ -42,7 +45,7 @@ class LibraryGUI:
         update_library_button = Button(root, text = "Update library", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._update_library(root))
         update_library_button.pack()
         
-        summary_button = Button(root, text = "Library summary", font = NORM_FONT, width = 20, borderwidth = 5)
+        summary_button = Button(root, text = "Library summary", font = NORM_FONT, width = 20, borderwidth = 5, command = lambda: self._show_library_summary(self.game_list))
         summary_button.pack()
 
         root.mainloop()
@@ -71,15 +74,16 @@ class LibraryGUI:
     def _delete_user(self, root):
         confirm_popup = PopupWindow("Are you sure?", "delete_user", root)
 
+    #modified version of the _get_input method from the SteamInfoGUI class so that the user's genre and rating changes remain intact
     def _update_library(self, root):
 
         pickle_in = open(USER_FILE_NAME, "rb")
         user = pickle.load(pickle_in)
         
-        user_id_number = user.user_id.strip()
-        print("Steam user ID: " + self.user_id_number)
-        user_api_key = user.user_api.get().strip()
-        print("Steam user API key: " + self.user_api_key)
+        user_id_number = user.steam_user_id.strip()
+        print("Steam user ID: " + user_id_number)
+        user_api_key = user.steam_user_api.get().strip()
+        print("Steam user API key: " + user_api_key)
 
         if self._check_connection():
             
@@ -98,7 +102,8 @@ class LibraryGUI:
                 ownedGamesRes = ownedGamesReq.json()
                 print(type(ownedGamesRes))
 
-                game_list = []
+                name_list = []
+                new_game_list = []
                 print(type(game_list))
                 for game in ownedGamesRes["response"]["games"]:
                     if game["playtime_forever"] > 0:
@@ -107,31 +112,34 @@ class LibraryGUI:
                         game_app_id = game["appid"]
                         game_genre = ""
                         new_game = Game(game_name, game_genre, game_app_id, game_minutes)
-                        game_list.append(new_game)
-                print("Game list done")
-                print(type(game_list))
+                        for item in self.game_list:
+                            name_list.append(item.name)
+                        if game_name not in name_list: 
+                            new_game_list.append(new_game)
+                print("New game list done")
 
                 with concurrent.futures.ProcessPoolExecutor() as executor:
-                    result = executor.map(self._set_genre, game_list)
+                    result = executor.map(self._set_genre, new_game_list)
                 result_list = list(result)
                 for i  in result_list:
                     print(str(i))
 
-                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
-                game_list.sort(key = attrgetter("sort_name"), reverse = False)
-
                 #basically just assigning the genres from the futures result to the actual games in the games_list
-                for game in game_list:
+                for game in new_game_list:
                     for genre in result_list:
                         if game.name in genre:
                             game.genre = genre.replace(game.name, "")
+
+                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles
+                updated_game_list = self.game_list + new_game_list   
+                updated_game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
                 for game in game_list:
                     print(game.name)
                     print(game.steam_app_id)
                     print(game.genre)
                     
-                user.create_library_file(game_list)
+                user.create_library_file(updated_game_list)
 
                 root.destroy()
 
@@ -174,3 +182,6 @@ class LibraryGUI:
         except Exception as e:
             print(e)
             return False
+
+    def _show_library_summary(self, game_list):
+        LibrarySummary(game_list)

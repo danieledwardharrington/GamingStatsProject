@@ -12,6 +12,7 @@ class PopupWindow:
         #General error/exception popup
         win = tkinter.Toplevel()
         win.wm_title("Alert!")
+        win.wm_iconbitmap("images/gspIconTransparent.ico")
         win.geometry("200x100")
         message_label = tkinter.Label(win, text = message)
         message_label.pack(side = "top", fill = "x", pady = 10)

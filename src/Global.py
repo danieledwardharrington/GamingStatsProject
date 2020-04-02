@@ -6,10 +6,6 @@ REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 #URL for Steam
 STEAM_APP_URL = "https://store.steampowered.com/app/"
 
-#My info for testing
-api_key = os.environ.get("STEAM_API_KEY")
-steam_id = "76561198069544896"
-
 #Fonts
 XLARGE_FONT = ("Helvetica", 16)
 LARGE_FONT = ("Helvetica", 14)
@@ -37,5 +33,5 @@ STEAM_SEARCH_BOX_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/d
 STEAM_SEARCH_BUTTON_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[9]/div[1]/form/div/a"
 
 #FIle names
-USER_FILE_NAME = "userInfo.dat"
-LIBRARY_FILE_NAME = "userLibrary.dat"
+USER_FILE_NAME = "usr/userInfo.dat"
+LIBRARY_FILE_NAME = "usr/userLibrary.dat"
