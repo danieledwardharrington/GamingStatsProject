@@ -13,7 +13,7 @@ class EditGameWindow:
     def __init__(self, game, game_list):
         win = tkinter.Tk()
         win.title(game.name)
-        root.iconbitmap("images/gspIconTransparent.ico")
+        win.iconbitmap("images/gspIconTransparent.ico")
         win.geometry("600x300")
 
         genre_label = Label(win, text = "Game genre", font = LARGE_FONT, anchor = W, width = 20, pady = 10)

@@ -79,7 +79,7 @@ class SteamInfoGUI:
 
         if self._check_connection():
             
-            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.user_api_key + "&include_appinfo=true" + "&steamid=" + self.user_id_number + "&format=json")
+            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.user_api_key + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.user_id_number + "&format=json")
             print(type(ownedGamesReq))
             
             #checking for good response from Steam

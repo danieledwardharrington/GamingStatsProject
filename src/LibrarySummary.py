@@ -75,6 +75,8 @@ class LibrarySummary:
             for item in sublist:
                 if item == ": The RevolutionAction":
                     item = "Action"
+                if item.startswith(" "):
+                    item = item[2:]
                 flat_genres.append(item)
         flat_genres = list(filter(None, flat_genres))
 
@@ -82,12 +84,17 @@ class LibrarySummary:
         for genre in flat_genres:
             print(genre)
         
-        print("Getting most prevalent genres and removing mode each iteration")
-        most = ""
+        print("------------------------------------------")
+        print("------------------------------------------")
+        freqs = Counter(flat_genres)
+        print(freqs)
+        print("------------------------------------------")
+        print("------------------------------------------")
+
+        count = freqs.most_common(5)
         for i in range(5):
-            most = statistics.mode(flat_genres)
-            top_five.append(most)
-            flat_genres = list(filter(lambda x: x != most, flat_genres))
+            top_five.append(count[i][0])
+        print(top_five)
 
         print("Top list completed - most prevalent genres")
         
@@ -105,41 +112,45 @@ class LibrarySummary:
         print("Top list completed - highest rated games")
         return top_five
 
-    def _calculate_highest_rated_genres(self, game_list):
-        print("Sorting game_list by rating (descending)")
-        game_list.sort(key = attrgetter("rating"), reverse = True)
+    # def _calculate_highest_rated_genres(self, game_list):
+    #     print("Sorting game_list by rating (descending)")
+    #     game_list.sort(key = attrgetter("rating"), reverse = True)
 
-        #creating smaller list of games to work with their genres
-        small_game_list = []
-        for i in range(5):
-            small_game_list.append(game_list[i])
+    #     #creating smaller list of games to work with their genres
+    #     small_game_list = []
+    #     for i in range(5):
+    #         small_game_list.append(game_list[i])
 
-        genre_list = []
-        top_five = []
-        for game in small_game_list:
-            game_genres = [game.genre.split(", ")]
-            genre_list.extend(game_genres)
-        genre_list = list(filter(None, genre_list))
-        flat_genres = []
-        for sublist in genre_list:
-            for item in sublist:
-                flat_genres.append(item)
-        flat_genres = list(filter(None, flat_genres))
+    #     genre_list = []
+    #     top_five = []
+    #     for game in small_game_list:
+    #         game_genres = [game.genre.split(", ")]
+    #         genre_list.extend(game_genres)
+    #     genre_list = list(filter(None, genre_list))
+    #     flat_genres = []
+    #     for sublist in genre_list:
+    #         for item in sublist:
+    #             if item == ": The RevolutionAction":
+    #                 item = "Action"
+    #             if item.startswith(" "):
+    #                 item = item[2:]
+    #             flat_genres.append(item)
+    #     flat_genres = list(filter(None, flat_genres))
 
-        print("Flat genre list completed")
-        for genre in flat_genres:
-            print(genre)
+    #     print("Flat genre list completed")
+    #     for genre in flat_genres:
+    #         print(genre)
         
-        print("Getting most prevalent genres and removing mode each iteration")
-        most = ""
-        for i in range(5):
-            most = statistics.mode(flat_genres)
-            top_five.append(most)
-            flat_genres = list(filter(lambda x: x != most, flat_genres))
+    #     print("Getting most prevalent genres and removing mode each iteration")
+    #     most = ""
+    #     for i in range(5):
+    #         most = statistics.mode(flat_genres)
+    #         top_five.append(most)
+    #         flat_genres = list(filter(lambda x: x != most, flat_genres))
 
-        print("Top list completed - highest rated genres")
+    #     print("Top list completed - highest rated genres")
         
-        return top_five
+    #     return top_five
 
     def _calculate_most_played_genres(self, game_list):
         print("Sorting game_list by minutes played (descending)")
@@ -159,19 +170,16 @@ class LibrarySummary:
         flat_genres = []
         for sublist in genre_list:
             for item in sublist:
+                if item == ": The RevolutionAction":
+                    item = "Action"
+                if item.startswith(" "):
+                    item = item[2:]
                 flat_genres.append(item)
         flat_genres = list(filter(None, flat_genres))
 
         print("Flat genre list completed")
         for genre in flat_genres:
             print(genre)
-        
-        # print("Getting most prevalent genres and removing mode each iteration")
-        # most = ""
-        # for i in range(5):
-        #     most = statistics.mode(flat_genres)
-        #     top_five.append(most)
-        #     flat_genres = list(filter(lambda x: x != most, flat_genres))
 
         print("------------------------------------------")
         print("------------------------------------------")
