@@ -7,6 +7,7 @@ import json
 from SteamInfoGUI import *
 from LibraryGUI import *
 from Global import *
+import multiprocessing
 
 
 def main():
@@ -22,4 +23,6 @@ def main():
         print("Library gui loaded")
 
 if __name__ == '__main__':
+    if sys.platform.startswith("win"):
+        multiprocessing.freeze_support()
     main()
