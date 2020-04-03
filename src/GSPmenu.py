@@ -10,12 +10,12 @@ class GSPmenu(Menu):
         gsp_menu = Menu(master)
         master.config(menu = gsp_menu)
 
-        file_menu = Menu(gsp_menu)
+        file_menu = Menu(gsp_menu, tearoff = False)
         file_menu.add_command(label = "Exit", command = master.destroy)
 
         gsp_menu.add_cascade(label = "File", menu = file_menu)
 
-        help_menu = Menu(gsp_menu)
+        help_menu = Menu(gsp_menu, tearoff = False)
         help_menu.add_command(label = "About", command = self._show_about)
 
         gsp_menu.add_cascade(label = "Help", menu = help_menu)
