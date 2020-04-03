@@ -10,7 +10,7 @@ class AboutWindow:
         root = tkinter.Tk()
         root.geometry("650x400")
         root.title("About")
-        root.iconbitmap("images/gspIconTransparent.ico")
+        root.iconbitmap("images/gspDesktop2.ico")
 
         parent_frame = Frame(root)
 

@@ -27,7 +27,7 @@ class SteamInfoGUI:
         root = tkinter.Tk()
 
         root.title("Gaming Stats")
-        root.iconbitmap("images/gspIconTransparent.ico")
+        root.iconbitmap("images/gspDesktop2.ico")
         root.geometry("1200x700")
         GSPmenu(root)
 

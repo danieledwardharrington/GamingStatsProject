@@ -22,7 +22,7 @@ class LibraryGUI:
 
         root.title("Gaming Stats - Library")
         root.geometry("600x600")
-        root.iconbitmap("images/gspIconTransparent.ico")
+        root.iconbitmap("images/gspDesktop2.ico")
         GSPmenu(root)
 
         frame = Frame(root, borderwidth = 1, height = 300, width = 300)
@@ -107,7 +107,7 @@ class LibraryGUI:
 
                 name_list = []
                 new_game_list = []
-                print(type(game_list))
+                print(type(new_game_list))
                 for game in ownedGamesRes["response"]["games"]:
                     if game["playtime_forever"] > 0:
                         game_minutes = game["playtime_forever"]
@@ -137,12 +137,13 @@ class LibraryGUI:
                 updated_game_list = self.game_list + new_game_list   
                 updated_game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
-                for game in game_list:
+                for game in new_game_list:
                     print(game.name)
                     print(game.steam_app_id)
                     print(game.genre)
                     
-                user.create_library_file(updated_game_list)
+                user_file = UserFile(user_api_key, user_id_number)
+                user_file.create_library_file(updated_game_list)
 
                 root.destroy()
 

@@ -14,7 +14,7 @@ class EditGameWindow:
     def __init__(self, game, game_list):
         win = tkinter.Tk()
         win.title(game.name)
-        win.iconbitmap("images/gspIconTransparent.ico")
+        win.iconbitmap("images/gspDesktop2.ico")
         win.geometry("600x300")
         GSPmenu(win)
 

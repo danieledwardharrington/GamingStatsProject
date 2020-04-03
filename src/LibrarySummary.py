@@ -13,7 +13,7 @@ class LibrarySummary:
     def __init__(self, game_list):
         root = tkinter.Tk()
         root.title("Library Summary")
-        root.iconbitmap("images/gspIconTransparent.ico")
+        root.iconbitmap("images/gspDesktop2.ico")
         root.geometry("900x500")
         GSPmenu(root)
 
