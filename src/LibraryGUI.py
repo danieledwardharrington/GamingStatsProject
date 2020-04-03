@@ -8,6 +8,8 @@ import os
 from SteamInfoGUI import *
 import time
 from LibrarySummary import *
+import concurrent.futures
+
 
 class LibraryGUI:
 
@@ -21,6 +23,7 @@ class LibraryGUI:
         root.title("Gaming Stats - Library")
         root.geometry("600x600")
         root.iconbitmap("images/gspIconTransparent.ico")
+        GSPmenu(root)
 
         frame = Frame(root, borderwidth = 1, height = 300, width = 300)
         frame.pack(fill = BOTH, expand = True)

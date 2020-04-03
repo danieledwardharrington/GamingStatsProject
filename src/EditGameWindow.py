@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from Game import *
 from UserFile import *
+from GSPmenu import *
 
 class EditGameWindow:
 
@@ -15,6 +16,7 @@ class EditGameWindow:
         win.title(game.name)
         win.iconbitmap("images/gspIconTransparent.ico")
         win.geometry("600x300")
+        GSPmenu(win)
 
         genre_label = Label(win, text = "Game genre", font = LARGE_FONT, anchor = W, width = 20, pady = 10)
         genre_label.grid(row = 0, column = 0)

@@ -5,6 +5,8 @@ from operator import attrgetter
 import statistics
 from collections import Counter
 from itertools import groupby
+from GSPmenu import *
+import concurrent.futures
 
 class LibrarySummary:
     
@@ -13,6 +15,7 @@ class LibrarySummary:
         root.title("Library Summary")
         root.iconbitmap("images/gspIconTransparent.ico")
         root.geometry("900x500")
+        GSPmenu(root)
 
         most_played_games_label = Label(root, text = "Most played games:", font = LARGE_FONT, anchor = W, width = 25, pady = 10)
         top_played_list = self._calculate_most_played_games(game_list)

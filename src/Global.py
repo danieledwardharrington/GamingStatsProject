@@ -5,6 +5,7 @@ REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 
 #URL for Steam
 STEAM_APP_URL = "https://store.steampowered.com/app/"
+GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
 
 #Fonts
 XLARGE_FONT = ("Helvetica", 16)

@@ -16,6 +16,7 @@ from LibraryGUI import *
 from SteamBot import *
 import concurrent.futures
 import time
+from GSPmenu import *
 
 class SteamInfoGUI:
 
@@ -28,6 +29,7 @@ class SteamInfoGUI:
         root.title("Gaming Stats")
         root.iconbitmap("images/gspIconTransparent.ico")
         root.geometry("1200x700")
+        GSPmenu(root)
 
         key_label = Label(root, text = "Enter your Steam API key", font = LARGE_FONT, anchor = W, width = 25, pady = 10)
         key_label.grid(row = 0, column = 0)
