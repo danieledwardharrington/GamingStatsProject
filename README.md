@@ -1,7 +1,8 @@
 # Gaming Stats Project
 A simple desktop app that gets your library from Steam and gives you detailed stats, including most played game, most played genre, as well as the ability to give ratings to games.
 ## Installation
-Will update when ready. Will only be available for Windows initially. Will work on the others.
+Version 1.0 Beta is available for download - Windows only:
+[Click here to download it from Google Drive](https://drive.google.com/open?id=1UaASimv3SGmKy6py3Gwuk60mpNwaUM5Q)
 ## Instructions for Obtaining a Steam API Key
 * Click this link:
 https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey
