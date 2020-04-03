@@ -85,7 +85,7 @@ class LibraryGUI:
         
         user_id_number = user.steam_user_id.strip()
         print("Steam user ID: " + user_id_number)
-        user_api_key = user.steam_user_api.get().strip()
+        user_api_key = user.steam_user_api.strip()
         print("Steam user API key: " + user_api_key)
 
         if self._check_connection():
