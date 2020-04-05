@@ -34,7 +34,7 @@ class SteamInfoGUI:
         master = QtWidgets.QMainWindow()
         master.setWindowIcon(QIcon("images/gspDesktop2.ico"))
         ui = SteamUI()
-        ui.setupUi(master)
+        ui.setup_Ui(master)
         master.show()
         sys.exit(app.exec_())
         

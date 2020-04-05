@@ -11,7 +11,8 @@ from UserFile import *
 from SteamBot import *
 
 class SteamUI(object):
-    def setupUi(self, master):
+
+    def setup_Ui(self, master):
         master.setObjectName("master")
         master.resize(600, 500)
         font = QtGui.QFont()

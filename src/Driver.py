@@ -15,8 +15,13 @@ def main():
     #their info in again
     if not os.path.exists(USER_FILE_NAME) and not os.path.exists(LIBRARY_FILE_NAME):
         print("Loading steam info gui")
-        SteamInfoGUI()
-        print("Steam info gui loaded")
+        app = QtWidgets.QApplication(sys.argv)
+        master = QtWidgets.QMainWindow()
+        master.setWindowIcon(QIcon("images/gspDesktop2.ico"))
+        ui = SteamUI()
+        ui.setup_Ui(master)
+        master.show()
+        sys.exit(app.exec_())
     else:
         print("Loading library gui")
         LibraryGUI()
