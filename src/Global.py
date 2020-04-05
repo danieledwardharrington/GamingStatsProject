@@ -8,11 +8,17 @@ STEAM_APP_URL = "https://store.steampowered.com/app/"
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
 
 #Fonts
-XLARGE_FONT = ("Helvetica", 16)
-LARGE_FONT = ("Helvetica", 14)
-NORM_FONT = ("Helvetica", 12)
-SMALL_FONT = ("Helvetica", 10)
-XSMALL_FONT = ("Helvetica", 8)
+FONT_NAME = "Segoe UI"
+XSMALL_FONT_POINT = 8
+SMALL_FONT_POINT = 10
+NORM_FONT_POINT = 12
+LARGE_FONT_POINT = 14
+XLARGE_FONT_POINT = 16
+XLARGE_FONT = ("Segoe UI", 16)
+LARGE_FONT = ("Segoe UI", 14)
+NORM_FONT = ("Segoe UI", 12)
+SMALL_FONT = ("Segoe UI", 10)
+XSMALL_FONT = ("Segoe UI", 8)
 
 #Exception strings
 BROWSER_EXCEPTION = "Exception opening browser"
@@ -36,3 +42,4 @@ STEAM_SEARCH_BUTTON_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2
 #FIle names
 USER_FILE_NAME = "usr/userInfo.dat"
 LIBRARY_FILE_NAME = "usr/userLibrary.dat"
+WIN_ICON = "images/gspDesktop2.ico"

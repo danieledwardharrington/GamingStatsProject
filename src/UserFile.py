@@ -4,18 +4,15 @@ import pickle
 
 class UserFile:
 
-    user_api = ""
-    user_id = ""
+    steam_user = SteamUser()
 
-    def __init__(self, user_api = "", user_id = ""):
-        self.user_api = user_api
-        self.user_id = user_id
+    def __init__(self, steam_user):
+        self.steam_user = steam_user
 
     def create_user_file(self):
         try:
-            user = SteamUser(self.user_id, self.user_api)
             file_handler = open(USER_FILE_NAME, "wb")
-            pickle.dump(user, file_handler)
+            pickle.dump(self.steam_user, file_handler)
             file_handler.close()
         except Exception as e:
             print(USER_FILE_EXCEPTION)
