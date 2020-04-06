@@ -1,7 +1,7 @@
 from Global import *
 import pickle
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView
 import concurrent.futures
 import time
 from operator import attrgetter
@@ -13,6 +13,7 @@ from SteamUser import *
 from Global import *
 import sys
 from AboutUI import *
+from EditGameUI import *
 
 class LibraryUI(object):
 
@@ -39,6 +40,7 @@ class LibraryUI(object):
         self.game_lib_table.setColumnCount(4)
         self.game_lib_table.setObjectName("game_lib_table")
         self.game_lib_table.setRowCount(0)
+        self.game_lib_table.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
         self.table_horz_layout.addWidget(self.game_lib_table)
         self.verticalLayout.addLayout(self.table_horz_layout)
         self.update_delete_horz_layout = QtWidgets.QHBoxLayout()
@@ -63,6 +65,7 @@ class LibraryUI(object):
         font.setFamily(FONT_NAME)
         self.edit_game_button.setFont(font)
         self.edit_game_button.setObjectName("edit_game_button")
+        self.edit_game_button.clicked.connect(lambda: self._edit_game())
         self.edit_summary_horz_layout.addWidget(self.edit_game_button)
         self.lib_summary_button = QtWidgets.QPushButton(self.parent_vert_layout)
         font = QtGui.QFont()
@@ -135,16 +138,26 @@ class LibraryUI(object):
             print("File not found")
             print(e)
     
-    def _edit_game(self, game_box):
-        game_name = game_box.get(ACTIVE)
+    def _edit_game(self):
+        item_index = self.game_lib_table.currentIndex()
+        print(item_index)
+        print(vars(item_index))
+        print(item_index.column())
+        game_data = self.game_lib_table.model().data(item_index)
+        print(game_data)
+        print(type(game_data))
 
-        game_to_edit = Game()
+        if item_index.column() == 0:
 
-        for game in self.game_list:
-            if game_name == game.name:
-                game_to_edit = game
+            game_to_edit = Game()
+            game_name = game_data
+            for game in self.game_list:
+                if game_name == game.name:
+                    game_to_edit = game
 
-        edit_game_window = EditGameWindow(game_to_edit, self.game_list)
+            EditGameUI(game_to_edit, self.game_list)
+        else:
+            pass
 
     def _update_library(self, root):
         
@@ -261,11 +274,20 @@ class LibraryUI(object):
         for game in self.game_list:
             library_table.setItem(row, 0, QTableWidgetItem(game.name))
             rating_str = "{:10.1f}".format(game.rating)
-            library_table.setItem(row, 1, QTableWidgetItem(rating_str))
+            rating_item = QtWidgets.QTableWidgetItem()
+            rating_item.setText(rating_str)
+            rating_item.setFlags(rating_item.flags() & ~Qt.ItemIsSelectable)
+            library_table.setItem(row, 1, rating_item)
             hours_str = "{:10.1f}".format(game.hours_played)
-            library_table.setItem(row, 2, QTableWidgetItem(hours_str))
+            hours_item = QtWidgets.QTableWidgetItem()
+            hours_item.setText(hours_str)
+            hours_item.setFlags(hours_item.flags() & ~Qt.ItemIsSelectable)
+            library_table.setItem(row, 2, hours_item)
             minutes_str = "{:10.0f}".format(game.minutes_played)
-            library_table.setItem(row, 3, QTableWidgetItem(minutes_str))
+            minutes_item = QtWidgets.QTableWidgetItem()
+            minutes_item.setText(minutes_str)
+            minutes_item.setFlags(minutes_item.flags() & ~Qt.ItemIsSelectable)
+            library_table.setItem(row, 3, minutes_item)
             
             row += 1
 

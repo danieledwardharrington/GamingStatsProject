@@ -2,6 +2,7 @@ from Global import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import Qt
 
 class AboutUI(object):
 

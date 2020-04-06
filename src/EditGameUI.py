@@ -1,21 +1,21 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Code\gspUI\EditGameUI.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Global import *
+from UserFile import *
 
+class EditGameUI(object):
 
-class Ui_edit_game_dialog(object):
-    def setupUi(self, edit_game_dialog):
+    def __init__(self, game_to_edit, game_list):
+        super().__init__()
+        edit_dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
+        self.setup_Ui(edit_dialog, game_to_edit, game_list)
+        edit_dialog.show()
+        edit_dialog.exec_()
+
+    def setup_Ui(self, edit_game_dialog, game_to_edit, game_list):
         edit_game_dialog.setObjectName("edit_game_dialog")
         edit_game_dialog.resize(500, 400)
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         edit_game_dialog.setFont(font)
         self.edit_grid_layout = QtWidgets.QGridLayout(edit_game_dialog)
         self.edit_grid_layout.setObjectName("edit_grid_layout")
@@ -25,7 +25,7 @@ class Ui_edit_game_dialog(object):
         self.genre_horz_layout.addItem(spacerItem)
         self.genre_label = QtWidgets.QLabel(edit_game_dialog)
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(12)
         self.genre_label.setFont(font)
         self.genre_label.setObjectName("genre_label")
@@ -38,8 +38,9 @@ class Ui_edit_game_dialog(object):
         self.genre_entry.setSizePolicy(sizePolicy)
         self.genre_entry.setMinimumSize(QtCore.QSize(300, 0))
         self.genre_entry.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.genre_entry.setText(game_to_edit.genre)
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(12)
         self.genre_entry.setFont(font)
         self.genre_entry.setObjectName("genre_entry")
@@ -53,7 +54,7 @@ class Ui_edit_game_dialog(object):
         self.rating_horz_layout.addItem(spacerItem2)
         self.rating_label = QtWidgets.QLabel(edit_game_dialog)
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(12)
         self.rating_label.setFont(font)
         self.rating_label.setObjectName("rating_label")
@@ -61,8 +62,9 @@ class Ui_edit_game_dialog(object):
         self.rating_entry = QtWidgets.QLineEdit(edit_game_dialog)
         self.rating_entry.setMinimumSize(QtCore.QSize(300, 0))
         self.rating_entry.setMaximumSize(QtCore.QSize(300, 16777215))
+        self.rating_entry.setText(str(game_to_edit.rating))
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(12)
         self.rating_entry.setFont(font)
         self.rating_entry.setObjectName("rating_entry")
@@ -77,8 +79,10 @@ class Ui_edit_game_dialog(object):
         self.button_horz_layout.addItem(spacerItem4)
         self.save_button = QtWidgets.QPushButton(edit_game_dialog)
         self.save_button.setMaximumSize(QtCore.QSize(80, 16777215))
+        self.save_button.setToolTip("Save changes")
+        self.save_button.clicked.connect(lambda: self._save_edit(game_to_edit, game_list))
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(10)
         self.save_button.setFont(font)
         self.save_button.setObjectName("save_button")
@@ -86,28 +90,32 @@ class Ui_edit_game_dialog(object):
         self.cancel_button = QtWidgets.QPushButton(edit_game_dialog)
         self.cancel_button.setMaximumSize(QtCore.QSize(80, 16777215))
         self.cancel_button.setObjectName("cancel_button")
+        self.cancel_button.setToolTip("Cancel changes")
+        self.cancel_button.clicked.connect(lambda: self.edit_game_dialog.close())
         self.button_horz_layout.addWidget(self.cancel_button, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.button_horz_layout.addItem(spacerItem5)
         self.edit_grid_layout.addLayout(self.button_horz_layout, 2, 0, 1, 1)
 
-        self.retranslateUi(edit_game_dialog)
+        self.retranslateUi(edit_game_dialog, game_to_edit)
         QtCore.QMetaObject.connectSlotsByName(edit_game_dialog)
 
-    def retranslateUi(self, edit_game_dialog):
+    def retranslateUi(self, edit_game_dialog, game_to_edit):
         _translate = QtCore.QCoreApplication.translate
-        edit_game_dialog.setWindowTitle(_translate("edit_game_dialog", "Gaming Stats Project - Edit Game"))
+        game_name = game_to_edit.name
+        edit_game_dialog.setWindowTitle(_translate("edit_game_dialog", "Gaming Stats Project - " + game_name))
         self.genre_label.setText(_translate("edit_game_dialog", "Genre "))
         self.rating_label.setText(_translate("edit_game_dialog", "Rating"))
         self.save_button.setText(_translate("edit_game_dialog", "Save"))
         self.cancel_button.setText(_translate("edit_game_dialog", "Cancel"))
 
+    def _save_edit(self, game, game_list):
+        new_genre = self.genre_entry.text().strip()
+        new_rating_str = self.rating_entry.text().strip()
+        new_rating = round(float(new_rating_str), 1)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    edit_game_dialog = QtWidgets.QDialog()
-    ui = Ui_edit_game_dialog()
-    ui.setupUi(edit_game_dialog)
-    edit_game_dialog.show()
-    sys.exit(app.exec_())
+        game.genre = new_genre
+        game.rating = new_rating
+
+        new_lib_file = UserFile()
+        new_lib_file.create_library_file(game_list)
