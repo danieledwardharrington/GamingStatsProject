@@ -24,5 +24,5 @@ class SteamBot:
                 genre = genre + ", " + str(a.text.strip())
 
         #I'm adding the name of the game to the beginning of the string here so that later, I can easily assign the genre to the actual game in the game_list
-        return_str = game.name + genre
+        return_str = str(game.steam_app_id) + genre
         return return_str

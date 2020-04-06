@@ -65,7 +65,7 @@ class LibraryUI(object):
         font.setFamily(FONT_NAME)
         self.edit_game_button.setFont(font)
         self.edit_game_button.setObjectName("edit_game_button")
-        self.edit_game_button.clicked.connect(lambda: self._edit_game())
+        self.edit_game_button.clicked.connect(lambda: self._edit_game(library_window))
         self.edit_summary_horz_layout.addWidget(self.edit_game_button)
         self.lib_summary_button = QtWidgets.QPushButton(self.parent_vert_layout)
         font = QtGui.QFont()
@@ -138,7 +138,7 @@ class LibraryUI(object):
             print("File not found")
             print(e)
     
-    def _edit_game(self):
+    def _edit_game(self, lib_window):
         item_index = self.game_lib_table.currentIndex()
         print(item_index)
         print(vars(item_index))
@@ -155,7 +155,7 @@ class LibraryUI(object):
                 if game_name == game.name:
                     game_to_edit = game
 
-            EditGameUI(game_to_edit, self.game_list)
+            EditGameUI(game_to_edit, self.game_list, lib_window)
         else:
             pass
 
@@ -272,21 +272,24 @@ class LibraryUI(object):
 
         row = 0
         for game in self.game_list:
-            library_table.setItem(row, 0, QTableWidgetItem(game.name))
+            name_item = QtWidgets.QTableWidgetItem()
+            name_item.setText(game.name)
+            name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
+            library_table.setItem(row, 0, name_item)
             rating_str = "{:10.1f}".format(game.rating)
             rating_item = QtWidgets.QTableWidgetItem()
             rating_item.setText(rating_str)
-            rating_item.setFlags(rating_item.flags() & ~Qt.ItemIsSelectable)
+            rating_item.setFlags(rating_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEditable)
             library_table.setItem(row, 1, rating_item)
             hours_str = "{:10.1f}".format(game.hours_played)
             hours_item = QtWidgets.QTableWidgetItem()
             hours_item.setText(hours_str)
-            hours_item.setFlags(hours_item.flags() & ~Qt.ItemIsSelectable)
+            hours_item.setFlags(hours_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEditable)
             library_table.setItem(row, 2, hours_item)
             minutes_str = "{:10.0f}".format(game.minutes_played)
             minutes_item = QtWidgets.QTableWidgetItem()
             minutes_item.setText(minutes_str)
-            minutes_item.setFlags(minutes_item.flags() & ~Qt.ItemIsSelectable)
+            minutes_item.setFlags(minutes_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEditable)
             library_table.setItem(row, 3, minutes_item)
             
             row += 1

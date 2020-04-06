@@ -1,6 +1,6 @@
 from Global import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import Qt
 
@@ -9,6 +9,8 @@ class AboutUI(object):
     def __init__(self):
         about_dialog = QtWidgets.QDialog()
         self.setup_Ui(about_dialog)
+        about_dialog.setWindowIcon(QIcon(WIN_ICON))
+        about_dialog.setWindowFlags(about_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         about_dialog.show()
         about_dialog.exec_()
 
@@ -17,7 +19,7 @@ class AboutUI(object):
         about_dialog.setObjectName("about_dialog")
         about_dialog.resize(600, 500)
         font = QtGui.QFont()
-        font.setFamily("Segoe UI")
+        font.setFamily(FONT_NAME)
         font.setPointSize(12)
         about_dialog.setFont(font)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(about_dialog)

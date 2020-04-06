@@ -1,17 +1,21 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
 from Global import *
 from UserFile import *
+from LibraryUI import *
 
 class EditGameUI(object):
 
-    def __init__(self, game_to_edit, game_list):
+    def __init__(self, game_to_edit, game_list, lib_window):
         super().__init__()
-        edit_dialog = QtWidgets.QDialog(None, QtCore.Qt.WindowSystemMenuHint | QtCore.Qt.WindowTitleHint)
-        self.setup_Ui(edit_dialog, game_to_edit, game_list)
+        edit_dialog = QtWidgets.QDialog()
+        edit_dialog.setWindowFlags(edit_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
+        edit_dialog.setWindowIcon(QIcon(WIN_ICON))
+        self.setup_Ui(edit_dialog, game_to_edit, game_list, lib_window)
         edit_dialog.show()
         edit_dialog.exec_()
 
-    def setup_Ui(self, edit_game_dialog, game_to_edit, game_list):
+    def setup_Ui(self, edit_game_dialog, game_to_edit, game_list, lib_window):
         edit_game_dialog.setObjectName("edit_game_dialog")
         edit_game_dialog.resize(500, 400)
         font = QtGui.QFont()
@@ -80,7 +84,7 @@ class EditGameUI(object):
         self.save_button = QtWidgets.QPushButton(edit_game_dialog)
         self.save_button.setMaximumSize(QtCore.QSize(80, 16777215))
         self.save_button.setToolTip("Save changes")
-        self.save_button.clicked.connect(lambda: self._save_edit(game_to_edit, game_list))
+        self.save_button.clicked.connect(lambda: self._save_edit(game_to_edit, game_list, edit_game_dialog, lib_window))
         font = QtGui.QFont()
         font.setFamily(FONT_NAME)
         font.setPointSize(10)
@@ -91,7 +95,7 @@ class EditGameUI(object):
         self.cancel_button.setMaximumSize(QtCore.QSize(80, 16777215))
         self.cancel_button.setObjectName("cancel_button")
         self.cancel_button.setToolTip("Cancel changes")
-        self.cancel_button.clicked.connect(lambda: self.edit_game_dialog.close())
+        self.cancel_button.clicked.connect(lambda: edit_game_dialog.reject())
         self.button_horz_layout.addWidget(self.cancel_button, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.button_horz_layout.addItem(spacerItem5)
@@ -109,7 +113,7 @@ class EditGameUI(object):
         self.save_button.setText(_translate("edit_game_dialog", "Save"))
         self.cancel_button.setText(_translate("edit_game_dialog", "Cancel"))
 
-    def _save_edit(self, game, game_list):
+    def _save_edit(self, game, game_list, edit_game_dialog, lib_window):
         new_genre = self.genre_entry.text().strip()
         new_rating_str = self.rating_entry.text().strip()
         new_rating = round(float(new_rating_str), 1)
@@ -117,5 +121,14 @@ class EditGameUI(object):
         game.genre = new_genre
         game.rating = new_rating
 
-        new_lib_file = UserFile()
-        new_lib_file.create_library_file(game_list)
+        try:
+            from UserFile import UserFile
+            new_lib_file = UserFile()
+            new_lib_file.create_library_file(game_list)
+        except Exception as e:
+            print(LIBRARY_FILE_EXCEPTION)
+            print(e)
+
+        from LibraryUI import LibraryUI
+        LibraryUI(lib_window)
+        edit_game_dialog.accept()

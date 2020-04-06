@@ -224,8 +224,8 @@ class SteamUI(object):
                 #basically just assigning the genres from the futures result to the actual games in the games_list
                 for game in game_list:
                     for genre in result_list:
-                        if game.name in genre:
-                            game.genre = genre.replace(game.name, "")
+                        if genre.startswith(str(game.steam_app_id)):
+                            game.genre = genre.replace(str(game.steam_app_id), "")
 
                 for game in game_list:
                     print(game.name)

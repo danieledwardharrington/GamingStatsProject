@@ -6,7 +6,7 @@ class UserFile:
 
     steam_user = SteamUser()
 
-    def __init__(self, steam_user):
+    def __init__(self, steam_user = SteamUser()):
         self.steam_user = steam_user
 
     def create_user_file(self):
