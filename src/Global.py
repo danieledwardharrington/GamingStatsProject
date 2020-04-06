@@ -3,7 +3,7 @@ import os
 #URL for GitHub repo, sending the user there for instructions on obtaining API key and SteamID64
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 
-#URL for Steam
+#URLs
 STEAM_APP_URL = "https://store.steampowered.com/app/"
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
 
@@ -35,9 +35,7 @@ USER_FILE_POPUP = "Error saving user information"
 LIBRARY_FILE_EXCEPTION = "Exception creating library file"
 LIBRARY_FILE_POPUP = "Error saving game information"
 
-#Stuff for Steam
-STEAM_SEARCH_BOX_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[9]/div[1]/form/div/input"
-STEAM_SEARCH_BUTTON_XPATH = "/html/body/div[1]/div[7]/div[4]/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div/div[9]/div[1]/form/div/a"
+LIBRARY_UI_EXCEPTION = "Exception loading library UI"
 
 #FIle names
 USER_FILE_NAME = "usr/userInfo.dat"

@@ -14,6 +14,7 @@ class Game:
         self.steam_app_id = steam_app_id
         self.minutes_played = minutes_played
         self.hours_played = minutes_played / 60
+        self.hours_played = round(self.hours_played, 1)
         
         #Checking to see if the game title starts with "the" so I can remove it for the purposes of sorting
         if self.name.find("The ") == 0 or self.name.find("the ") == 0:

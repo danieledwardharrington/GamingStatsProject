@@ -6,11 +6,19 @@ from SteamUser import *
 import time
 import urllib.request
 from Game import *
-from LibraryGUI import *
 from UserFile import *
 from SteamBot import *
+from LibraryUI import *
+import concurrent.futures
+from operator import attrgetter
+import sys
+from AboutUI import *
 
 class SteamUI(object):
+
+    def __init__(self, master):
+        super().__init__()
+        self.setup_Ui(master)
 
     def setup_Ui(self, master):
         master.setObjectName("master")
@@ -124,8 +132,12 @@ class SteamUI(object):
         master.setStatusBar(self.statusbar)
         self.action_exit = QtWidgets.QAction(master)
         self.action_exit.setObjectName("action_exit")
+        self.action_exit.setShortcut("Ctrl+Q")
+        self.action_exit.setStatusTip("Exit the app")
+        self.action_exit.triggered.connect(lambda: sys.exit())
         self.action_about = QtWidgets.QAction(master)
         self.action_about.setObjectName("action_about")
+        self.action_about.triggered.connect(lambda: AboutUI())
         self.menu_file.addAction(self.action_exit)
         self.menu_help.addAction(self.action_about)
         self.main_menubar.addAction(self.menu_file.menuAction())
@@ -138,7 +150,7 @@ class SteamUI(object):
 
     def retranslateUi(self, master):
         _translate = QtCore.QCoreApplication.translate
-        master.setWindowTitle(_translate("master", "Gaming Stats Project"))
+        master.setWindowTitle(_translate("master", "Gaming Stats Project - Steam User Info"))
         self.steam_id_label.setText(_translate("master", "SteamID64 Number"))
         self.steam_api_label.setText(_translate("master", "Steam API Key"))
         self.submit_button.setToolTip(_translate("master", "<html><head/><body><p>Submit info</p></body></html>"))
@@ -220,21 +232,30 @@ class SteamUI(object):
                     print(game.steam_app_id)
                     print(game.genre)
 
-                #saving user files once everything has been done successfully
-                userInfoFile = UserFile(steam_user)
-                userInfoFile.create_user_file()
-                    
-                userInfoFile.create_library_file(game_list)
-
-                root.hide()
-
                 print("-----------------------------")
                 end = time.time()
                 print("Job end: " + str(end))
                 print("Job took: " + str(end - start))
                 print("-----------------------------")
 
-                LibraryGUI()
+                try:
+                    try:
+                        from UserFile import UserFile
+                        #saving user files once everything has been done successfully
+                        print("Saving user files")
+                        user_info_file = UserFile(steam_user)
+                        user_info_file.create_user_file()   
+                        user_info_file.create_library_file(game_list)
+                        print("User files saved")
+                    except Exception as e:
+                        print(USER_FILE_EXCEPTION)
+                        print(e)
+
+                    print("Loading LibraryUI")
+                    LibraryUI(root)
+                except Exception as e:
+                    print(LIBRARY_UI_EXCEPTION)
+                    print(e)
 
             else:
                 steam_popup = PopupWindow(STEAM_POPUP)
@@ -252,12 +273,3 @@ class SteamUI(object):
         except Exception as e:
             print(e)
             return False
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     master = QtWidgets.QMainWindow()
-#     ui = Ui_master()
-#     ui.setupUi(master)
-#     master.show()
-#     sys.exit(app.exec_())

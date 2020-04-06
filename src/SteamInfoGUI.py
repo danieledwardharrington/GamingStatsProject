@@ -29,14 +29,14 @@ class SteamInfoGUI:
     user_id_number = ""
 
     def __init__(self):
-
-        app = QtWidgets.QApplication(sys.argv)
-        master = QtWidgets.QMainWindow()
-        master.setWindowIcon(QIcon("images/gspDesktop2.ico"))
-        ui = SteamUI()
-        ui.setup_Ui(master)
-        master.show()
-        sys.exit(app.exec_())
+        pass
+        # app = QtWidgets.QApplication(sys.argv)
+        # master = QtWidgets.QMainWindow()
+        # master.setWindowIcon(QIcon("images/gspDesktop2.ico"))
+        # ui = SteamUI()
+        # ui.setup_Ui(master)
+        # master.show()
+        # sys.exit(app.exec_())
         
         # root = tkinter.Tk()
 
