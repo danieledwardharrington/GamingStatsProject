@@ -18,7 +18,7 @@ class Game:
         
         #Checking to see if the game title starts with "the" so I can remove it for the purposes of sorting
         if self.name.find("The ") == 0 or self.name.find("the ") == 0:
-            self.sort_name = self.name[4:]
+            self.sort_name = self.name[4:].upper()
         else:
             self.sort_name = self.name.upper() 
 
