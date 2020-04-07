@@ -20,13 +20,14 @@ from LibrarySummaryDialog import *
 class LibraryUI(object):
 
     game_list = []
+    result_list = []
 
-    def __init__(self, master):
+    def __init__(self, master, steam_worker):
         super().__init__()
         self._load_data()
-        self.setup_Ui(master)
+        self.setup_Ui(master, steam_worker)
 
-    def setup_Ui(self, library_window):
+    def setup_Ui(self, library_window, steam_worker):
         library_window.setObjectName("library_window")
         library_window.resize(538, 748)
         font = QtGui.QFont()
@@ -52,7 +53,7 @@ class LibraryUI(object):
         font.setFamily(FONT_NAME)
         self.update_library_button.setFont(font)
         self.update_library_button.setObjectName("update_library_button")
-        self.update_library_button.clicked.connect(lambda: self._update_library(library_window))
+        self.update_library_button.clicked.connect(lambda: self._update_library(library_window, steam_worker))
         self.update_delete_horz_layout.addWidget(self.update_library_button)
         self.delete_info_button = QtWidgets.QPushButton(self.parent_vert_layout)
         font = QtGui.QFont()
@@ -164,7 +165,7 @@ class LibraryUI(object):
         else:
             TODO("Handle clicking on anything other than the game's name")
 
-    def _update_library(self, root):
+    def _update_library(self, root, steam_worker):
         
         pickle_in = open(USER_FILE_NAME, "rb")
         steam_user = pickle.load(pickle_in)
@@ -205,17 +206,19 @@ class LibraryUI(object):
                             new_game_list.append(new_game)
                 print("New game list done")
 
-                steam_bot = SteamBot()
-                with concurrent.futures.ProcessPoolExecutor() as executor:
-                    result = executor.map(steam_bot.set_genre, new_game_list)
-                result_list = list(result)
-                for i  in result_list:
-                    print(type(i))
-                    print(str(i))
+                # steam_bot = SteamBot()
+                # with concurrent.futures.ProcessPoolExecutor() as executor:
+                #     result = executor.map(steam_bot.set_genre, new_game_list)
+                # result_list = list(result)
+                # for i  in result_list:
+                #     print(type(i))
+                #     print(str(i))
+
+                steam_worker.listed.connect(self._result_to_list)
 
                 #basically just assigning the genres from the futures result to the actual games in the games_list
                 for game in new_game_list:
-                    for genre in result_list:
+                    for genre in self.result_list:
                         if game.name in genre:
                             game.genre = genre.replace(game.name, "")
   
@@ -237,7 +240,7 @@ class LibraryUI(object):
 
                 try:
                     print("Loading LibraryUI")
-                    LibraryUI(root)
+                    LibraryUI(root, steam_worker)
 
                     try:
                         from UserFile import UserFile
@@ -254,12 +257,10 @@ class LibraryUI(object):
                     print(e)
 
             else:
-                steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)
                 print("Code: " + str(ownedGamesReq.status_code))
         else:
             print(NO_NETWORK)
-            network_popup = PopupWindow(NO_NETWORK)
 
     def _show_summary(self):
         LibrarySummaryDialog(self.game_list)
@@ -311,6 +312,9 @@ class LibraryUI(object):
         except Exception as e:
             print(e)
             return False
+    
+    def _result_to_list(self, emit_list):
+        self.result_list = emit_list
 
     def _confirm_delete(self, master):
         DeleteUserDialog(master)

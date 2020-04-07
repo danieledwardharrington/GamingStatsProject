@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Global import *
 import webbrowser
-from PopupWindow import *
 from SteamUser import *
 import time
 import urllib.request
@@ -13,14 +12,17 @@ import concurrent.futures
 from operator import attrgetter
 import sys
 from AboutUI import *
+from SteamWorker import *
 
 class SteamUI(object):
 
-    def __init__(self, master):
-        super().__init__()
-        self.setup_Ui(master)
+    result_list = []
 
-    def setup_Ui(self, master):
+    def __init__(self, master, steam_worker):
+        super().__init__()
+        self.setup_Ui(master, steam_worker)
+
+    def setup_Ui(self, master, steam_worker):
         master.setObjectName("master")
         master.resize(600, 500)
         font = QtGui.QFont()
@@ -101,7 +103,7 @@ class SteamUI(object):
         font.setPointSize(XSMALL_FONT_POINT)
         self.submit_button.setFont(font)
         self.submit_button.setObjectName("submit_button")
-        self.submit_button.clicked.connect(lambda: self._get_input(self.api_key_entry, self.steam_id_entry, master))
+        self.submit_button.clicked.connect(lambda: self._get_input(self.api_key_entry, self.steam_id_entry, master, steam_worker))
         self.button_horz_layout.addWidget(self.submit_button)
         self.repo_button = QtWidgets.QPushButton(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -171,7 +173,7 @@ class SteamUI(object):
             print(BROWSER_EXCEPTION)
             print(e)
 
-    def _get_input(self, key_entry, id_entry, root):
+    def _get_input(self, key_entry, id_entry, root, steam_worker):
         
         user_id_number = id_entry.text().strip()
         user_api_key = key_entry.text().strip()
@@ -210,20 +212,27 @@ class SteamUI(object):
                 print("Game list done")
                 print(type(game_list))
 
-                steam_bot = SteamBot()
-                with concurrent.futures.ProcessPoolExecutor() as executor:
-                    result = executor.map(steam_bot.set_genre, game_list)
-                result_list = list(result)
-                for i  in result_list:
-                    print(type(i))
-                    print(str(i))
+                # steam_bot = SteamBot()
+                # with concurrent.futures.ProcessPoolExecutor() as executor:
+                #     result = executor.map(steam_bot.set_genre, game_list)
+                # result_list = list(result)
+                # for i  in result_list:
+                #     print(type(i))
+                #     print(str(i))
+
+                # steam_worker = SteamWorker()
+                # steam_thread = QtCore.QThread()
+                # steam_worker.moveToThread(steam_thread)
+                # steam_thread.start()
+
+                steam_worker.listed.connect(self._result_to_list)
 
                 #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
                 game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
                 #basically just assigning the genres from the futures result to the actual games in the games_list
                 for game in game_list:
-                    for genre in result_list:
+                    for genre in self.result_list:
                         if genre.startswith(str(game.steam_app_id)):
                             game.genre = genre.replace(str(game.steam_app_id), "")
 
@@ -252,18 +261,16 @@ class SteamUI(object):
                         print(e)
 
                     print("Loading LibraryUI")
-                    LibraryUI(root)
+                    LibraryUI(root, steam_worker)
                 except Exception as e:
                     print(LIBRARY_UI_EXCEPTION)
                     print(e)
 
             else:
-                steam_popup = PopupWindow(STEAM_POPUP)
                 print(STEAM_EXCEPTION)
                 print("Code: " + str(ownedGamesReq.status_code))
         else:
             print(NO_NETWORK)
-            network_popup = PopupWindow(NO_NETWORK)
 
     def _check_connection(self):
         host = "http://google.com"
@@ -273,3 +280,6 @@ class SteamUI(object):
         except Exception as e:
             print(e)
             return False
+
+    def _result_to_list(self, emit_list):
+        self.result_list = emit_list

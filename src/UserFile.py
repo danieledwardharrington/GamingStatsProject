@@ -1,5 +1,5 @@
-from PopupWindow import *
 from SteamUser import *
+from Global import *
 import pickle
 
 class UserFile:
@@ -17,7 +17,6 @@ class UserFile:
         except Exception as e:
             print(USER_FILE_EXCEPTION)
             print(e)
-            file_popup = PopupWindow(USER_FILE_POPUP)
 
     def create_library_file(self, game_list):
         try:
@@ -27,4 +26,3 @@ class UserFile:
         except Exception as e:
             print(LIBRARY_FILE_EXCEPTION)
             print(e)
-            library_popup = PopupWindow(LIBRARY_FILE_POPUP)
