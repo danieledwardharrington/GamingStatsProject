@@ -20,10 +20,10 @@ class Game:
         if self.name.find("The ") == 0 or self.name.find("the ") == 0:
             self.sort_name = self.name[4:]
         else:
-            self.sort_name = self.name  
+            self.sort_name = self.name.upper() 
 
     def set_sort_name(self):
         if self.name.find("The ") == 0 or self.name.find("the ") == 0:
-            self.sort_name = self.name[4:]
+            self.sort_name = self.name[4:].upper()
         else:
-            self.sort_name = self.name
+            self.sort_name = self.name.upper()
