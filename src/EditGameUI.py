@@ -100,6 +100,8 @@ class EditGameUI(object):
         spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.button_horz_layout.addItem(spacerItem5)
         self.edit_grid_layout.addLayout(self.button_horz_layout, 2, 0, 1, 1)
+        self.genre_entry.setCursorPosition(0)
+        self.rating_entry.setCursorPosition(0)
 
         self.retranslateUi(edit_game_dialog, game_to_edit)
         QtCore.QMetaObject.connectSlotsByName(edit_game_dialog)
