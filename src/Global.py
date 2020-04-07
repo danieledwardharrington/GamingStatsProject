@@ -41,3 +41,6 @@ LIBRARY_UI_EXCEPTION = "Exception loading library UI"
 USER_FILE_NAME = "usr/userInfo.dat"
 LIBRARY_FILE_NAME = "usr/userLibrary.dat"
 WIN_ICON = "images/gspDesktop2.ico"
+
+#About string
+ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page (genre will be blank if the game is no longer on Steam). All ratings are set to 0.0 until changed by the user and are rounded to nearest tenth."

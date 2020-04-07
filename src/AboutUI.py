@@ -17,7 +17,7 @@ class AboutUI(object):
 
     def setup_Ui(self, about_dialog):
         about_dialog.setObjectName("about_dialog")
-        about_dialog.resize(600, 500)
+        about_dialog.resize(400, 300)
         font = QtGui.QFont()
         font.setFamily(FONT_NAME)
         font.setPointSize(12)
@@ -51,7 +51,7 @@ class AboutUI(object):
     def retranslateUi(self, about_dialog):
         _translate = QtCore.QCoreApplication.translate
         about_dialog.setWindowTitle(_translate("about_dialog", "Gaming Stats Project - About"))
-        self.about_label.setText(_translate("about_dialog", "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page (genre will be blank if the game is no longer on Steam)."))
+        self.about_label.setText(_translate("about_dialog", ABOUT_STRING))
         self.gform_label.setToolTip(_translate("about_dialog", "Fill out a feedback form"))
         self.gform_label.setText(_translate("about_dialog", "<html><head/><body><p><a href=https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link <span style=\" text-decoration: underline; color:#0000ff;\">Have feedback? Click here</span></p></a></body></html>"))
 

@@ -14,6 +14,8 @@ from Global import *
 import sys
 from AboutUI import *
 from EditGameUI import *
+from DeleteUserDialog import *
+from LibrarySummaryDialog import *
 
 class LibraryUI(object):
 
@@ -50,12 +52,14 @@ class LibraryUI(object):
         font.setFamily(FONT_NAME)
         self.update_library_button.setFont(font)
         self.update_library_button.setObjectName("update_library_button")
+        self.update_library_button.clicked.connect(lambda: self._update_library(library_window))
         self.update_delete_horz_layout.addWidget(self.update_library_button)
         self.delete_info_button = QtWidgets.QPushButton(self.parent_vert_layout)
         font = QtGui.QFont()
         font.setFamily(FONT_NAME)
         self.delete_info_button.setFont(font)
         self.delete_info_button.setObjectName("delete_info_button")
+        self.delete_info_button.clicked.connect(lambda: self._confirm_delete(library_window))
         self.update_delete_horz_layout.addWidget(self.delete_info_button)
         self.verticalLayout.addLayout(self.update_delete_horz_layout)
         self.edit_summary_horz_layout = QtWidgets.QHBoxLayout()
@@ -72,6 +76,7 @@ class LibraryUI(object):
         font.setFamily(FONT_NAME)
         self.lib_summary_button.setFont(font)
         self.lib_summary_button.setObjectName("lib_summary_button")
+        self.lib_summary_button.clicked.connect(lambda: self._show_summary())
         self.edit_summary_horz_layout.addWidget(self.lib_summary_button)
         self.verticalLayout.addLayout(self.edit_summary_horz_layout)
         library_window.setCentralWidget(self.parent_vert_layout)
@@ -157,7 +162,7 @@ class LibraryUI(object):
 
             EditGameUI(game_to_edit, self.game_list, lib_window)
         else:
-            pass
+            TODO("Handle clicking on anything other than the game's name")
 
     def _update_library(self, root):
         
@@ -232,8 +237,7 @@ class LibraryUI(object):
 
                 try:
                     print("Loading LibraryUI")
-                    lib_ui = LibraryUI()
-                    lib_ui.setup_Ui(root)
+                    LibraryUI(root)
 
                     try:
                         from UserFile import UserFile
@@ -256,6 +260,9 @@ class LibraryUI(object):
         else:
             print(NO_NETWORK)
             network_popup = PopupWindow(NO_NETWORK)
+
+    def _show_summary(self):
+        LibrarySummaryDialog(self.game_list)
 
     def _populate_table(self, library_table):
         library_table.setRowCount(len(self.game_list))
@@ -296,5 +303,14 @@ class LibraryUI(object):
 
         library_table.setSortingEnabled(True)
 
-    def _sort_table(self, library_table, column):
-        pass
+    def _check_connection(self):
+        host = "http://google.com"
+        try:
+            urllib.request.urlopen(host)
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def _confirm_delete(self, master):
+        DeleteUserDialog(master)
