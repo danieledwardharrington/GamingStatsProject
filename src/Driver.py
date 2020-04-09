@@ -7,12 +7,13 @@ from LibraryUI import *
 from Global import *
 import multiprocessing
 import ctypes
+from ErrorDialog import *
 import logging as log
 
+log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
 def main():
-
-    log.basicConfig(level = log.DEBUG)
+    log.info("Driver main started")
 
     app = QtWidgets.QApplication(sys.argv)
     app.setWindowIcon(QIcon(WIN_ICON))
@@ -29,11 +30,21 @@ def main():
     #if the files don't exist for user info and the game library, we're taking the user to put
     #their info in again
     if not os.path.exists(USER_FILE_NAME) and not os.path.exists(LIBRARY_FILE_NAME):
-        print("Loading steamUI")
-        SteamUI(master)
+        try:
+            log.info("Loading SteamUI")
+            SteamUI(master)
+        except Exception as e:
+            log.error(STEAM_UI_EXCEPTION)
+            log.error(e)
+            ErrorDialog(STEAM_EXCEPTION)
     else:
-        print("Loading LibraryUI")
-        LibraryUI(master)
+        try:
+            log.info("Loading LibraryUI")
+            LibraryUI(master)
+        except Exception as e:
+            log.error(LIBRARY_UI_EXCEPTION)
+            log.error(e)
+            ErrorDialog(LIBRARY_UI_EXCEPTION)
 
     master.show()
     sys.exit(app.exec_())

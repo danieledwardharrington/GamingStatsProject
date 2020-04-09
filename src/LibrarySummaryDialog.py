@@ -8,9 +8,10 @@ import logging as log
 
 class LibrarySummaryDialog(object):
     
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def __init__(self, game_list):
+        log.info("Library summary init called")
         summary_dialog = QtWidgets.QDialog()
         self.setup_Ui(summary_dialog, game_list)
         summary_dialog.setWindowIcon(QIcon(WIN_ICON))
@@ -103,6 +104,7 @@ class LibrarySummaryDialog(object):
         self.most_prevalent_label.setText(_translate("summary_dialog", "Most Prevalent Genres"))
 
     def _populate_lists(self, game_list):
+        log.ingo("Summary populate lists called")
         most_played_games = self._calculate_most_played_games(game_list)
         highest_rated_games = self._calculate_highest_rated_games(game_list)
         most_played_genres = self._calculate_most_played_genres(game_list)
@@ -112,49 +114,58 @@ class LibrarySummaryDialog(object):
         for game in most_played_games:
             self.most_played_game_list.insertItem(index, game)
             index += 1
+            log.info("Game inserted to most played: " + game.name)
         
         index = 0
         for game in highest_rated_games:
             self.highest_rated_games_list.insertItem(index, game)
             index += 1
+            log.info("Game inserted to highest rated: " + game.name)
 
         index = 0
         for genre in most_played_genres:
             self.most_played_genres_list.insertItem(index, genre)
             index += 1
+            log.info("Genre inserted to most played: " + genre)
 
         index = 0
         for genre in most_prevalent_genres:
             self.most_prevalent_genres_list.insertItem(index, genre)
             index += 1
+            log.info("Genre inserted to most prevalent: " + genre)
+
+        log.info("Populate lists complete")
 
     def _calculate_most_played_games(self, game_list):
-        print("Sorting game_list by minutes played (descending)")
+        log.info("Calculate most played called")
+        log.info("Sorting game_list by minutes played (descending)")
         game_list.sort(key = attrgetter("minutes_played"), reverse = True)
 
-        print("Sorting complete")
-        print("Creating new list and adding first five elements of game_list to it")
+        log.info("Sorting complete")
+        log.info("Creating new list and adding first five elements of game_list to it")
         top_ten = []
         for i in range(10):
             top_ten.append(game_list[i].name)
 
-        print("Top list completed - most played games")
+        log.info("Top list completed - most played games")
         return top_ten
 
     def _calculate_highest_rated_games(self, game_list):
-        print("Sorting game_list by rating (descending)")
+        log.info("Calculate highest rated called")
+        log.info("Sorting game_list by rating (descending)")
         game_list.sort(key = attrgetter("rating"), reverse = True)
 
-        print("Sorting complete")
-        print("Creating new list to hold five highest rated games")
+        log.info("Sorting complete")
+        log.info("Creating new list to hold five highest rated games")
         top_ten = []
         for i in range(10):
             top_ten.append(game_list[i].name)
-        print("Top list completed - highest rated games")
+        log.info("Top list completed - highest rated games")
         return top_ten
 
     def _calculate_most_played_genres(self, game_list):
-        print("Sorting game_list by minutes played (descending)")
+        log.info("Calculate most played genres called")
+        log.info("Sorting game_list by minutes played (descending)")
         game_list.sort(key = attrgetter("minutes_played"), reverse = True)
 
         #creating smaller list of games to work with their genres
@@ -174,28 +185,25 @@ class LibrarySummaryDialog(object):
                 flat_genres.append(item)
         flat_genres = list(filter(None, flat_genres))
 
-        print("Flat genre list completed")
+        log.info("Flat genre list completed")
         for genre in flat_genres:
-            print(genre)
+            log.info(genre)
 
-        print("------------------------------------------")
-        print("------------------------------------------")
         freqs = Counter(flat_genres)
-        print(freqs)
-        print("------------------------------------------")
-        print("------------------------------------------")
+        log.info(freqs)
 
         count = freqs.most_common(10)
         for i in range(10):
             top_ten.append(count[i][0])
-        print(top_ten)
+        log.info(top_ten)
 
-        print("Top list completed - most played genres")
+        log.info("Top list completed - most played genres")
         
         return top_ten
 
     def _calculate_most_prevalent_genres(self, game_list):
-        print("Creating list of all genres in library (with dupes)")
+        log.info("Calculate most prevalent called")
+        log.info("Creating list of all genres in library (with dupes)")
         genre_list = []
         top_ten = []
         for game in game_list:
@@ -208,22 +216,18 @@ class LibrarySummaryDialog(object):
                 flat_genres.append(item)
         flat_genres = list(filter(None, flat_genres))
 
-        print("Flat genre list completed")
+        log.info("Flat genre list completed")
         for genre in flat_genres:
-            print(genre)
-        
-        print("------------------------------------------")
-        print("------------------------------------------")
+            log.info(genre)
+
         freqs = Counter(flat_genres)
-        print(freqs)
-        print("------------------------------------------")
-        print("------------------------------------------")
+        log.info(freqs)
 
         count = freqs.most_common(10)
         for i in range(10):
             top_ten.append(count[i][0])
-        print(top_ten)
+        log.info(top_ten)
 
-        print("Top list completed - most prevalent genres")
+        log.info("Top list completed - most prevalent genres")
         
         return top_ten

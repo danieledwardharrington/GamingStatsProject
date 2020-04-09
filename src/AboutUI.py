@@ -7,11 +7,13 @@ import logging as log
 
 class AboutUI(object):
 
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def __init__(self):
+        log.info("About init called")
         about_dialog = QtWidgets.QDialog()
         self.setup_Ui(about_dialog)
+        log.info("About UI setup")
         about_dialog.setWindowIcon(QIcon(WIN_ICON))
         about_dialog.setWindowFlags(about_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         about_dialog.show()
@@ -59,4 +61,5 @@ class AboutUI(object):
         self.gform_label.setText(_translate("about_dialog", "<html><head/><body><p><a href=https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link <span style=\" text-decoration: underline; color:#0000ff;\">Have feedback? Click here</span></p></a></body></html>"))
 
     def _send_to_form(self):
+        log.info("send to Google form called")
         QDesktopServices.openUrl(QUrl(GOOGLE_FORM_URL))

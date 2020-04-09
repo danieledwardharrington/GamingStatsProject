@@ -19,7 +19,7 @@ import logging as log
 
 class SteamUI(QObject):
 
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
     
     result_list = []
     game_list = []
@@ -32,6 +32,7 @@ class SteamUI(QObject):
 
     def __init__(self, master):
         super().__init__()
+        log.info("SteamUI init called")
         self.master = master
         self.steam_worker = SteamWorker()
         self.steam_thread = QtCore.QThread()
@@ -196,6 +197,7 @@ class SteamUI(QObject):
             print(e)
 
     def _get_input(self, key_entry, id_entry, root, steam_worker):
+        log.info("Get info called")
         self.submit_button.setEnabled(False)
         self.statusbar.showMessage("Please wait...", 6000)
 
@@ -210,27 +212,24 @@ class SteamUI(QObject):
         user_api_key = key_entry.text().strip()
 
         self.steam_user = SteamUser(user_id_number, user_api_key)
-        print("Steam user ID: " + user_id_number)
-        print("Steam user API key: " + user_api_key)
+        log.info("Steam user ID: " + user_id_number)
+        log.info("Steam user API key: " + user_api_key)
 
         if self._check_connection():
             
             ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_user_id + "&format=json")
-            print(type(ownedGamesReq))
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
                 self.start = time.time()
                 print("-----------------------------")
                 print("Job start: " + str(self.start))
+                log.info("Job start: " + str(self.start))
                 print("-----------------------------")
                 #if all good, starting everything and saving user info and library files
-                print(vars(ownedGamesReq))
-                print(type(ownedGamesReq))
+                log.info(vars(ownedGamesReq))
                 ownedGamesRes = ownedGamesReq.json()
-                print(type(ownedGamesRes))
 
-                print(type(self.game_list))
                 for game in ownedGamesRes["response"]["games"]:
                     if game["playtime_forever"] > 0:
                         game_minutes = game["playtime_forever"]
@@ -239,20 +238,21 @@ class SteamUI(QObject):
                         game_genre = ""
                         new_game = Game(game_name, game_genre, game_app_id, game_minutes)
                         self.game_list.append(new_game)
-                print("Game list done")
-                print(type(self.game_list))
+                log.info("Game list done")
 
                 increments = len(self.game_list) / 100
                 self.increment_amount.emit(increments)
                 self.genres_requested.emit(self.game_list)
 
             else:
-                print(STEAM_EXCEPTION)
-                print("Code: " + str(ownedGamesReq.status_code))
+                log.error(STEAM_EXCEPTION)
+                log.error("Code: " + str(ownedGamesReq.status_code))
                 self.submit_button.setEnabled(True)
+                ErrorDialog(STEAM_EXCEPTION)
         else:
-            print(NO_NETWORK)
+            log.error(NO_NETWORK)
             self.submit_button.setEnabled(True)
+            ErrorDialog(NO_NETWORK)
 
     def _check_connection(self):
         host = "http://google.com"
@@ -260,14 +260,14 @@ class SteamUI(QObject):
             urllib.request.urlopen(host)
             return True
         except Exception as e:
-            print(e)
+            log.error(e)
             return False
 
     def _result_to_list(self, emit_list):
         self.result_list = emit_list
 
     def _on_finished(self, finished):
-        print("On finished called")
+        log.info("On finished called")
         if finished:
                 #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
                 self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
@@ -282,37 +282,41 @@ class SteamUI(QObject):
                 end = time.time()
                 print("Job end: " + str(end))
                 print("Job took: " + str(end - self.start))
+                log.info("Job end: " + str(end))
+                log.info("Job took: " + str(end - self.start))
                 print("-----------------------------")
 
                 try:
                     try:
                         from UserFile import UserFile
                         #saving user files once everything has been done successfully
-                        print("Saving user files")
+                        log.info("Saving user files")
                         user_info_file = UserFile(self.steam_user)
                         user_info_file.create_user_file()   
                         user_info_file.create_library_file(self.game_list)
-                        print("User files saved")
+                        log.info("User files saved")
                     except Exception as e:
-                        print(USER_FILE_EXCEPTION)
-                        print(e)
+                        log.error(USER_FILE_EXCEPTION)
+                        log.error(e)
+                        ErrorDialog(USER_FILE_EXCEPTION)
 
-                    print("Loading LibraryUI")
+                    log.info("Loading LibraryUI")
                     self.statusbar.clearMessage()
                     self.last_increment_request.emit(True)
                     self.steam_thread.quit()
                     self.loading_thread.quit()
                     LibraryUI(self.master)
                 except Exception as e:
-                    print(LIBRARY_UI_EXCEPTION)
-                    print(e)
+                    log.error(LIBRARY_UI_EXCEPTION)
+                    log.error(e)
+                    ErrorDialog(LIBRARY_UI_EXCEPTION)
 
     def _show_loading(self, ready):
         if ready:
-            print("Show loading ready")
+            log.info("Show loading ready")
             self.loading_dialog.show_dialog()
 
     def _request_progress(self, ready):
-        print("Request progress called")
+        log.info("Request progress called")
         if ready:
             self.increment_request.emit(True)

@@ -18,11 +18,12 @@ from DeleteUserDialog import *
 from LibrarySummaryDialog import *
 from LoadingDialog import *
 from SteamWorker import *
+from ErrorDialog import *
 import logging as log
 
 class LibraryUI(QObject):
 
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
     
     game_list = []
     new_game_list = []
@@ -36,6 +37,7 @@ class LibraryUI(QObject):
 
     def __init__(self, master):
         super().__init__()
+        log.info("LibraryUI init called")
         self._load_data()
         self.master = master
         self.steam_worker = SteamWorker()
@@ -141,7 +143,7 @@ class LibraryUI(QObject):
 
         self._populate_table(self.game_lib_table)
 
-        print("LibraryUI loaded")
+        log.info("LibraryUI loaded")
 
     def retranslateUi(self, library_window):
         _translate = QtCore.QCoreApplication.translate
@@ -162,35 +164,39 @@ class LibraryUI(QObject):
         #loading data from the file
     
     def _load_data(self):
+        log.info("Load data called")
         try:
             pickle_in = open(LIBRARY_FILE_NAME, "rb")
-            self.game_list = pickle.load(pickle_in) 
+            self.game_list = pickle.load(pickle_in)
+            log.info("Load data successful") 
         except Exception as e:
-            print("File not found")
-            print(e)
+            log.error(LIBRARY_FILE_EXCEPTION)
+            log.error(e)
+            ErrorDialog(LIBRARY_FILE_EXCEPTION)
     
     def _edit_game(self, lib_window):
+        log.info("Edit game called")
         item_index = self.game_lib_table.currentIndex()
-        print(item_index)
-        print(vars(item_index))
-        print(item_index.column())
         game_data = self.game_lib_table.model().data(item_index)
-        print(game_data)
-        print(type(game_data))
 
         if item_index.column() == 0:
-
             game_to_edit = Game()
             game_name = game_data
             for game in self.game_list:
                 if game_name == game.name:
                     game_to_edit = game
-
-            EditGameUI(game_to_edit, self.game_list, lib_window, self.steam_thread, self.loading_thread)
+            log.info("Game to edit created: " + game_to_edit.name)
+            try:
+                EditGameUI(game_to_edit, self.game_list, lib_window, self.steam_thread, self.loading_thread)
+            except Exception as e:
+                log.error(EDIT_EXCEPTION)
+                log.error(e)
+                ErrorDialog(EDIT_POPUP)
         else:
-            TODO("Handle clicking on anything other than the game's name")
+            ErrorDialog(NO_GAME_EXCEPTION)
 
     def _update_library(self, root, steam_worker):
+        log.info("Update library called")
         self.library_statusbar.showMessage("Please wait...", 6000)
         self.update_library_button.setEnabled(False)
         self.delete_info_button.setEnabled(False)
@@ -207,28 +213,27 @@ class LibraryUI(QObject):
         pickle_in = open(USER_FILE_NAME, "rb")
         self.steam_user = pickle.load(pickle_in)
 
-        print("Steam user ID: " + self.steam_user.steam_user_id)
-        print("Steam user API key: " + self.steam_user.steam_user_api)
+        log.info("Steam user ID: " + self.steam_user.steam_user_id)
+        log.info("Steam user API key: " + self.steam_user.steam_user_api)
 
         if self._check_connection():
             
             ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_user_id + "&format=json")
-            print(type(ownedGamesReq))
+            log.info(type(ownedGamesReq))
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
                 self.start = time.time()
                 print("-----------------------------")
                 print("Job start: " + str(self.start))
+                log.info("Job start: " + str(self.start))
                 print("-----------------------------")
                 #if all good, starting everything and saving user info and library files
-                print(vars(ownedGamesReq))
-                print(type(ownedGamesReq))
+                log.info(vars(ownedGamesReq))
                 ownedGamesRes = ownedGamesReq.json()
-                print(type(ownedGamesRes))
 
                 name_list = []
-                print(type(self.new_game_list))
+                log.info("Populating new game list")
                 for game in ownedGamesRes["response"]["games"]:
                     if game["playtime_forever"] > 0:
                         game_minutes = game["playtime_forever"]
@@ -240,9 +245,10 @@ class LibraryUI(QObject):
                             name_list.append(item.name)
                         if game_name not in name_list: 
                             self.new_game_list.append(new_game)
-                print("New game list done")
+                log.info("New game list done")
 
                 increments = len(self.game_list) / 100
+                log.info("Increments: " + str(increments))
                 self.increment_amount.emit(increments)
                 self.genres_requested.emit(self.game_list)
 
@@ -258,19 +264,28 @@ class LibraryUI(QObject):
                 self.delete_info_button.setEnabled(True)
                 self.lib_summary_button.setEnabled(True)
                 self.edit_game_button.setEnabled(True)
-                print(STEAM_EXCEPTION)
-                print("Code: " + str(ownedGamesReq.status_code))
+                log.error(STEAM_EXCEPTION)
+                log.error("Code: " + str(ownedGamesReq.status_code))
+                ErrorDialog(STEAM_EXCEPTION)
         else:
             self.update_library_button.setEnabled(True)
             self.delete_info_button.setEnabled(True)
             self.lib_summary_button.setEnabled(True)
             self.edit_game_button.setEnabled(True)
-            print(NO_NETWORK)
+            log.error(NO_NETWORK)
+            ErrorDialog(NO_NETWORK)
 
     def _show_summary(self):
-        LibrarySummaryDialog(self.game_list)
+        log.info("Show summary called")
+        try:
+            LibrarySummaryDialog(self.game_list)
+        except Exception as e:
+            log.error(SUMMARY_EXCEPTION)
+            log.error(e)
+            ErrorDialog(SUMMARY_EXCEPTION)
 
     def _populate_table(self, library_table):
+        log.info("Populate table called")
         library_table.setRowCount(len(self.game_list))
         header = library_table.horizontalHeader()
         header.setSectionsClickable(True)
@@ -315,19 +330,24 @@ class LibraryUI(QObject):
             urllib.request.urlopen(host)
             return True
         except Exception as e:
-            print(e)
+            log.error(e)
             return False
     
     def _result_to_list(self, emit_list):
         self.result_list = emit_list
 
     def _confirm_delete(self, master):
-        DeleteUserDialog(master)
-        self.steam_thread.quit()
-        self.loading_thread.quit()
+        try:
+            DeleteUserDialog(master)
+            self.steam_thread.quit()
+            self.loading_thread.quit()
+        except Exception as e:
+            log.error(DELETE_USER_EXCEPTION)
+            log.error(e)
+            ErrorDialog(DELETE_USER_EXCEPTION)
 
     def _on_finished(self, finished):
-        print("On finished called")
+        log.info("On finished called")
         if finished:
                 #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles
                 self.updated_game_list = self.game_list + self.new_game_list   
@@ -342,37 +362,40 @@ class LibraryUI(QObject):
                 end = time.time()
                 print("Job end: " + str(end))
                 print("Job took: " + str(end - self.start))
+                log.info("Job end: " + str(end))
+                log.info("Job took: " + str(end - self.start))
                 print("-----------------------------")
 
                 try:
-
                     try:
                         from UserFile import UserFile
                         #saving user files once everything has been done successfully
-                        print("Saving user files")
+                        log.info("Saving user files")
                         user_info_file = UserFile(self.steam_user)  
                         user_info_file.create_library_file(self.updated_game_list)
-                        print("User files saved")
+                        log.info("User files saved")
                     except Exception as e:
-                        print(USER_FILE_EXCEPTION)
-                        print(e)
+                        log.error(USER_FILE_EXCEPTION)
+                        log.error(e)
+                        ErrorDialog(USER_FILE_EXCEPTION)
 
                     self.last_increment_request.emit(True)
                     self.steam_thread.quit()
                     self.loading_thread.quit()
                     self.library_statusbar.clearMessage()
-                    print("Loading LibraryUI")
+                    log.info("Loading LibraryUI")
                     LibraryUI(self.master)
                 except Exception as e:
-                    print(LIBRARY_UI_EXCEPTION)
-                    print(e)
+                    log.error(LIBRARY_UI_EXCEPTION)
+                    log.error(e)
+                    ErrorDialog(LIBRARY_UI_EXCEPTION)
 
     def _show_loading(self, ready):
         if ready:
-            print("Show loading ready")
+            log.info("Show loading ready")
             self.loading_dialog.show_dialog()
 
     def _request_progress(self, ready):
-        print("Request progress called")
+        log.info("Request progress called")
         if ready:
             self.increment_request.emit(True)

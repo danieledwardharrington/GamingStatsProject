@@ -6,12 +6,14 @@ import logging as log
 
 class DeleteUserDialog(object):
 
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def __init__(self, master):
         super().__init__()
+        log.info("Delete user dialog init called")
         delete_dialog = QtWidgets.QDialog()
         self.setup_Ui(delete_dialog, master)
+        log.info("Delete user dialog UI setup")
         delete_dialog.setWindowIcon(QIcon(WIN_ICON))
         delete_dialog.setWindowFlags(delete_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         delete_dialog.show()
@@ -71,7 +73,7 @@ class DeleteUserDialog(object):
     def _confirmed(self, confirm_delete_dialog, master):
         os.remove(USER_FILE_NAME)
         os.remove(LIBRARY_FILE_NAME)
-
+        log.info("User files deleted")
         from SteamUI import SteamUI
         SteamUI(master)
         confirm_delete_dialog.accept()

@@ -24,6 +24,9 @@ XSMALL_FONT = ("Segoe UI", 8)
 BROWSER_EXCEPTION = "Exception opening browser"
 BROWSER_POPUP = "Error opening browser"
 
+DELETE_USER_EXCEPTION = "Exception loading delete user dialog."
+DELETE_USER_POPUP = "Error loading delete user confirmation."
+
 NO_NETWORK = "No network connection"
 
 STEAM_EXCEPTION = "Exception getting user information from Steam"
@@ -52,11 +55,17 @@ UNKNOWN_POPUP = "Unknown error"
 
 ERROR_TITLE = "Error!"
 
+NO_GAME_EXCEPTION = "No game selected."
+NO_GAME_POPUP = "No game selected. Click the game name and try again."
+
 #FIle names
 USER_FILE_NAME = "usr/userInfo.dat"
 LIBRARY_FILE_NAME = "usr/userLibrary.dat"
 WIN_ICON = "images/gspDesktop2.ico"
-LOG_FILE_NAME = "log/gspLog.dat"
+LOG_FILE_NAME = "log/gspLog.log"
+
+#Log format
+LOG_FORMAT = "%(asctime)s:%(levelname)s:%(message)s"
 
 #About string
 ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page", \

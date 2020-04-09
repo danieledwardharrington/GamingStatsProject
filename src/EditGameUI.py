@@ -3,6 +3,7 @@ from PyQt5.QtGui import QIcon
 from Global import *
 from UserFile import *
 from LibraryUI import *
+from ErrorDialog import *
 import logging as log
 
 class EditGameUI(object):
@@ -11,12 +12,14 @@ class EditGameUI(object):
 
     def __init__(self, game_to_edit, game_list, lib_window, steam_thread, loading_thread):
         super().__init__()
+        log.info("EditGameUI init called")
         edit_dialog = QtWidgets.QDialog()
         edit_dialog.setWindowFlags(edit_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         edit_dialog.setWindowIcon(QIcon(WIN_ICON))
         self.steam_thread = steam_thread
         self.loading_thread = loading_thread
         self.setup_Ui(edit_dialog, game_to_edit, game_list, lib_window)
+        log.info("EditGameUI ui setup")
         edit_dialog.show()
         edit_dialog.exec_()
 
@@ -121,6 +124,7 @@ class EditGameUI(object):
         self.cancel_button.setText(_translate("edit_game_dialog", "Cancel"))
 
     def _save_edit(self, game, game_list, edit_game_dialog, lib_window):
+        log.info("Save edit called")
         self.steam_thread.quit()
         self.loading_thread.quit()
         new_genre = self.genre_entry.text().strip()
@@ -134,10 +138,17 @@ class EditGameUI(object):
             from UserFile import UserFile
             new_lib_file = UserFile()
             new_lib_file.create_library_file(game_list)
+            log.info("Save edit successful")
         except Exception as e:
-            print(LIBRARY_FILE_EXCEPTION)
-            print(e)
+            log.info(LIBRARY_FILE_EXCEPTION)
+            log.info(e)
+            ErrorDialog(LIBRARY_FILE_EXCEPTION)
 
-        from LibraryUI import LibraryUI
-        LibraryUI(lib_window)
-        edit_game_dialog.accept()
+        try:
+            from LibraryUI import LibraryUI
+            LibraryUI(lib_window)
+            edit_game_dialog.accept()
+        except Exception as e:
+            log.info(LIBRARY_UI_EXCEPTION)
+            log.info(e)
+            ErrorDialog(LIBRARY_UI_EXCEPTION) 
