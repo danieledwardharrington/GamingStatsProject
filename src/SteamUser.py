@@ -1,7 +1,8 @@
 import logging as log
+from Global import *
 
 class SteamUser:
-
+    
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     steam_user_id = ""

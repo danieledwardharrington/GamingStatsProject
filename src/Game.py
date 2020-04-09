@@ -1,4 +1,5 @@
 import logging as log
+from Global import *
 
 class Game:
 

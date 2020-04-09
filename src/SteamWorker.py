@@ -3,6 +3,7 @@ from PyQt5.QtCore import QObject
 from SteamBot import *
 import concurrent.futures
 import logging as log
+from Global import *
 
 class SteamWorker(QObject):
     

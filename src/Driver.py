@@ -10,7 +10,6 @@ import ctypes
 from ErrorDialog import *
 import logging as log
 
-log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
 def main():
     log.info("Driver main started")
@@ -50,6 +49,7 @@ def main():
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
     if sys.platform.startswith("win"):
         multiprocessing.freeze_support()
     main()
