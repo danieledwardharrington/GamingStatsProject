@@ -36,11 +36,27 @@ LIBRARY_FILE_EXCEPTION = "Exception creating library file"
 LIBRARY_FILE_POPUP = "Error saving game information"
 
 LIBRARY_UI_EXCEPTION = "Exception loading library UI"
+LIBRARY_UI_POPUP = "Error loading library window"
+
+SUMMARY_EXCEPTION = "Exception compiling library summary"
+SUMMARY_POPUP = "Error loading library summary"
+
+EDIT_EXCEPTION = "Exception loading edit game window"
+EDIT_POPUP = "Error loading edit game window"
+
+STEAM_UI_EXCEPTION = "Exception opening SteamUI"
+STEAM_UI_POPUP = "Error loading Steam information window"
+
+UNKNOWN_EXCEPTION = "Unknown exception"
+UNKNOWN_POPUP = "Unknown error"
+
+ERROR_TITLE = "Error!"
 
 #FIle names
 USER_FILE_NAME = "usr/userInfo.dat"
 LIBRARY_FILE_NAME = "usr/userLibrary.dat"
 WIN_ICON = "images/gspDesktop2.ico"
+LOG_FILE_NAME = "log/gspLog.dat"
 
 #About string
 ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page", \

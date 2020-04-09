@@ -3,8 +3,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import Qt
+import logging as log
 
 class AboutUI(object):
+
+    log.basicConfig(level = log.DEBUG)
 
     def __init__(self):
         about_dialog = QtWidgets.QDialog()

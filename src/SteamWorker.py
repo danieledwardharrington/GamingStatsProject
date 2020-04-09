@@ -2,9 +2,12 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QObject
 from SteamBot import *
 import concurrent.futures
+import logging as log
 
 class SteamWorker(QObject):
     
+    log.basicConfig(level = log.DEBUG)
+
     listed = QtCore.pyqtSignal(list)
     finished = QtCore.pyqtSignal(bool)
     ready = QtCore.pyqtSignal(bool)

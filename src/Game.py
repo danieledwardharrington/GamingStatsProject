@@ -1,4 +1,8 @@
+import logging as log
+
 class Game:
+
+    log.basicConfig(level = log.DEBUG)
 
     name = ""
     sort_name = "" #This is specifically for sorting the list alphabetically, trimming "the" from the beginning of any titles

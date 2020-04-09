@@ -1,4 +1,8 @@
+import logging as log
+
 class SteamUser:
+
+    log.basicConfig(level = log.DEBUG)
 
     steam_user_id = ""
     steam_user_api = ""

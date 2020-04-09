@@ -14,9 +14,13 @@ import sys
 from AboutUI import *
 from SteamWorker import *
 from LoadingDialog import *
+from SteamWorker import *
+import logging as log
 
 class SteamUI(QObject):
 
+    log.basicConfig(level = log.DEBUG)
+    
     result_list = []
     game_list = []
     steam_user = SteamUser()
@@ -26,12 +30,15 @@ class SteamUI(QObject):
     increment_amount = QtCore.pyqtSignal(float)
     last_increment_request = QtCore.pyqtSignal(bool)
 
-    def __init__(self, master, steam_worker):
+    def __init__(self, master):
         super().__init__()
         self.master = master
-        self.steam_worker = steam_worker
+        self.steam_worker = SteamWorker()
+        self.steam_thread = QtCore.QThread()
+        self.steam_worker.moveToThread(self.steam_thread)
+        self.steam_thread.start()
         self.setup_Ui(self.master, self.steam_worker)
-        steam_worker.increment.connect(self._request_progress)
+        self.steam_worker.increment.connect(self._request_progress)
         self.loading_dialog = LoadingDialog()
         self.loading_thread = QtCore.QThread()
         self.loading_dialog.moveToThread(self.loading_thread)
@@ -237,55 +244,7 @@ class SteamUI(QObject):
 
                 increments = len(self.game_list) / 100
                 self.increment_amount.emit(increments)
-
-                # steam_bot = SteamBot()
-                # with concurrent.futures.ProcessPoolExecutor() as executor:
-                #     result = executor.map(steam_bot.set_genre, self.game_list)
-                # result_list = list(result)
-                # for i  in result_list:
-                #     print(type(i))
-                #     print(str(i))
-
                 self.genres_requested.emit(self.game_list)
-
-                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
-                # self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
-
-                # #basically just assigning the genres from the futures result to the actual games in the games_list
-                # for game in self.game_list:
-                #     for genre in self.result_list:
-                #         if genre.startswith(str(game.steam_app_id)):
-                #             game.genre = genre.replace(str(game.steam_app_id), "")
-
-                # for game in self.game_list:
-                #     print(game.name)
-                #     print(game.steam_app_id)
-                #     print(game.genre)
-
-                # print("-----------------------------")
-                # end = time.time()
-                # print("Job end: " + str(end))
-                # print("Job took: " + str(end - start))
-                # print("-----------------------------")
-
-                # try:
-                #     try:
-                #         from UserFile import UserFile
-                #         #saving user files once everything has been done successfully
-                #         print("Saving user files")
-                #         user_info_file = UserFile(self.steam_user)
-                #         user_info_file.create_user_file()   
-                #         user_info_file.create_library_file(self.game_list)
-                #         print("User files saved")
-                #     except Exception as e:
-                #         print(USER_FILE_EXCEPTION)
-                #         print(e)
-
-                #     print("Loading LibraryUI")
-                #     LibraryUI(root, steam_worker)
-                # except Exception as e:
-                #     print(LIBRARY_UI_EXCEPTION)
-                #     print(e)
 
             else:
                 print(STEAM_EXCEPTION)
@@ -319,11 +278,6 @@ class SteamUI(QObject):
                         if genre.startswith(str(game.steam_app_id)):
                             game.genre = genre.replace(str(game.steam_app_id), "")
 
-                # for game in self.game_list:
-                #     print(game.name)
-                #     print(game.steam_app_id)
-                #     print(game.genre)
-
                 print("-----------------------------")
                 end = time.time()
                 print("Job end: " + str(end))
@@ -345,9 +299,10 @@ class SteamUI(QObject):
 
                     print("Loading LibraryUI")
                     self.statusbar.clearMessage()
-                    LibraryUI(self.master, self.steam_worker)
                     self.last_increment_request.emit(True)
+                    self.steam_thread.quit()
                     self.loading_thread.quit()
+                    LibraryUI(self.master)
                 except Exception as e:
                     print(LIBRARY_UI_EXCEPTION)
                     print(e)

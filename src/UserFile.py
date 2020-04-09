@@ -1,8 +1,11 @@
 from SteamUser import *
 from Global import *
 import pickle
+import logging as log
 
 class UserFile:
+
+    log.basicConfig(level = log.DEBUG)
 
     steam_user = SteamUser()
 

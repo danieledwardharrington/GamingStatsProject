@@ -4,9 +4,12 @@ from Global import *
 from collections import Counter
 from itertools import groupby
 from operator import attrgetter
+import logging as log
 
 class LibrarySummaryDialog(object):
     
+    log.basicConfig(level = log.DEBUG)
+
     def __init__(self, game_list):
         summary_dialog = QtWidgets.QDialog()
         self.setup_Ui(summary_dialog, game_list)

@@ -2,8 +2,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 from Global import *
 from PyQt5.QtGui import QIcon
+import logging as log
 
 class DeleteUserDialog(object):
+
+    log.basicConfig(level = log.DEBUG)
 
     def __init__(self, master):
         super().__init__()

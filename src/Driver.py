@@ -7,10 +7,12 @@ from LibraryUI import *
 from Global import *
 import multiprocessing
 import ctypes
-from SteamWorker import *
+import logging as log
 
 
 def main():
+
+    log.basicConfig(level = log.DEBUG)
 
     app = QtWidgets.QApplication(sys.argv)
     app.setWindowIcon(QIcon(WIN_ICON))
@@ -24,19 +26,14 @@ def main():
     myappid = "dharringtondev.GamingStatsProject" # arbitrary string
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
-    steam_worker = SteamWorker()
-    steam_thread = QtCore.QThread()
-    steam_worker.moveToThread(steam_thread)
-    steam_thread.start()
-
     #if the files don't exist for user info and the game library, we're taking the user to put
     #their info in again
     if not os.path.exists(USER_FILE_NAME) and not os.path.exists(LIBRARY_FILE_NAME):
         print("Loading steamUI")
-        SteamUI(master, steam_worker)
+        SteamUI(master)
     else:
         print("Loading LibraryUI")
-        LibraryUI(master, steam_worker)
+        LibraryUI(master)
 
     master.show()
     sys.exit(app.exec_())

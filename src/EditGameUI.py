@@ -3,14 +3,19 @@ from PyQt5.QtGui import QIcon
 from Global import *
 from UserFile import *
 from LibraryUI import *
+import logging as log
 
 class EditGameUI(object):
 
-    def __init__(self, game_to_edit, game_list, lib_window):
+    log.basicConfig(level = log.DEBUG)
+
+    def __init__(self, game_to_edit, game_list, lib_window, steam_thread, loading_thread):
         super().__init__()
         edit_dialog = QtWidgets.QDialog()
         edit_dialog.setWindowFlags(edit_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         edit_dialog.setWindowIcon(QIcon(WIN_ICON))
+        self.steam_thread = steam_thread
+        self.loading_thread = loading_thread
         self.setup_Ui(edit_dialog, game_to_edit, game_list, lib_window)
         edit_dialog.show()
         edit_dialog.exec_()
@@ -116,6 +121,8 @@ class EditGameUI(object):
         self.cancel_button.setText(_translate("edit_game_dialog", "Cancel"))
 
     def _save_edit(self, game, game_list, edit_game_dialog, lib_window):
+        self.steam_thread.quit()
+        self.loading_thread.quit()
         new_genre = self.genre_entry.text().strip()
         new_rating_str = self.rating_entry.text().strip()
         new_rating = round(float(new_rating_str), 1)

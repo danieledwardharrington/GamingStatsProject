@@ -7,8 +7,11 @@ from Game import *
 import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import QObject
+import logging as log
 
 class SteamBot:
+
+    log.basicConfig(level = log.DEBUG)
 
     def __init__(self):
         print("Steam bot created")
