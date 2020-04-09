@@ -6,14 +6,23 @@ import concurrent.futures
 class SteamWorker(QObject):
     
     listed = QtCore.pyqtSignal(list)
+    finished = QtCore.pyqtSignal(bool)
+    ready = QtCore.pyqtSignal(bool)
+    increment = QtCore.pyqtSignal(bool)
+    steam_bot = SteamBot()
+    result_list = []
 
     def steam_work(self, game_list):
-        steam_bot = SteamBot()
+        self.ready.emit(True)
+        print("Steam work true emit")
+        self.steam_bot = SteamBot()
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            result = executor.map(steam_bot.set_genre, game_list)
-            result_list = list(result)
-        for i  in result_list:
+            for result in executor.map(self.steam_bot.set_genre, game_list):
+                self.result_list.append(result)
+                self.increment.emit(True)
+        for i in self.result_list:
             print(type(i))
             print(str(i))
 
-        self.listed.emit(result_list)
+        self.listed.emit(self.result_list)
+        self.finished.emit(True)

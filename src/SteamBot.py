@@ -5,6 +5,8 @@ import bs4
 import urllib.request
 from Game import *
 import requests
+from PyQt5 import QtCore
+from PyQt5.QtCore import QObject
 
 class SteamBot:
 
@@ -15,7 +17,7 @@ class SteamBot:
         steam_cookies = {'birthtime': '283993201', 'mature_content': '1'}
         sauce = requests.get(STEAM_APP_URL + str(game.steam_app_id), cookies = steam_cookies)
         soup = bs4.BeautifulSoup(sauce.content, "lxml")
-
+        print("Steam bot set genre")
         genre = ""
         for a in soup.find_all("a", class_ = "app_tag"):
             if genre == "":

@@ -13,14 +13,30 @@ from operator import attrgetter
 import sys
 from AboutUI import *
 from SteamWorker import *
+from LoadingDialog import *
 
-class SteamUI(object):
+class SteamUI(QObject):
 
     result_list = []
+    game_list = []
+    steam_user = SteamUser()
+
+    genres_requested = QtCore.pyqtSignal(list)
+    increment_request = QtCore.pyqtSignal(bool)
+    increment_amount = QtCore.pyqtSignal(float)
+    last_increment_request = QtCore.pyqtSignal(bool)
 
     def __init__(self, master, steam_worker):
         super().__init__()
-        self.setup_Ui(master, steam_worker)
+        self.master = master
+        self.steam_worker = steam_worker
+        self.setup_Ui(self.master, self.steam_worker)
+        steam_worker.increment.connect(self._request_progress)
+        self.loading_dialog = LoadingDialog()
+        self.loading_thread = QtCore.QThread()
+        self.loading_dialog.moveToThread(self.loading_thread)
+        self.last_increment_request.connect(self.loading_dialog.last_increment)
+        self.loading_thread.start()
 
     def setup_Ui(self, master, steam_worker):
         master.setObjectName("master")
@@ -169,29 +185,37 @@ class SteamUI(object):
         try:
             webbrowser.open_new_tab(REPO_URL)
         except Exception as e:
-            browser_popup = PopupWindow(BROWSER_POPUP)
             print(BROWSER_EXCEPTION)
             print(e)
 
     def _get_input(self, key_entry, id_entry, root, steam_worker):
-        
+        self.submit_button.setEnabled(False)
+        self.statusbar.showMessage("Please wait...", 6000)
+
+        steam_worker.listed.connect(self._result_to_list)
+        steam_worker.finished.connect(self._on_finished)
+        steam_worker.ready.connect(self._show_loading)
+        self.genres_requested.connect(steam_worker.steam_work)
+        self.increment_amount.connect(self.loading_dialog.set_increments)
+        self.increment_request.connect(self.loading_dialog.increment_bar)
+
         user_id_number = id_entry.text().strip()
         user_api_key = key_entry.text().strip()
 
-        steam_user = SteamUser(user_id_number, user_api_key)
+        self.steam_user = SteamUser(user_id_number, user_api_key)
         print("Steam user ID: " + user_id_number)
         print("Steam user API key: " + user_api_key)
 
         if self._check_connection():
             
-            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + steam_user.steam_user_id + "&format=json")
+            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_user_id + "&format=json")
             print(type(ownedGamesReq))
             
             #checking for good response from Steam
             if(ownedGamesReq.status_code == 200):
-                start = time.time()
+                self.start = time.time()
                 print("-----------------------------")
-                print("Job start: " + str(start))
+                print("Job start: " + str(self.start))
                 print("-----------------------------")
                 #if all good, starting everything and saving user info and library files
                 print(vars(ownedGamesReq))
@@ -199,8 +223,7 @@ class SteamUI(object):
                 ownedGamesRes = ownedGamesReq.json()
                 print(type(ownedGamesRes))
 
-                game_list = []
-                print(type(game_list))
+                print(type(self.game_list))
                 for game in ownedGamesRes["response"]["games"]:
                     if game["playtime_forever"] > 0:
                         game_minutes = game["playtime_forever"]
@@ -208,69 +231,69 @@ class SteamUI(object):
                         game_app_id = game["appid"]
                         game_genre = ""
                         new_game = Game(game_name, game_genre, game_app_id, game_minutes)
-                        game_list.append(new_game)
+                        self.game_list.append(new_game)
                 print("Game list done")
-                print(type(game_list))
+                print(type(self.game_list))
+
+                increments = len(self.game_list) / 100
+                self.increment_amount.emit(increments)
 
                 # steam_bot = SteamBot()
                 # with concurrent.futures.ProcessPoolExecutor() as executor:
-                #     result = executor.map(steam_bot.set_genre, game_list)
+                #     result = executor.map(steam_bot.set_genre, self.game_list)
                 # result_list = list(result)
                 # for i  in result_list:
                 #     print(type(i))
                 #     print(str(i))
 
-                # steam_worker = SteamWorker()
-                # steam_thread = QtCore.QThread()
-                # steam_worker.moveToThread(steam_thread)
-                # steam_thread.start()
-
-                steam_worker.listed.connect(self._result_to_list)
+                self.genres_requested.emit(self.game_list)
 
                 #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
-                game_list.sort(key = attrgetter("sort_name"), reverse = False)
+                # self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
-                #basically just assigning the genres from the futures result to the actual games in the games_list
-                for game in game_list:
-                    for genre in self.result_list:
-                        if genre.startswith(str(game.steam_app_id)):
-                            game.genre = genre.replace(str(game.steam_app_id), "")
+                # #basically just assigning the genres from the futures result to the actual games in the games_list
+                # for game in self.game_list:
+                #     for genre in self.result_list:
+                #         if genre.startswith(str(game.steam_app_id)):
+                #             game.genre = genre.replace(str(game.steam_app_id), "")
 
-                for game in game_list:
-                    print(game.name)
-                    print(game.steam_app_id)
-                    print(game.genre)
+                # for game in self.game_list:
+                #     print(game.name)
+                #     print(game.steam_app_id)
+                #     print(game.genre)
 
-                print("-----------------------------")
-                end = time.time()
-                print("Job end: " + str(end))
-                print("Job took: " + str(end - start))
-                print("-----------------------------")
+                # print("-----------------------------")
+                # end = time.time()
+                # print("Job end: " + str(end))
+                # print("Job took: " + str(end - start))
+                # print("-----------------------------")
 
-                try:
-                    try:
-                        from UserFile import UserFile
-                        #saving user files once everything has been done successfully
-                        print("Saving user files")
-                        user_info_file = UserFile(steam_user)
-                        user_info_file.create_user_file()   
-                        user_info_file.create_library_file(game_list)
-                        print("User files saved")
-                    except Exception as e:
-                        print(USER_FILE_EXCEPTION)
-                        print(e)
+                # try:
+                #     try:
+                #         from UserFile import UserFile
+                #         #saving user files once everything has been done successfully
+                #         print("Saving user files")
+                #         user_info_file = UserFile(self.steam_user)
+                #         user_info_file.create_user_file()   
+                #         user_info_file.create_library_file(self.game_list)
+                #         print("User files saved")
+                #     except Exception as e:
+                #         print(USER_FILE_EXCEPTION)
+                #         print(e)
 
-                    print("Loading LibraryUI")
-                    LibraryUI(root, steam_worker)
-                except Exception as e:
-                    print(LIBRARY_UI_EXCEPTION)
-                    print(e)
+                #     print("Loading LibraryUI")
+                #     LibraryUI(root, steam_worker)
+                # except Exception as e:
+                #     print(LIBRARY_UI_EXCEPTION)
+                #     print(e)
 
             else:
                 print(STEAM_EXCEPTION)
                 print("Code: " + str(ownedGamesReq.status_code))
+                self.submit_button.setEnabled(True)
         else:
             print(NO_NETWORK)
+            self.submit_button.setEnabled(True)
 
     def _check_connection(self):
         host = "http://google.com"
@@ -283,3 +306,58 @@ class SteamUI(object):
 
     def _result_to_list(self, emit_list):
         self.result_list = emit_list
+
+    def _on_finished(self, finished):
+        print("On finished called")
+        if finished:
+                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
+                self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
+
+                #basically just assigning the genres from the futures result to the actual games in the games_list
+                for game in self.game_list:
+                    for genre in self.result_list:
+                        if genre.startswith(str(game.steam_app_id)):
+                            game.genre = genre.replace(str(game.steam_app_id), "")
+
+                # for game in self.game_list:
+                #     print(game.name)
+                #     print(game.steam_app_id)
+                #     print(game.genre)
+
+                print("-----------------------------")
+                end = time.time()
+                print("Job end: " + str(end))
+                print("Job took: " + str(end - self.start))
+                print("-----------------------------")
+
+                try:
+                    try:
+                        from UserFile import UserFile
+                        #saving user files once everything has been done successfully
+                        print("Saving user files")
+                        user_info_file = UserFile(self.steam_user)
+                        user_info_file.create_user_file()   
+                        user_info_file.create_library_file(self.game_list)
+                        print("User files saved")
+                    except Exception as e:
+                        print(USER_FILE_EXCEPTION)
+                        print(e)
+
+                    print("Loading LibraryUI")
+                    self.statusbar.clearMessage()
+                    LibraryUI(self.master, self.steam_worker)
+                    self.last_increment_request.emit(True)
+                    self.loading_thread.quit()
+                except Exception as e:
+                    print(LIBRARY_UI_EXCEPTION)
+                    print(e)
+
+    def _show_loading(self, ready):
+        if ready:
+            print("Show loading ready")
+            self.loading_dialog.show_dialog()
+
+    def _request_progress(self, ready):
+        print("Request progress called")
+        if ready:
+            self.increment_request.emit(True)
