@@ -177,8 +177,8 @@ class SteamUI(QObject):
     def retranslateUi(self, master):
         _translate = QtCore.QCoreApplication.translate
         master.setWindowTitle(_translate("master", "Gaming Stats Project - Steam User Info"))
-        self.steam_id_label.setText(_translate("master", "SteamID64 Number"))
-        self.steam_api_label.setText(_translate("master", "Steam API Key"))
+        self.steam_id_label.setText(_translate("master", "Steam API Key"))
+        self.steam_api_label.setText(_translate("master", "SteamID64 Number"))
         self.submit_button.setToolTip(_translate("master", "<html><head/><body><p>Submit info</p></body></html>"))
         self.submit_button.setText(_translate("master", "Submit"))
         self.repo_button.setToolTip(_translate("master", "<html><head/><body><p>Visit repo</p></body></html>"))
