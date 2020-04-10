@@ -1,7 +1,7 @@
 # Program that gives detailed stats/ratings about a user's Steam library
 # Author: Daniel Harrington
 
-from os import *
+from os import path
 from SteamUI import *
 from LibraryUI import *
 from Global import *
@@ -49,6 +49,8 @@ def main():
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
+    with open(LOG_FILE_NAME, "w"):
+        pass
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
     if sys.platform.startswith("win"):
         multiprocessing.freeze_support()
