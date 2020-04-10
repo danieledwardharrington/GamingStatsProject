@@ -104,35 +104,47 @@ class LibrarySummaryDialog(object):
         self.most_prevalent_label.setText(_translate("summary_dialog", "Most Prevalent Genres"))
 
     def _populate_lists(self, game_list):
-        log.ingo("Summary populate lists called")
+        log.info("Summary populate lists called")
         most_played_games = self._calculate_most_played_games(game_list)
         highest_rated_games = self._calculate_highest_rated_games(game_list)
         most_played_genres = self._calculate_most_played_genres(game_list)
         most_prevalent_genres = self._calculate_most_prevalent_genres(game_list)
 
         index = 0
+        log.info("Set index to 0")
         for game in most_played_games:
             self.most_played_game_list.insertItem(index, game)
             index += 1
-            log.info("Game inserted to most played: " + game.name)
+            log.info("Incremented index")
+            log.info("Game inserted to most played: " + game)
+        log.info("Inserting most played games complete")
         
         index = 0
+        log.info("Set index to 0")
         for game in highest_rated_games:
             self.highest_rated_games_list.insertItem(index, game)
             index += 1
-            log.info("Game inserted to highest rated: " + game.name)
+            log.info("Incremented index")
+            log.info("Game inserted to highest rated: " + game)
+        log.info("Inserting highest games complete")
 
         index = 0
+        log.info("Set index to 0")
         for genre in most_played_genres:
             self.most_played_genres_list.insertItem(index, genre)
             index += 1
+            log.info("Incremented index")
             log.info("Genre inserted to most played: " + genre)
+        log.info("Inserting most played genres complete")
 
         index = 0
+        log.info("Set index to 0")
         for genre in most_prevalent_genres:
             self.most_prevalent_genres_list.insertItem(index, genre)
             index += 1
+            log.info("Incremented index")
             log.info("Genre inserted to most prevalent: " + genre)
+        log.info("Inserting most prevalent genres complete")
 
         log.info("Populate lists complete")
 
