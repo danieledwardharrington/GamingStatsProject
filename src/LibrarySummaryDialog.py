@@ -146,7 +146,7 @@ class LibrarySummaryDialog(object):
 
         #Just doing the top ten, or the showing the full list if the user has less than 10 games
         top_ten = []
-        if len(game_list) >= 10
+        if len(game_list) >= 10:
             for i in range(10):
                 top_ten.append(game_list[i].name)
         else:
