@@ -143,9 +143,15 @@ class LibrarySummaryDialog(object):
 
         log.info("Sorting complete")
         log.info("Creating new list and adding first five elements of game_list to it")
+
+        #Just doing the top ten, or the showing the full list if the user has less than 10 games
         top_ten = []
-        for i in range(10):
-            top_ten.append(game_list[i].name)
+        if len(game_list) >= 10
+            for i in range(10):
+                top_ten.append(game_list[i].name)
+        else:
+            for i in range (len(game_list)):
+                top_ten.append(game_list[i].name)
 
         log.info("Top list completed - most played games")
         return top_ten
@@ -157,9 +163,14 @@ class LibrarySummaryDialog(object):
 
         log.info("Sorting complete")
         log.info("Creating new list to hold five highest rated games")
+        
         top_ten = []
-        for i in range(10):
-            top_ten.append(game_list[i].name)
+        if len(game_list) >= 10:
+            for i in range(10):
+                top_ten.append(game_list[i].name)
+        else:
+            for i in range(len(game_list)):
+                top_ten.append(game_list[i].name)
         log.info("Top list completed - highest rated games")
         return top_ten
 
@@ -192,9 +203,14 @@ class LibrarySummaryDialog(object):
         freqs = Counter(flat_genres)
         log.info(freqs)
 
-        count = freqs.most_common(10)
-        for i in range(10):
-            top_ten.append(count[i][0])
+        if len(game_list) >= 10:
+            count = freqs.most_common(10)
+            for i in range(10):
+                top_ten.append(count[i][0])
+        else:
+            count = freqs.most_common(len(game_list))
+            for i in range(len(game_list)):
+                top_ten.append(count[i][0])
         log.info(top_ten)
 
         log.info("Top list completed - most played genres")
@@ -223,9 +239,14 @@ class LibrarySummaryDialog(object):
         freqs = Counter(flat_genres)
         log.info(freqs)
 
-        count = freqs.most_common(10)
-        for i in range(10):
-            top_ten.append(count[i][0])
+        if len(game_list) >= 10:
+            count = freqs.most_common(10)
+            for i in range(10):
+                top_ten.append(count[i][0])
+        else:
+            count = freqs.most_common(len(game_list))
+            for i in range(len(game_list)):
+                top_ten.append(count[i][0])
         log.info(top_ten)
 
         log.info("Top list completed - most prevalent genres")
