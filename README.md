@@ -2,7 +2,7 @@
 A simple desktop app that gets your library from Steam and gives you detailed stats, including most played game, most played genre, as well as the ability to give ratings to games.
 ## Installation
 Version 1.0 Beta is available for download - Windows only:<br/>
-[Click here to download it from Google Drive](https://drive.google.com/open?id=1TLCYWp95Mj2GyOUsJNCRqg1bQxRu8e6k)
+[Click here to download it from Google Drive](https://drive.google.com/open?id=1_eg_jsm4hihOKo2QWjkm1jRPLgI9nJl2)
 ## Instructions for Obtaining a Steam API Key
 * Click this link:
 https://steamcommunity.com/login/home/?goto=%2Fdev%2Fapikey
