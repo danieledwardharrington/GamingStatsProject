@@ -161,8 +161,7 @@ class LibraryUI(QObject):
         self.action_exit.setText(_translate("library_window", "Exit"))
         self.action_about.setText(_translate("library_window", "About"))
 
-        #loading data from the file
-    
+    #loading data from the file
     def _load_data(self):
         log.info("Load data called")
         try:

@@ -8,7 +8,7 @@ import logging as log
 
 class EditGameUI(object):
 
-    log.basicConfig(level = log.DEBUG)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def __init__(self, game_to_edit, game_list, lib_window, steam_thread, loading_thread):
         super().__init__()
