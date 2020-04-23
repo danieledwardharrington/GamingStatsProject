@@ -2,14 +2,12 @@
 # Author: Daniel Harrington
 
 from os import path
-from SteamUI import *
-from LibraryUI import *
-from Global import *
+from PrimaryUI import SteamUI, LibraryUI
+from Vars.Global import *
 import multiprocessing
 import ctypes
-from ErrorDialog import *
+from MiscDialog import ErrorDialog
 import logging as log
-
 
 def main():
     log.info("Driver main started")

@@ -1,6 +1,6 @@
 import logging as log
-import GameUser.UserABC
-from Global import *
+from . import UserABC
+from ..Vars.Global import LOG_FILE_NAME, LOG_FORMAT
 
 class SteamUser(UserABC):
     

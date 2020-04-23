@@ -1,13 +1,13 @@
-from Global import *
+from ..Vars.Global import *
 import os
 from time import sleep
 import bs4
 import urllib.request
-from Game import *
+from . import SteamGame
 import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import QObject
-import GameWorkers.SteamBotABC
+from . import SteamBotABC
 import logging as log
 
 class SteamBot(SteamBotABC):

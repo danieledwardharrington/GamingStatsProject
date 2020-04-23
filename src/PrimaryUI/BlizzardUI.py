@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import logging as log
-from Global import *
+from ..Vars.Global import *
 from PyQt5.QtGui import QIcon
 
 class BlizzardUI(QObject):

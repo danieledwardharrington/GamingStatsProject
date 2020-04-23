@@ -1,9 +1,9 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QObject
-from GameWorkers.SteamBot import *
+from . import SteamBot
 import concurrent.futures
 import logging as log
-from Global import *
+from ..Vars.Global import *
 
 class SteamWorker(QObject):
     

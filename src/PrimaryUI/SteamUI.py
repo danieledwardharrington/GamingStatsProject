@@ -1,20 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Global import *
+from ..Vars.Global import *
 import webbrowser
-from SteamUser import *
+from ..GameUser import SteamUser, UserFile
 import time
 import urllib.request
-from Game import *
-from UserFile import *
-from SteamBot import *
-from LibraryUI import *
+from ..GameWorkers import SteamGame, SteamBot, SteamGame, SteamWorker
+from . import LibraryUI, AboutUI
 import concurrent.futures
 from operator import attrgetter
 import sys
-from AboutUI import *
-from SteamWorker import *
-from LoadingDialog import *
-from SteamWorker import *
+from ..MiscDialog import AboutDialog, LoadingDialog
 import logging as log
 
 class SteamUI(QObject):

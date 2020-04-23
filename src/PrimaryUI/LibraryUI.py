@@ -1,25 +1,18 @@
-from Global import *
+from ..Vars.Global import *
 import pickle
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView
 import concurrent.futures
 import time
 from operator import attrgetter
-from UserFile import *
+from ..GameUser import UserFile, SteamUser
 import urllib.request
-from Game import *
-from SteamBot import *
-from SteamUser import *
-from Global import *
+from ..GameWorkers import SteamGame, SteamBot, SteamWorker
 import sys
-from AboutUI import *
-from EditGameUI import *
-from DeleteUserDialog import *
-from LibrarySummaryDialog import *
-from LoadingDialog import *
-from SteamWorker import *
-from ErrorDialog import *
+from . import EditGameUI, LibrarySummaryDialog
+from ..MiscDialog import AboutDialog, DeleteUserDialog, LoadingDialog, ErrorDialog
 import logging as log
+import requests
 
 class LibraryUI(QObject):
 
@@ -179,7 +172,7 @@ class LibraryUI(QObject):
         game_data = self.game_lib_table.model().data(item_index)
 
         if item_index.column() == 0:
-            game_to_edit = Game()
+            game_to_edit = SteamGame()
             game_name = game_data
             for game in self.game_list:
                 if game_name == game.name:
@@ -239,7 +232,7 @@ class LibraryUI(QObject):
                         game_name = game["name"]
                         game_app_id = game["appid"]
                         game_genre = ""
-                        new_game = Game(game_name, game_genre, game_app_id, game_minutes)
+                        new_game = SteamGame(game_name, game_genre, game_app_id, game_minutes)
                         for item in self.game_list:
                             name_list.append(item.name)
                         if game_name not in name_list: 
@@ -367,7 +360,7 @@ class LibraryUI(QObject):
 
                 try:
                     try:
-                        from UserFile import UserFile
+                        from ..GameUser import UserFile
                         #saving user files once everything has been done successfully
                         log.info("Saving user files")
                         user_info_file = UserFile(self.steam_user)  

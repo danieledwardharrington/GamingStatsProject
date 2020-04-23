@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Global import *
-from SteamUI import *
-from BlizzardUI import *
+from ..Vars.Global import *
+from . import SteamUI, BlizzardUI, LibraryUI
 import logging as log
 
 class GameSelectionUI(QObject):

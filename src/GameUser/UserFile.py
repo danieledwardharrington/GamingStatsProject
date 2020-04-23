@@ -1,5 +1,5 @@
-from SteamUser import *
-from Global import *
+from . import SteamUser
+from ..Vars.Global import *
 import pickle
 import logging as log
 

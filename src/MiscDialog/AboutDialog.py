@@ -1,11 +1,11 @@
-from Global import *
+from ..Vars.Global import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QDesktopServices, QIcon
 from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import Qt
 import logging as log
 
-class AboutUI(object):
+class AboutDialog(object):
 
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 

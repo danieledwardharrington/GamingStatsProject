@@ -1,9 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
-from Global import *
-from UserFile import *
-from LibraryUI import *
-from ErrorDialog import *
+from ..Vars.Global import *
+from ..GameUser import UserFile
+from . import LibraryUI
+from ..MiscDialog import ErrorDialog
 import logging as log
 
 class EditGameUI(object):

@@ -1,5 +1,5 @@
 import logging as log
-from Global import *
+from ..Vars.Global import LOG_FILE_NAME, LOG_FORMAT
 
 class SteamGame:
 

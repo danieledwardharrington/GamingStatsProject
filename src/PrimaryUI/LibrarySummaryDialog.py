@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
-from Global import *
+from ..Vars.Global import *
 from collections import Counter
 from itertools import groupby
 from operator import attrgetter
