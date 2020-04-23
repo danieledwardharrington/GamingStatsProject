@@ -5,7 +5,11 @@ REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 
 #URLs
 STEAM_APP_URL = "https://store.steampowered.com/app/"
+
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
+
+BLIZZ_BASE_URL = "https://us.api.blizzard.com"
+BLIZZ_TOKEN_URL = "https://us.battle.net/oauth/token"
 
 #Fonts
 FONT_NAME = "Segoe UI"

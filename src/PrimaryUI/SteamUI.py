@@ -9,8 +9,9 @@ from . import LibraryUI, AboutUI
 import concurrent.futures
 from operator import attrgetter
 import sys
-from ..MiscDialog import AboutDialog, LoadingDialog
+from ..MiscDialog import AboutDialog, LoadingDialog, ErrorDialog
 import logging as log
+import requests
 
 class SteamUI(QObject):
 
@@ -231,7 +232,7 @@ class SteamUI(QObject):
                         game_name = game["name"]
                         game_app_id = game["appid"]
                         game_genre = ""
-                        new_game = Game(game_name, game_genre, game_app_id, game_minutes)
+                        new_game = SteamGame(game_name, game_genre, game_app_id, game_minutes)
                         self.game_list.append(new_game)
                 log.info("Game list done")
 
@@ -283,7 +284,7 @@ class SteamUI(QObject):
 
                 try:
                     try:
-                        from UserFile import UserFile
+                        from ..GameUser import UserFile
                         #saving user files once everything has been done successfully
                         log.info("Saving user files")
                         user_info_file = UserFile(self.steam_user)
