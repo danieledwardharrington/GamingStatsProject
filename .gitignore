@@ -1,4 +1,7 @@
 #Log and user data
-log/gspLog.log*
-usr/userLibrary.dat*
-usr/userInfo.dat*
+log/gspLog.log
+usr/userLibrary.dat
+usr/userInfo.dat
+
+#vscode folder
+.vscode
