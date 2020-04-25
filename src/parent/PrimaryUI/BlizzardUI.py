@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import logging as log
 from ..Vars.Global import *
 from PyQt5.QtGui import QIcon
+from ..GameUser import BlizzardUser, UserFile
 
 class BlizzardUI(QObject):
 
@@ -215,7 +216,10 @@ class BlizzardUI(QObject):
 
         for checkbox in self.game_checkboxes:
             if checkbox.isChecked():
-                self.games_checked.append(checkbox)
+                self.games_checked.append(checkbox.text())
+        blizz_user = BlizzardUser(self.real_id, self.region, self.games_checked)
+        user_file = UserFile(blizz_user)
+        user_file.create_user_file()
 
     #just putting all the conditions in their own method for one easy call rather than cascading if statements
     def _conditions_met(self):

@@ -1,9 +1,9 @@
 import os
 
-#URL for GitHub repo, sending the user there for instructions on obtaining API key and SteamID64
+# URL for GitHub repo, sending the user there for instructions on obtaining API key and SteamID64
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 
-#URLs
+# URLs
 STEAM_APP_URL = "https://store.steampowered.com/app/"
 
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
@@ -12,7 +12,7 @@ BLIZZ_BASE_URL = "https://us.api.blizzard.com"
 BLIZZ_TOKEN_URL = "https://us.battle.net/oauth/token"
 BLIZZ_AUTH_URL = "https://us.battle.net/oauth/authorize"
 
-#Fonts
+# Fonts
 FONT_NAME = "Segoe UI"
 XSMALL_FONT_POINT = 8
 SMALL_FONT_POINT = 10
@@ -25,7 +25,7 @@ NORM_FONT = ("Segoe UI", 12)
 SMALL_FONT = ("Segoe UI", 10)
 XSMALL_FONT = ("Segoe UI", 8)
 
-#Exception strings
+# Exception strings
 BROWSER_EXCEPTION = "Exception opening browser"
 BROWSER_POPUP = "Error opening browser"
 
@@ -63,16 +63,20 @@ ERROR_TITLE = "Error!"
 NO_GAME_EXCEPTION = "No game selected."
 NO_GAME_POPUP = "No game selected. Click the game name and try again."
 
-#FIle names
-USER_FILE_NAME = "usr/userInfo.dat"
-LIBRARY_FILE_NAME = "usr/userLibrary.dat"
+# FIle names
+USER_FILE_NAME = "usr/steamUserInfo.dat"
+LIBRARY_FILE_NAME = "usr/steamUserLibrary.dat"
+
+BLIZZ_USER_FILE_NAME = "usr/blizzUserInfo.dat"
+
 WIN_ICON = "images/gspDesktop2.ico"
 LOG_FILE_NAME = "log/gspLog.log"
 
-#Log format
+# Log format
 LOG_FORMAT = "%(asctime)s:%(levelname)s:%(message)s"
 
-#About string
+# About string
 ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page", \
                 " (genre will be blank if the game is no longer on Steam). Only games that have been played for at least one minute are included.", \
                 " All ratings are set to 0.0 until changed by the user and are rounded to nearest tenth."
+                

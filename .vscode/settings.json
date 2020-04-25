@@ -1,7 +1,7 @@
 {
-    "python.pythonPath": "C:\\Users\\Daniel\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.pythonPath": "d:\\GamingStatsProject\\venv\\Scripts\\python.exe",
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true,
+    "python.linting.enabled": false,
     "python.autoComplete.extraPath": ["C:\\Code\\GamingStatsProject"],
     "python.linting.pycodestyleEnabled": true
 }

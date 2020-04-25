@@ -2,11 +2,11 @@
 # Author: Daniel Harrington
 
 from os import path
-from PrimaryUI import SteamUI, LibraryUI
-from Vars.Global import *
+from .PrimaryUI import SteamUI, LibraryUI
+from .Vars.Global import *
 import multiprocessing
 import ctypes
-from MiscDialog import ErrorDialog
+from .MiscDialog import ErrorDialog
 import logging as log
 
 def main():

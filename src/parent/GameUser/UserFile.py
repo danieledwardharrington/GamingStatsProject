@@ -7,18 +7,22 @@ class UserFile:
 
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
-    steam_user = SteamUser()
-
-    def __init__(self, steam_user = SteamUser()):
+    def __init__(self, game_user):
         log.info("Steam user init called")
-        self.steam_user = steam_user
+        self.game_user = game_user
 
     def create_user_file(self):
         log.info("Create user file called")
         try:
             log.debug("Trying to create user file")
-            file_handler = open(USER_FILE_NAME, "wb")
-            pickle.dump(self.steam_user, file_handler)
+            
+            #checking what kind of user this is
+            if isinstance(self.game_user, SteamUser):
+                file_name = USER_FILE_NAME
+            else:
+                file_name = BLIZZ_USER_FILE_NAME 
+            file_handler = open(file_name, "wb")
+            pickle.dump(self.game_user, file_handler)
             file_handler.close()
             log.debug("User file creation succeeded")
         except Exception as e:
