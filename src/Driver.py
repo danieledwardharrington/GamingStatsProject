@@ -1,13 +1,19 @@
 # Program that gives detailed stats/ratings about a user's Steam library
 # Author: Daniel Harrington
 
+import sys
 from os import path
-from .PrimaryUI import SteamUI, LibraryUI
-from .Vars.Global import *
+from Packages.Vars.Global import *
+with open(LOG_FILE_NAME, "w"):
+    pass
+from Packages.PrimaryUI.SteamUI import SteamUI
+from Packages.PrimaryUI.LibraryUI import LibraryUI
 import multiprocessing
 import ctypes
-from .MiscDialog import ErrorDialog
+from Packages.MiscDialog.ErrorDialog import ErrorDialog
 import logging as log
+from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5.QtGui import QIcon
 
 def main():
     log.info("Driver main started")
@@ -33,7 +39,7 @@ def main():
         except Exception as e:
             log.error(STEAM_UI_EXCEPTION)
             log.error(e)
-            ErrorDialog(STEAM_EXCEPTION)
+            ErrorDialog(STEAM_UI_EXCEPTION)
     else:
         try:
             log.info("Loading LibraryUI")
@@ -47,8 +53,6 @@ def main():
     sys.exit(app.exec_())
 
 if __name__ == '__main__':
-    with open(LOG_FILE_NAME, "w"):
-        pass
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
     if sys.platform.startswith("win"):
         multiprocessing.freeze_support()
