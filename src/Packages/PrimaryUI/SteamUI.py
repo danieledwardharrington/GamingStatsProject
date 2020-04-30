@@ -165,7 +165,7 @@ class SteamUI(QObject):
         self.action_exit.triggered.connect(lambda: sys.exit())
         self.action_about = QtWidgets.QAction(master)
         self.action_about.setObjectName("action_about")
-        self.action_about.triggered.connect(lambda: AboutUI())
+        self.action_about.triggered.connect(lambda: AboutDialog())
         self.menu_file.addAction(self.action_exit)
         self.menu_help.addAction(self.action_about)
         self.main_menubar.addAction(self.menu_file.menuAction())

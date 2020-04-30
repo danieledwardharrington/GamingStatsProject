@@ -1,6 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ..Vars.Global import *
-from . import SteamUI, BlizzardUI, LibraryUI
+from .PrimaryUI.SteamUI import SteamUI
+from .PrimaryUI.BlizzardUI import BlizzardUI
+from .PrimaryUI.LibraryUI import LibraryUI
 import logging as log
 
 class GameSelectionUI(QObject):
@@ -156,7 +158,11 @@ class GameSelectionUI(QObject):
 
     def _go_to_steam_ui(self):
         steam_dialog = QtWidgets.QDialog
+        steam_dialog.setWindowIcon(QIcon(WIN_ICON))
+        steam_dialog.setWindowFlags(steam_dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
         SteamUI(steam_dialog)
+        steam_dialog.show()
+        steam_dialog.exec_()
 
     def _go_to_lib_ui(self, master):
         LibraryUI(master)

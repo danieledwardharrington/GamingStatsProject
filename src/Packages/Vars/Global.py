@@ -7,6 +7,7 @@ REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
 STEAM_APP_URL = "https://store.steampowered.com/app/"
 
 GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link"
+GOOGLE_FORM_URL_STYLED = "<html><head/><body><p><a href=https://docs.google.com/forms/d/e/1FAIpQLSdZsLvup2XdG2JxSSInDUPRUxjP-2KcxSmKVMHRHgaTpwNbWA/viewform?usp=sf_link <span style=\" text-decoration: underline; color:#0000ff;\">Have feedback? Click here</span></p></a></body></html>"
 
 BLIZZ_BASE_URL = "https://us.api.blizzard.com"
 BLIZZ_TOKEN_URL = "https://us.battle.net/oauth/token"
@@ -76,7 +77,5 @@ LOG_FILE_NAME = "log/gspLog.log"
 LOG_FORMAT = "%(asctime)s:%(levelname)s:%(message)s"
 
 # About string
-ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page", \
-                " (genre will be blank if the game is no longer on Steam). Only games that have been played for at least one minute are included.", \
-                " All ratings are set to 0.0 until changed by the user and are rounded to nearest tenth."
+ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page (genre will be blank if the game is no longer on Steam). Only games that have been played for at least one minute are included. All ratings are set to 0.0 until changed by the user and are rounded to nearest tenth."
                 

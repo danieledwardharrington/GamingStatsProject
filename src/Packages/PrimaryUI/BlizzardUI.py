@@ -26,6 +26,9 @@ class BlizzardUI(QObject):
         self.game_checkboxes.append(self.hearthstone_checkbox)
         self.game_checkboxes.append(self.overwatch_checkbox)
 
+        blizzard_dialog.show()
+        blizzard_dialog.exec_()
+
     def setupUi(self, blizzard_dialog):
         blizzard_dialog.setObjectName("blizzard_dialog")
         blizzard_dialog.resize(600, 400)
@@ -217,9 +220,11 @@ class BlizzardUI(QObject):
         for checkbox in self.game_checkboxes:
             if checkbox.isChecked():
                 self.games_checked.append(checkbox.text())
-        blizz_user = BlizzardUser(self.real_id, self.region, self.games_checked)
-        user_file = UserFile(blizz_user)
-        user_file.create_user_file()
+
+        if self._conditions_met():
+            blizz_user = BlizzardUser(self.real_id, self.region, self.games_checked)
+            user_file = UserFile(blizz_user)
+            user_file.create_user_file()
 
     #just putting all the conditions in their own method for one easy call rather than cascading if statements
     def _conditions_met(self):

@@ -6,12 +6,19 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView
 import concurrent.futures
 import time
 from operator import attrgetter
-from ..GameUser import UserFile, SteamUser
+from ..GameUser.UserFile import UserFile
+from ..GameUser.SteamUser import SteamUser
 import urllib.request
-from ..GameWorkers import SteamGame, SteamBot, SteamWorker
+from ..GameWorkers.SteamGame import SteamGame
+from ..GameWorkers.SteamBot import SteamBot
+from ..GameWorkers.SteamWorker import SteamWorker
 import sys
-from . import EditGameUI, LibrarySummaryDialog
-from ..MiscDialog import AboutDialog, DeleteUserDialog, LoadingDialog, ErrorDialog
+from .EditGameUI import EditGameUI
+from .LibrarySummaryUI import LibrarySummaryUI
+from ..MiscDialog.AboutDialog import AboutDialog
+from ..MiscDialog.DeleteUserDialog import DeleteUserDialog
+from ..MiscDialog.LoadingDialog import LoadingDialog
+from ..MiscDialog.ErrorDialog import ErrorDialog
 import logging as log
 import requests
 

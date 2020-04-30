@@ -6,7 +6,7 @@ from itertools import groupby
 from operator import attrgetter
 import logging as log
 
-class LibrarySummaryDialog(object):
+class LibrarySummaryUI(object):
     
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 

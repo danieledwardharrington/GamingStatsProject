@@ -19,9 +19,9 @@ class SteamWorker(QObject):
         log.info("steam_work called")
         self.ready.emit(True)
         log.debug("Steam work true emit")
-        self.steam_bot = SteamBot()
+        steam_bot = SteamBot()
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            for result in executor.map(self.steam_bot.set_genre, game_list):
+            for result in executor.map(steam_bot.set_genre, game_list):
                 self.result_list.append(result)
                 self.increment.emit(True)
         for i in self.result_list:

@@ -1,4 +1,4 @@
-from . import SteamUser
+from .SteamUser import SteamUser
 from ..Vars.Global import *
 import pickle
 import logging as log
@@ -20,7 +20,7 @@ class UserFile:
             if isinstance(self.game_user, SteamUser):
                 file_name = USER_FILE_NAME
             else:
-                file_name = BLIZZ_USER_FILE_NAME 
+                file_name = BLIZZ_USER_FILE_NAME
             file_handler = open(file_name, "wb")
             pickle.dump(self.game_user, file_handler)
             file_handler.close()

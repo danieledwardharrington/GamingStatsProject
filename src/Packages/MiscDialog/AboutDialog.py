@@ -5,7 +5,7 @@ from PyQt5.QtCore import QUrl
 from PyQt5.QtCore import Qt
 import logging as log
 
-class AboutDialog(object):
+class AboutDialog():
 
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
@@ -22,7 +22,7 @@ class AboutDialog(object):
 
     def setup_Ui(self, about_dialog):
         about_dialog.setObjectName("about_dialog")
-        about_dialog.resize(400, 300)
+        about_dialog.resize(500, 400)
         font = QtGui.QFont()
         font.setFamily(FONT_NAME)
         font.setPointSize(12)

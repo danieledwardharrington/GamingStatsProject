@@ -3,4 +3,6 @@ from abc import ABC, abstractmethod
 class SteamBotABC(ABC):
 
     @abstractmethod
-    def set_grenre(self, game): pass
+    @classmethod
+    def set_grenre(cls, game):
+        pass
