@@ -2,7 +2,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import logging as log
 from ..Vars.Global import *
 from PyQt5.QtGui import QIcon
-from ..GameUser import BlizzardUser, UserFile
+from ..GameUser.UserFile import UserFile
+from ..GameUser.BlizzardUser import BlizzardUser
 
 class BlizzardUI(QObject):
 
@@ -25,6 +26,9 @@ class BlizzardUI(QObject):
         self.game_checkboxes.append(self.wow_checkbox)
         self.game_checkboxes.append(self.hearthstone_checkbox)
         self.game_checkboxes.append(self.overwatch_checkbox)
+
+        self.region = None
+        self.real_id = None
 
         blizzard_dialog.show()
         blizzard_dialog.exec_()

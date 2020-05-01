@@ -29,7 +29,8 @@ class UserFile:
             log.error(USER_FILE_EXCEPTION)
             log.error(e)
 
-    def create_library_file(self, game_list):
+    @classmethod
+    def create_library_file(cls, game_list):
         log.info("Create library file called")
         try:
             log.debug("Trying to create library file")

@@ -5,3 +5,12 @@
 2020-04-30 14:45:18,183:INFO:Loading dialog init
 2020-04-30 14:45:21,475:INFO:About init called
 2020-04-30 14:45:21,477:INFO:About UI setup
+2020-04-30 18:29:10,250:DEBUG:Check connection if block
+2020-04-30 18:30:47,537:DEBUG:Check connection if block
+2020-04-30 18:31:49,476:DEBUG:Check connection if block
+2020-04-30 18:32:23,876:DEBUG:Check connection if block
+2020-04-30 18:32:23,878:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-04-30 18:32:24,086:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-04-30 18:34:15,316:DEBUG:Check connection if block
+2020-04-30 18:34:15,318:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-04-30 18:34:15,491:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None

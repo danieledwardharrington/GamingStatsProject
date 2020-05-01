@@ -9,25 +9,25 @@ from requests.auth import HTTPBasicAuth
 from ..GameUser.BlizzardUser import BlizzardUser
 
 class OAuth2Blizz(OAuth2BlizzABC):
-    print()
+
     log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def get_token(self):
-        #if self.is_token_invalid():
+        if self._check_connection():
             #will need to pickle load for blizzard user here
-            log.debug("Is token invalid if block")
-            self.client_id = os.environ("BLIZZ_CLIENT_ID")
-            print(self.client_id)
-            self.client_secret = os.environ("BLIZZ_CLIENT_SECRET")
-            print(self.client_secret)
+            log.debug("Check connection if block")
+            self.client_id = os.getenv("BLIZZ_CLIENT_ID")
+            print(f"Client ID: {self.client_id}")
+            self.client_secret = os.getenv("BLIZZ_CLIENT_SECRET")
+            print(f"Client secret: {self.client_secret}")
             self.region = "us"
-            url = f"https://%s.battle.net/oauth/token{self.region}"
+            url = f"https://{self.region}.battle.net/oauth/token"
             body = {"grant_type": 'client_credentials'}
             auth = HTTPBasicAuth(self.client_id, self.client_secret)
 
             response = requests.post(url, data = body, auth = auth)
             response_json = response.json
-            print(response_json)
+            print(f"reponse_json: {response_json}")
 
     def _check_connection(self):
         host = "http://google.com"
@@ -37,3 +37,6 @@ class OAuth2Blizz(OAuth2BlizzABC):
         except Exception as e:
             log.error(e)
             return False
+
+test = OAuth2Blizz()
+test.get_token()

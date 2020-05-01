@@ -35,6 +35,7 @@ class SteamUI(QObject):
     def __init__(self, master):
         super().__init__()
         log.info("SteamUI init called")
+        self.start = None #Start of job timer for later when scraping info from Steam
         self.master = master
         self.steam_worker = SteamWorker()
         self.steam_thread = QtCore.QThread()
@@ -214,8 +215,8 @@ class SteamUI(QObject):
         user_api_key = key_entry.text().strip()
 
         self.steam_user = SteamUser(user_id_number, user_api_key)
-        log.info("Steam user ID: " + user_id_number)
-        log.info("Steam user API key: " + user_api_key)
+        log.info(f"Steam user ID: {user_id_number}")
+        log.info(f"Steam user API key: {user_api_key}")
 
         if self._check_connection():
             
@@ -225,8 +226,8 @@ class SteamUI(QObject):
             if(ownedGamesReq.status_code == 200):
                 self.start = time.time()
                 print("-----------------------------")
-                print("Job start: " + str(self.start))
-                log.info("Job start: " + str(self.start))
+                print(f"Job start: {str(self.start)}")
+                log.info(f"Job start: {str(self.start)}")
                 print("-----------------------------")
                 #if all good, starting everything and saving user info and library files
                 log.info(vars(ownedGamesReq))
@@ -248,7 +249,7 @@ class SteamUI(QObject):
 
             else:
                 log.error(STEAM_EXCEPTION)
-                log.error("Code: " + str(ownedGamesReq.status_code))
+                log.error(f"Code: {str(ownedGamesReq.status_code)}")
                 self.submit_button.setEnabled(True)
                 ErrorDialog(STEAM_EXCEPTION)
         else:
@@ -256,7 +257,8 @@ class SteamUI(QObject):
             self.submit_button.setEnabled(True)
             ErrorDialog(NO_NETWORK)
 
-    def _check_connection(self):
+    @classmethod
+    def _check_connection(cls):
         host = "http://google.com"
         try:
             urllib.request.urlopen(host)
@@ -284,13 +286,13 @@ class SteamUI(QObject):
                 end = time.time()
                 print("Job end: " + str(end))
                 print("Job took: " + str(end - self.start))
-                log.info("Job end: " + str(end))
-                log.info("Job took: " + str(end - self.start))
+                log.info(f"Job end: {str(end)}")
+                log.info(f"Job took: {str(end - self.start)}")
                 print("-----------------------------")
 
                 try:
                     try:
-                        from ..GameUser import UserFile
+                        #from ..GameUser.UserFile import UserFile
                         #saving user files once everything has been done successfully
                         log.info("Saving user files")
                         user_info_file = UserFile(self.steam_user)

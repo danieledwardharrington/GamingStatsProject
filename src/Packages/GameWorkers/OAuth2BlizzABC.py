@@ -6,9 +6,9 @@ class OAuth2BlizzABC(ABC):
     @abstractmethod
     def get_token(self): pass
 
-    #return boolean
-    @abstractmethod
-    def is_token_invalid(self): pass
+    # #return boolean
+    # @abstractmethod
+    # def is_token_invalid(self): pass
 
     #return boolean
     @abstractmethod
