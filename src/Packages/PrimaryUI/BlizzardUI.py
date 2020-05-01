@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QObject
 import logging as log
 from ..Vars.Global import *
 from PyQt5.QtGui import QIcon

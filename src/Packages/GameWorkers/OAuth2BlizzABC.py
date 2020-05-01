@@ -4,7 +4,8 @@ class OAuth2BlizzABC(ABC):
     
     #return string
     @abstractmethod
-    def get_token(self): pass
+    def get_token(self):
+        pass
 
     # #return boolean
     # @abstractmethod
@@ -12,4 +13,5 @@ class OAuth2BlizzABC(ABC):
 
     #return boolean
     @abstractmethod
-    def _check_connection(self): pass
+    def _check_connection(self):
+        pass

@@ -223,7 +223,7 @@ class SteamUI(QObject):
             ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_user_id + "&format=json")
             
             #checking for good response from Steam
-            if(ownedGamesReq.status_code == 200):
+            if ownedGamesReq.status_code == 200:
                 self.start = time.time()
                 print("-----------------------------")
                 print(f"Job start: {str(self.start)}")
@@ -273,47 +273,47 @@ class SteamUI(QObject):
     def _on_finished(self, finished):
         log.info("On finished called")
         if finished:
-                #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
-                self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
+            #Sorting the list alphabetically, omitting "the " or "The " from the beginning of titles   
+            self.game_list.sort(key = attrgetter("sort_name"), reverse = False)
 
-                #basically just assigning the genres from the futures result to the actual games in the games_list
-                for game in self.game_list:
-                    for genre in self.result_list:
-                        if genre.startswith(str(game.steam_app_id)):
-                            game.genre = genre.replace(str(game.steam_app_id), "")
+            #basically just assigning the genres from the futures result to the actual games in the games_list
+            for game in self.game_list:
+                for genre in self.result_list:
+                    if genre.startswith(str(game.steam_app_id)):
+                        game.genre = genre.replace(str(game.steam_app_id), "")
 
-                print("-----------------------------")
-                end = time.time()
-                print("Job end: " + str(end))
-                print("Job took: " + str(end - self.start))
-                log.info(f"Job end: {str(end)}")
-                log.info(f"Job took: {str(end - self.start)}")
-                print("-----------------------------")
+            print("-----------------------------")
+            end = time.time()
+            print("Job end: " + str(end))
+            print("Job took: " + str(end - self.start))
+            log.info(f"Job end: {str(end)}")
+            log.info(f"Job took: {str(end - self.start)}")
+            print("-----------------------------")
 
+            try:
                 try:
-                    try:
-                        #from ..GameUser.UserFile import UserFile
-                        #saving user files once everything has been done successfully
-                        log.info("Saving user files")
-                        user_info_file = UserFile(self.steam_user)
-                        user_info_file.create_user_file()   
-                        user_info_file.create_library_file(self.game_list)
-                        log.info("User files saved")
-                    except Exception as e:
-                        log.error(USER_FILE_EXCEPTION)
-                        log.error(e)
-                        ErrorDialog(USER_FILE_EXCEPTION)
-
-                    log.info("Loading LibraryUI")
-                    self.statusbar.clearMessage()
-                    self.last_increment_request.emit(True)
-                    self.steam_thread.quit()
-                    self.loading_thread.quit()
-                    LibraryUI(self.master)
+                    #from ..GameUser.UserFile import UserFile
+                    #saving user files once everything has been done successfully
+                    log.info("Saving user files")
+                    user_info_file = UserFile(self.steam_user)
+                    user_info_file.create_user_file()   
+                    user_info_file.create_library_file(self.game_list)
+                    log.info("User files saved")
                 except Exception as e:
-                    log.error(LIBRARY_UI_EXCEPTION)
+                    log.error(USER_FILE_EXCEPTION)
                     log.error(e)
-                    ErrorDialog(LIBRARY_UI_EXCEPTION)
+                    ErrorDialog(USER_FILE_EXCEPTION)
+
+                log.info("Loading LibraryUI")
+                self.statusbar.clearMessage()
+                self.last_increment_request.emit(True)
+                self.steam_thread.quit()
+                self.loading_thread.quit()
+                LibraryUI(self.master)
+            except Exception as e:
+                log.error(LIBRARY_UI_EXCEPTION)
+                log.error(e)
+                ErrorDialog(LIBRARY_UI_EXCEPTION)
 
     def _show_loading(self, ready):
         if ready:
