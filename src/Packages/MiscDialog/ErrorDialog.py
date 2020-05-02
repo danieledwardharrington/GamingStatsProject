@@ -67,6 +67,8 @@ class ErrorDialog(object):
             self.error_label.setText(NO_GAME_POPUP)
         elif exception_type == DELETE_USER_EXCEPTION:
             self.error_label.setText(DELETE_USER_POPUP)
+        elif exception_type == BLIZZARD_EXCEPTION:
+            self.error_label.setText(BLIZZARD_POPUP)
         else:
             self.error_label.setText(UNKNOWN_POPUP)
         

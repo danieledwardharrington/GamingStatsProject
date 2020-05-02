@@ -38,6 +38,9 @@ NO_NETWORK = "No network connection"
 STEAM_EXCEPTION = "Exception getting user information from Steam"
 STEAM_POPUP = "Error getting your information from Steam"
 
+BLIZZARD_EXCEPTION = "Exception getting information from Blizzard"
+BLIZZARD_POPUP = "Error getting your information from Blizzard"
+
 USER_FILE_EXCEPTION = "Exception creating user file"
 USER_FILE_POPUP = "Error saving user information"
 

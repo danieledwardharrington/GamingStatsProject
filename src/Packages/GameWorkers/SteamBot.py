@@ -1,6 +1,5 @@
 from ..Vars.Global import *
 import os
-from time import sleep
 import bs4
 import urllib.request
 from .SteamGame import SteamGame

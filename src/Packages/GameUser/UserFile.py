@@ -1,4 +1,4 @@
-from .SteamUser import SteamUser
+from .UserImpl import UserImpl
 from ..Vars.Global import *
 import pickle
 import logging as log
@@ -17,7 +17,7 @@ class UserFile:
             log.debug("Trying to create user file")
             
             #checking what kind of user this is
-            if isinstance(self.game_user, SteamUser):
+            if isinstance(self.game_user, UserImpl):
                 file_name = USER_FILE_NAME
             else:
                 file_name = BLIZZ_USER_FILE_NAME

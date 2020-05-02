@@ -4,7 +4,10 @@ import logging as log
 from ..Vars.Global import *
 from PyQt5.QtGui import QIcon
 from ..GameUser.UserFile import UserFile
-from ..GameUser.BlizzardUser import BlizzardUser
+from ..GameUser.UserImpl import UserImpl
+from ..GameWorkers.OAuth2Blizz import OAuth2Blizz
+from ..MiscDialog.ErrorDialog import ErrorDialog
+import requests
 
 class BlizzardUI(QObject):
 
@@ -227,9 +230,23 @@ class BlizzardUI(QObject):
                 self.games_checked.append(checkbox.text())
 
         if self._conditions_met():
-            blizz_user = BlizzardUser(self.real_id, self.region, self.games_checked)
-            user_file = UserFile(blizz_user)
-            user_file.create_user_file()
+            blizz_user = UserImpl()
+            blizz_user.set_blizz_info(self.real_id, self.region, self.games_checked)
+            oauth = OAuth2Blizz(blizz_user)
+            response = oauth.get_token()
+
+            if response.status_code == 200:
+                log.info("Blizzard request successful")
+                log.info(f"Blizzard response code: {response.status_code}")
+                response_json = response.json()
+                token = response_json["access_token"]
+
+                user_file = UserFile(blizz_user)
+                user_file.create_user_file()
+            else:
+                log.error("Blizzard request failed")
+                log.error(BLIZZARD_EXCEPTION)
+                ErrorDialog(BLIZZARD_EXCEPTION)
 
     #just putting all the conditions in their own method for one easy call rather than cascading if statements
     def _conditions_met(self):

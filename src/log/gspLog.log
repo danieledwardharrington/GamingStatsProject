@@ -30,3 +30,19 @@
 2020-05-01 19:31:00,745:DEBUG:Check connection if block
 2020-05-01 19:31:00,748:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
 2020-05-01 19:31:00,978:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 12:32:06,278:INFO:OAuth2Blizz init called
+2020-05-02 12:32:06,539:DEBUG:Check connection if block
+2020-05-02 12:32:06,541:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 12:32:07,033:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 12:32:45,076:INFO:OAuth2Blizz init called
+2020-05-02 12:32:45,290:DEBUG:Check connection if block
+2020-05-02 12:32:45,292:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 12:32:45,471:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 12:33:34,660:INFO:OAuth2Blizz init called
+2020-05-02 12:33:34,901:DEBUG:Check connection if block
+2020-05-02 12:33:34,902:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 12:33:35,088:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 12:33:55,061:INFO:OAuth2Blizz init called
+2020-05-02 12:33:55,289:DEBUG:Check connection if block
+2020-05-02 12:33:55,290:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 12:33:55,470:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
