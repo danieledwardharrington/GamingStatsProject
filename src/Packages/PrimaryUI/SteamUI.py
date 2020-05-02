@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QObject
 from ..Vars.Global import *
 import webbrowser
-from ..GameUser.SteamUser import SteamUser
+from ..GameUser.UserImpl import UserImpl
 from ..GameUser.UserFile import UserFile
 import time
 import urllib.request
@@ -25,7 +25,7 @@ class SteamUI(QObject):
     
     result_list = []
     game_list = []
-    steam_user = SteamUser()
+    steam_user = UserImpl()
 
     genres_requested = QtCore.pyqtSignal(list)
     increment_request = QtCore.pyqtSignal(bool)
@@ -191,8 +191,8 @@ class SteamUI(QObject):
         self.action_exit.setText(_translate("master", "Exit"))
         self.action_about.setText(_translate("master", "About"))
 
-
-    def _send_to_repo(self):
+    @classmethod
+    def _send_to_repo(cls):
         try:
             webbrowser.open_new_tab(REPO_URL)
         except Exception as e:
@@ -214,13 +214,13 @@ class SteamUI(QObject):
         user_id_number = id_entry.text().strip()
         user_api_key = key_entry.text().strip()
 
-        self.steam_user = SteamUser(user_id_number, user_api_key)
+        self.steam_user.set_steam_info(user_id_number, user_api_key)
         log.info(f"Steam user ID: {user_id_number}")
         log.info(f"Steam user API key: {user_api_key}")
 
         if self._check_connection():
             
-            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_user_api + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_user_id + "&format=json")
+            ownedGamesReq = requests.get("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + self.steam_user.steam_api_key + "&include_appinfo=true&include_played_free_games=true&steamid=" + self.steam_user.steam_id + "&format=json")
             
             #checking for good response from Steam
             if ownedGamesReq.status_code == 200:

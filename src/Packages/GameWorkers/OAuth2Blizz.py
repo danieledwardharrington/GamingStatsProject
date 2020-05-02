@@ -6,7 +6,7 @@ from ..Vars.Global import LOG_FILE_NAME, LOG_FORMAT, BLIZZ_BASE_URL, BLIZZ_TOKEN
 import requests
 import json
 from requests.auth import HTTPBasicAuth
-from ..GameUser.BlizzardUser import BlizzardUser
+from ..GameUser.UserImpl import UserImpl
 
 class OAuth2Blizz(OAuth2BlizzABC):
 
@@ -33,8 +33,11 @@ class OAuth2Blizz(OAuth2BlizzABC):
             auth = HTTPBasicAuth(self.client_id, self.client_secret)
 
             response = requests.post(url, data = body, auth = auth)
-            response_json = response.json
+            response_json = response.json()
+            token = response_json["access_token"]
             print(f"reponse_json: {response_json}")
+            print(f"token: {token}")
+            return token
 
     def _check_connection(self):
         host = "http://google.com"
