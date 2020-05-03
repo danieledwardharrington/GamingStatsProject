@@ -46,3 +46,129 @@
 2020-05-02 12:33:55,289:DEBUG:Check connection if block
 2020-05-02 12:33:55,290:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
 2020-05-02 12:33:55,470:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:50:27,380:INFO:Steam user init called
+2020-05-02 14:50:27,380:INFO:OAuth2Blizz init called
+2020-05-02 14:50:50,661:INFO:Steam user init called
+2020-05-02 14:50:50,661:INFO:OAuth2Blizz init called
+2020-05-02 14:50:50,661:INFO:Checking internet connection
+2020-05-02 14:50:50,952:INFO:Internet connection test successful
+2020-05-02 14:50:50,952:DEBUG:Check connection if block
+2020-05-02 14:50:50,954:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:50:51,158:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:50:51,163:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:50:51,316:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo HTTP/1.1" 403 987
+2020-05-02 14:54:33,637:INFO:Steam user init called
+2020-05-02 14:54:33,638:INFO:OAuth2Blizz init called
+2020-05-02 14:54:33,638:INFO:Checking internet connection
+2020-05-02 14:54:33,904:INFO:Internet connection test successful
+2020-05-02 14:54:33,904:DEBUG:Check connection if block
+2020-05-02 14:54:33,906:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:54:34,099:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:54:56,135:INFO:Steam user init called
+2020-05-02 14:54:56,135:INFO:OAuth2Blizz init called
+2020-05-02 14:54:56,135:INFO:Checking internet connection
+2020-05-02 14:54:56,357:INFO:Internet connection test successful
+2020-05-02 14:54:56,358:DEBUG:Check connection if block
+2020-05-02 14:54:56,359:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:54:56,544:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:54:56,549:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:54:56,707:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo?Authorization:%20Bearer%20USR6bbtnSTyiMd959eP2AsIkv6p2yA8vIK HTTP/1.1" 403 987
+2020-05-02 14:56:29,878:INFO:Steam user init called
+2020-05-02 14:56:29,878:INFO:OAuth2Blizz init called
+2020-05-02 14:56:29,878:INFO:Checking internet connection
+2020-05-02 14:56:30,106:INFO:Internet connection test successful
+2020-05-02 14:56:30,106:DEBUG:Check connection if block
+2020-05-02 14:56:30,107:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:56:30,285:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:56:30,290:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:56:30,452:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo?Authorization:%20Bearer%20USR6bbtnSTyiMd959eP2AsIkv6p2yA8vIK HTTP/1.1" 403 987
+2020-05-02 14:59:08,416:INFO:Steam user init called
+2020-05-02 14:59:08,416:INFO:OAuth2Blizz init called
+2020-05-02 14:59:08,416:INFO:Checking internet connection
+2020-05-02 14:59:08,663:INFO:Internet connection test successful
+2020-05-02 14:59:08,663:DEBUG:Check connection if block
+2020-05-02 14:59:08,664:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:59:08,853:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:59:08,858:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:59:09,011:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo?access_token=USR6bbtnSTyiMd959eP2AsIkv6p2yA8vIK HTTP/1.1" 403 979
+2020-05-02 14:59:41,293:INFO:Steam user init called
+2020-05-02 14:59:41,293:INFO:OAuth2Blizz init called
+2020-05-02 14:59:41,293:INFO:Checking internet connection
+2020-05-02 14:59:41,535:INFO:Internet connection test successful
+2020-05-02 14:59:41,535:DEBUG:Check connection if block
+2020-05-02 14:59:41,537:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:59:41,719:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 14:59:41,724:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 14:59:41,875:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo?access_token=USR6bbtnSTyiMd959eP2AsIkv6p2yA8vIK HTTP/1.1" 403 979
+2020-05-02 15:01:50,226:INFO:Steam user init called
+2020-05-02 15:01:50,227:INFO:OAuth2Blizz init called
+2020-05-02 15:01:50,227:INFO:Checking internet connection
+2020-05-02 15:01:50,440:INFO:Internet connection test successful
+2020-05-02 15:01:50,440:DEBUG:Check connection if block
+2020-05-02 15:01:50,441:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 15:01:50,645:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 200 None
+2020-05-02 15:01:50,650:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 15:01:50,814:DEBUG:https://us.battle.net:443 "GET /oauth/userinfo?access_token=USR6bbtnSTyiMd959eP2AsIkv6p2yA8vIK HTTP/1.1" 403 979
+2020-05-02 15:03:26,468:INFO:Steam user init called
+2020-05-02 15:03:26,468:INFO:OAuth2Blizz init called
+2020-05-02 15:03:26,468:INFO:Checking internet connection
+2020-05-02 15:03:26,706:INFO:Internet connection test successful
+2020-05-02 15:03:26,706:DEBUG:Check connection if block
+2020-05-02 15:03:26,708:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 15:03:26,881:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-02 15:05:23,157:INFO:Steam user init called
+2020-05-02 15:05:23,158:INFO:OAuth2Blizz init called
+2020-05-02 15:05:23,158:INFO:Checking internet connection
+2020-05-02 15:05:23,422:INFO:Internet connection test successful
+2020-05-02 15:05:23,423:DEBUG:Check connection if block
+2020-05-02 15:05:23,424:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-02 15:05:23,617:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:01:21,139:INFO:Steam user init called
+2020-05-03 13:01:21,140:INFO:OAuth2Blizz init called
+2020-05-03 13:01:21,140:INFO:Checking internet connection
+2020-05-03 13:01:21,393:INFO:Internet connection test successful
+2020-05-03 13:01:21,393:DEBUG:Check connection if block
+2020-05-03 13:01:21,576:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:01:22,531:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:04:02,800:INFO:Steam user init called
+2020-05-03 13:04:02,800:INFO:OAuth2Blizz init called
+2020-05-03 13:04:02,800:INFO:Checking internet connection
+2020-05-03 13:04:03,033:INFO:Internet connection test successful
+2020-05-03 13:04:03,033:DEBUG:Check connection if block
+2020-05-03 13:04:03,196:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:04:03,384:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:09:32,358:INFO:Steam user init called
+2020-05-03 13:09:32,358:INFO:OAuth2Blizz init called
+2020-05-03 13:09:32,358:INFO:Checking internet connection
+2020-05-03 13:09:32,621:INFO:Internet connection test successful
+2020-05-03 13:09:32,621:DEBUG:Check connection if block
+2020-05-03 13:09:32,789:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:09:32,957:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:10:34,116:INFO:Steam user init called
+2020-05-03 13:10:34,116:INFO:OAuth2Blizz init called
+2020-05-03 13:10:34,116:INFO:Checking internet connection
+2020-05-03 13:10:34,322:INFO:Internet connection test successful
+2020-05-03 13:10:34,322:DEBUG:Check connection if block
+2020-05-03 13:10:34,481:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:10:34,663:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:14:55,823:INFO:Steam user init called
+2020-05-03 13:14:55,823:INFO:OAuth2Blizz init called
+2020-05-03 13:14:55,823:INFO:Checking internet connection
+2020-05-03 13:14:56,085:INFO:Internet connection test successful
+2020-05-03 13:14:56,085:DEBUG:Check connection if block
+2020-05-03 13:14:56,243:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:14:56,445:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:17:06,456:INFO:Steam user init called
+2020-05-03 13:17:06,456:INFO:OAuth2Blizz init called
+2020-05-03 13:17:06,456:INFO:Checking internet connection
+2020-05-03 13:17:06,674:INFO:Internet connection test successful
+2020-05-03 13:17:06,675:DEBUG:Check connection if block
+2020-05-03 13:17:06,832:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:17:07,024:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-03 13:17:40,454:INFO:Steam user init called
+2020-05-03 13:17:40,454:INFO:OAuth2Blizz init called
+2020-05-03 13:17:40,454:INFO:Checking internet connection
+2020-05-03 13:17:40,673:INFO:Internet connection test successful
+2020-05-03 13:17:40,673:DEBUG:Check connection if block
+2020-05-03 13:17:40,832:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-03 13:17:41,006:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class UserABC(ABC):
     blizz_real_id = None
     blizz_region = None
-    sc2_realm_id = None
+    blizz_realm_id = None
     blizz_region_id = None
     blizz_games = None
     steam_id = None

@@ -207,10 +207,13 @@ class BlizzardUI(QObject):
         self.real_id_label.setText(_translate("blizzard_dialog", "Real ID"))
         self.region_combobox.setToolTip(_translate("blizzard_dialog", "Choose region"))
         self.region_combobox.setItemText(0, _translate("blizzard_dialog", "Region"))
-        self.region_combobox.setItemText(1, _translate("blizzard_dialog", "Americas"))
-        self.region_combobox.setItemText(2, _translate("blizzard_dialog", "Europe"))
-        self.region_combobox.setItemText(3, _translate("blizzard_dialog", "Asia"))
-        self.region_combobox.setItemText(4, _translate("blizzard_dialog", "China"))
+        self.region_combobox.setItemText(1, _translate("blizzard_dialog", "US"))
+        self.region_combobox.setItemText(2, _translate("blizzard_dialog", "Latin America"))
+        self.region_combobox.setItemText(3, _translate("blizzard_dialog", "Europe"))
+        self.region_combobox.setItemText(4, _translate("blizzard_dialog", "Russia"))
+        self.region_combobox.setItemText(5, _translate("blizzard_dialog", "Korea"))
+        self.region_combobox.setItemText(6, _translate("blizzard_dialog", "Taiwan"))
+        self.region_combobox.setItemText(7, _translate("blizzard_dialog", "China"))
         self.select_blizz_games_label.setText(_translate("blizzard_dialog", "Select your games"))
         self.sc2_checkbox.setText(_translate("blizzard_dialog", "StarCraft II"))
         self.hearthstone_checkbox.setText(_translate("blizzard_dialog", "Hearthstone"))
@@ -240,6 +243,8 @@ class BlizzardUI(QObject):
                 log.info(f"Blizzard response code: {response.status_code}")
                 response_json = response.json()
                 token = response_json["access_token"]
+
+                user_info = requests.get("{BLIZZ_BASE_URL}/player/")
 
                 user_file = UserFile(blizz_user)
                 user_file.create_user_file()

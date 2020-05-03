@@ -12,6 +12,7 @@ GOOGLE_FORM_URL_STYLED = "<html><head/><body><p><a href=https://docs.google.com/
 BLIZZ_BASE_URL = "https://us.api.blizzard.com"
 BLIZZ_TOKEN_URL = "https://us.battle.net/oauth/token"
 BLIZZ_AUTH_URL = "https://us.battle.net/oauth/authorize"
+BLIZZ_OAUTH_BASE = "https://us.battle.net/oauth/"
 
 # Fonts
 FONT_NAME = "Segoe UI"

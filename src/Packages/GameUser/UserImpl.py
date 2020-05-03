@@ -17,5 +17,3 @@ class UserImpl(UserABC):
         self.blizz_real_id = real_id
         self.blizz_region = region
         self.blizz_games = games
-
-    
