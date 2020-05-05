@@ -21,6 +21,21 @@ class OAuth2Blizz(OAuth2BlizzABC):
         self.client_secret = None
         self.region = user.blizz_region
 
+    def get_auth_code(self):
+        if self._check_connection():
+            self.client_id = os.getenv("BLIZZ_CLIENT_ID")
+            print(f"Client ID: {self.client_id}")
+            self.client_secret = os.getenv("BLIZZ_CLIENT_SECRET")
+            print(f"Client secret: {self.client_secret}")
+            self.region = "us"
+            state = "abcd1234"
+
+            re = requests.get(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope={SC2_SCOPE}&state={state}")
+
+            re_url = re.url
+            code = re_url.split("code=")[-1]
+            return code
+
     def get_token(self):
         if self._check_connection():
             log.debug("Check connection if block")
@@ -29,8 +44,9 @@ class OAuth2Blizz(OAuth2BlizzABC):
             self.client_secret = os.getenv("BLIZZ_CLIENT_SECRET")
             print(f"Client secret: {self.client_secret}")
             self.region = "us"
+            state = "abcd1234"
 
-            webbrowser.open_new_tab(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope=sc2.profile")
+            webbrowser.open_new_tab(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope=sc2.profile&state={state}")
 
             url = f"https://{self.region}.battle.net/oauth/token"
             body = {"grant_type": 'authorization_code'}
@@ -57,10 +73,5 @@ class OAuth2Blizz(OAuth2BlizzABC):
             return False
 
 test = OAuth2Blizz()
-response = test.get_token()
-response_json = response.json()
-print(f"response_json: {response_json}")
-token = response_json["access_token"]
-print(f"Token: {token}")
-res = requests.get(f"us.battle.net/userinfo?access_token={token}")
-print(res)
+response = test.get_auth_code()
+print(f"Response: {response}")

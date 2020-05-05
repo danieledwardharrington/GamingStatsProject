@@ -14,6 +14,12 @@ BLIZZ_TOKEN_URL = "https://us.battle.net/oauth/token"
 BLIZZ_AUTH_URL = "https://us.battle.net/oauth/authorize"
 BLIZZ_OAUTH_BASE = "https://us.battle.net/oauth/"
 
+# Blizzard Scopes
+WOW_SCOPE = "wow.profile"
+SC2_SCOPE = "sc2.profile"
+D3_SCOPE = "d3.profile"
+OPENID_SCOPE = "openid"
+
 # Fonts
 FONT_NAME = "Segoe UI"
 XSMALL_FONT_POINT = 8

@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 
 class OAuth2BlizzABC(ABC):
     
+    @abstractmethod
+    def get_auth_code(self):
+        pass
+
     #return string
     @abstractmethod
     def get_token(self):
