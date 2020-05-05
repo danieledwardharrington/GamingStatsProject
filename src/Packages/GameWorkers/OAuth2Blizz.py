@@ -33,8 +33,10 @@ class OAuth2Blizz(OAuth2BlizzABC):
             re = requests.get(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope={SC2_SCOPE}&state={state}")
 
             re_url = re.url
+            print(re_url)
             code = re_url.split("code=")[-1]
-            return code
+            return re
+        return None
 
     def get_token(self):
         if self._check_connection():
@@ -73,5 +75,3 @@ class OAuth2Blizz(OAuth2BlizzABC):
             return False
 
 test = OAuth2Blizz()
-response = test.get_auth_code()
-print(f"Response: {response}")
