@@ -206,3 +206,72 @@
 2020-05-04 19:19:17,823:INFO:OAuth2Blizz init called
 2020-05-04 19:19:39,322:INFO:Steam user init called
 2020-05-04 19:19:39,322:INFO:OAuth2Blizz init called
+2020-05-05 17:10:19,686:INFO:Steam user init called
+2020-05-05 17:10:19,687:INFO:OAuth2Blizz init called
+2020-05-05 17:10:19,687:INFO:Checking internet connection
+2020-05-05 17:10:19,969:INFO:Internet connection test successful
+2020-05-05 17:10:19,973:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:10:20,183:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:10:20,229:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:11:29,218:INFO:Steam user init called
+2020-05-05 17:11:29,218:INFO:OAuth2Blizz init called
+2020-05-05 17:11:29,218:INFO:Checking internet connection
+2020-05-05 17:11:29,457:INFO:Internet connection test successful
+2020-05-05 17:11:29,460:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:11:29,647:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:11:29,701:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:12:01,045:INFO:Steam user init called
+2020-05-05 17:12:01,046:INFO:OAuth2Blizz init called
+2020-05-05 17:12:01,046:INFO:Checking internet connection
+2020-05-05 17:12:01,301:INFO:Internet connection test successful
+2020-05-05 17:12:01,304:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:12:01,585:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:12:01,634:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:13:29,886:INFO:Steam user init called
+2020-05-05 17:13:29,886:INFO:OAuth2Blizz init called
+2020-05-05 17:13:29,886:INFO:Checking internet connection
+2020-05-05 17:13:30,171:INFO:Internet connection test successful
+2020-05-05 17:13:30,173:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:13:30,353:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:13:30,401:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:15:49,055:INFO:Steam user init called
+2020-05-05 17:15:49,055:INFO:OAuth2Blizz init called
+2020-05-05 17:15:49,055:INFO:Checking internet connection
+2020-05-05 17:15:49,308:INFO:Internet connection test successful
+2020-05-05 17:15:49,311:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:15:49,486:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:18:57,669:INFO:Steam user init called
+2020-05-05 17:18:57,669:INFO:OAuth2Blizz init called
+2020-05-05 17:18:57,669:INFO:Checking internet connection
+2020-05-05 17:18:57,944:INFO:Internet connection test successful
+2020-05-05 17:18:57,946:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:18:58,122:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:18:58,177:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:20:13,268:INFO:Steam user init called
+2020-05-05 17:20:13,268:INFO:OAuth2Blizz init called
+2020-05-05 17:20:13,268:INFO:Checking internet connection
+2020-05-05 17:20:13,510:INFO:Internet connection test successful
+2020-05-05 17:20:13,513:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:20:13,698:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:20:13,743:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None
+2020-05-05 17:26:48,815:INFO:Steam user init called
+2020-05-05 17:26:48,815:INFO:OAuth2Blizz init called
+2020-05-05 17:26:48,815:INFO:Checking internet connection
+2020-05-05 17:26:49,050:INFO:Internet connection test successful
+2020-05-05 17:26:49,050:DEBUG:Check connection if block
+2020-05-05 17:26:49,250:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:26:49,445:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-05 17:27:46,828:INFO:Steam user init called
+2020-05-05 17:27:46,828:INFO:OAuth2Blizz init called
+2020-05-05 17:27:46,828:INFO:Checking internet connection
+2020-05-05 17:27:47,071:INFO:Internet connection test successful
+2020-05-05 17:27:47,071:DEBUG:Check connection if block
+2020-05-05 17:27:47,220:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:27:47,402:DEBUG:https://us.battle.net:443 "POST /oauth/token HTTP/1.1" 400 None
+2020-05-05 17:36:47,322:INFO:Steam user init called
+2020-05-05 17:36:47,322:INFO:OAuth2Blizz init called
+2020-05-05 17:36:47,322:INFO:Checking internet connection
+2020-05-05 17:36:47,577:INFO:Internet connection test successful
+2020-05-05 17:36:47,581:DEBUG:Starting new HTTPS connection (1): us.battle.net:443
+2020-05-05 17:36:47,739:DEBUG:https://us.battle.net:443 "GET /oauth/authorize?client_id=45e5032f888d44d986d6999b436fa4c7&response_type=code&redirect_uri=https://github.com/danieledwardharrington/GamingStatsProject&locale=us&scope=sc2.profile&state=abcd1234 HTTP/1.1" 302 0
+2020-05-05 17:36:47,786:DEBUG:https://us.battle.net:443 "GET /login/en/?ref=https://us.battle.net/oauth/authorize?client_id%3D45e5032f888d44d986d6999b436fa4c7%26response_type%3Dcode%26redirect_uri%3Dhttps://github.com/danieledwardharrington/GamingStatsProject%26locale%3Dus%26scope%3Dsc2.profile%26state%3Dabcd1234&app=oauth HTTP/1.1" 200 None

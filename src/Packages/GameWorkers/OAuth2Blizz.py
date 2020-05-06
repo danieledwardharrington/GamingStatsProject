@@ -32,9 +32,15 @@ class OAuth2Blizz(OAuth2BlizzABC):
 
             re = requests.get(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope={SC2_SCOPE}&state={state}")
 
+            headers = re.headers
+            print("-------------------------------------------")
+            print(f"HEADERS: {headers}")
+            print("-------------------------------------------")
+
             re_url = re.url
             print(re_url)
             code = re_url.split("code=")[-1]
+            print(f"Code print: {code}")
             return re
         return None
 
@@ -55,6 +61,9 @@ class OAuth2Blizz(OAuth2BlizzABC):
             auth = HTTPBasicAuth(self.client_id, self.client_secret)
 
             response = requests.post(url, data = body, auth = auth)
+            res_json = response.json()
+            print(f"RESPONSE: {response}")
+            print(f"RESPONSE JSON: {res_json}")
             return response
         
         log.error(NO_NETWORK)
@@ -75,3 +84,4 @@ class OAuth2Blizz(OAuth2BlizzABC):
             return False
 
 test = OAuth2Blizz()
+test.get_auth_code()
