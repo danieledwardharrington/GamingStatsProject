@@ -1,4 +1,5 @@
 import os
+import socket
 
 # URL for GitHub repo, sending the user there for instructions on obtaining API key and SteamID64
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
@@ -88,4 +89,3 @@ LOG_FORMAT = "%(asctime)s:%(levelname)s:%(message)s"
 
 # About string
 ABOUT_STRING = "This app was developed using the Steam Web API. The genres for all games are scraped from each game\'s respective Steam page (genre will be blank if the game is no longer on Steam). Only games that have been played for at least one minute are included. All ratings are set to 0.0 until changed by the user and are rounded to nearest tenth."
-                

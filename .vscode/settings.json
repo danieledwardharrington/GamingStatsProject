@@ -3,5 +3,8 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.autoComplete.extraPath": ["C:\\Code\\GamingStatsProject\\src"],
-    "python.linting.pycodestyleEnabled": false
+    "python.linting.pycodestyleEnabled": false,
+    "files.associations": {
+        "iostream": "cpp"
+    }
 }

@@ -4,7 +4,7 @@ from ..Vars.Global import LOG_FILE_NAME, LOG_FORMAT
 
 class UserImpl(UserABC):
     
-    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
+    #log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     def __init__(self):
         log.info("Steam user init called")
