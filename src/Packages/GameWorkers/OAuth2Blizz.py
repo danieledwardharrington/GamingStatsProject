@@ -103,7 +103,9 @@ class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass=FinalMeta):
 
     def _set_new_url(self, new_url):
         self.changed_url = new_url
-        print(self.changed_url)
+        print(f"QUrl: {self.changed_url}")
+        human_url = self.changed_url.toDisplayString()
+        print(f"Human URL: {human_url}")
 
 test = OAuth2Blizz()
 test.get_auth_code()
