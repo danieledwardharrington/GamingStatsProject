@@ -3,6 +3,7 @@ import socket
 
 # URL for GitHub repo, sending the user there for instructions on obtaining API key and SteamID64
 REPO_URL = "https://github.com/danieledwardharrington/GamingStatsProject"
+REDIRECT_URL = "https://danielharrington.dev/gspConfirmation/"
 
 # URLs
 STEAM_APP_URL = "https://store.steampowered.com/app/"

@@ -7,22 +7,20 @@ import requests
 import json
 from requests.auth import HTTPBasicAuth
 from ..GameUser.UserImpl import UserImpl
-#from ..MiscDialog.ErrorDialog import ErrorDialog
+from ..MiscDialog.ErrorDialog import ErrorDialog
 from PyQt5 import QtCore
 from PyQt5.QtCore import QUrl, QObject
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
-from PyQt5 import QtWidgets
-import sys
-
 class FinalMeta(type(OAuth2BlizzABC), type(QObject)):
     pass
 
-class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass=FinalMeta):
+class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass = FinalMeta):
 
-    #log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
+    log.basicConfig(filename = LOG_FILE_NAME, level = log.DEBUG, format = LOG_FORMAT)
 
     changed_url = None
+    code = None
 
     def __init__(self, user = UserImpl()):
         super().__init__()
@@ -39,27 +37,11 @@ class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass=FinalMeta):
             print(f"Client secret: {self.client_secret}")
             self.region = "us"
             state = "abcd1234"
-            
-            app = QtWidgets.QApplication(sys.argv)
+
             web = QWebEngineView()
-            web.urlChanged.connect(self._set_new_url)
-            web.load(QUrl(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope=sc2.profile&state={state}"))
+            web.urlChanged.connect(self._set_auth_code)
+            web.load(QUrl(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REDIRECT_URL}&locale={self.region}&scope=sc2.profile&state={state}"))
             web.show()
-
-            re_url = web.url()
-
-            print("***************************************")
-            print("***************************************")
-            print("***************************************")
-            print(self.changed_url)
-            print("***************************************")
-            print("***************************************")
-            print("***************************************")
-            sys.exit(app.exec_())
-            code = re_url.split("code=")[-1]
-            print(f"Code print: {code}")
-            return re_url
-        return None
 
     def get_token(self):
         if self._check_connection():
@@ -70,9 +52,6 @@ class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass=FinalMeta):
             print(f"Client secret: {self.client_secret}")
             self.region = "us"
             state = "abcd1234"
-
-            web = QWebEngineView()
-            web.load(QUrl(f"{BLIZZ_AUTH_URL}?client_id={self.client_id}&response_type=code&redirect_uri={REPO_URL}&locale={self.region}&scope=sc2.profile&state={state}"))
 
             url = f"https://{self.region}.battle.net/oauth/token"
             body = {"grant_type": 'authorization_code'}
@@ -101,11 +80,10 @@ class OAuth2Blizz(OAuth2BlizzABC, QObject, metaclass=FinalMeta):
             log.info("Internet connection test failed")
             return False
 
-    def _set_new_url(self, new_url):
+    def _set_auth_code(self, new_url):
         self.changed_url = new_url
         print(f"QUrl: {self.changed_url}")
         human_url = self.changed_url.toDisplayString()
         print(f"Human URL: {human_url}")
-
-test = OAuth2Blizz()
-test.get_auth_code()
+        self.code = human_url.split("code=")[-1]
+        print(f"Code print: {self.code}")
